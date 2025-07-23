@@ -6,6 +6,7 @@
 [build.environment]
   NPM_FLAGS = "--production=false"
   SKIP_DEPENDENCY_INSTALL = "true"
+  NETLIFY_SKIP_PYTHON_BUILD = "true"
 
 [[redirects]]
   from = "/*"

@@ -1,0 +1,12 @@
+# Ignore Python files and dependencies
+requirements.txt.bak
+*.py
+__pycache__/
+*.pyc
+.env
+venv/
+.venv/
+*.egg-info/
+
+# Keep only static files
+!static/
