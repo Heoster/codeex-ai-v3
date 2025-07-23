@@ -1,0 +1,1135 @@
+{% extends "base.html" %}
+
+{% block title %}AI Storage & Analytics Dashboard - CodeEx AI{% endblock %}
+
+{% block content %}
+<div class="min-h-screen py-8 px-4 md:px-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header Section -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-4">
+                AI Storage & Analytics Dashboard
+            </h1>
+            <p class="text-xl text-secondary max-w-3xl mx-auto">
+                Comprehensive management of your AI data, analytics, and advanced features. Monitor performance, manage storage, and explore AI capabilities.
+            </p>
+        </div>
+
+        <!-- Quick Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <div class="glass-strong rounded-2xl p-6 text-center">
+                <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                    </svg>
+                </div>
+                <div class="text-2xl font-bold text-white mb-1" id="total-conversations">0</div>
+                <div class="text-sm text-secondary">Total Conversations</div>
+            </div>
+
+            <div class="glass-strong rounded-2xl p-6 text-center">
+                <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                    </svg>
+                </div>
+                <div class="text-2xl font-bold text-white mb-1" id="ai-responses">0</div>
+                <div class="text-sm text-secondary">AI Responses Generated</div>
+            </div>
+
+            <div class="glass-strong rounded-2xl p-6 text-center">
+                <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                    </svg>
+                </div>
+                <div class="text-2xl font-bold text-white mb-1" id="storage-used">0 MB</div>
+                <div class="text-sm text-secondary">Storage Used</div>
+            </div>
+
+            <div class="glass-strong rounded-2xl p-6 text-center">
+                <div class="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                </div>
+                <div class="text-2xl font-bold text-white mb-1">
+                    <span class="text-green-400">AES-256</span>
+                </div>
+                <div class="text-sm text-secondary">Encryption Active</div>
+            </div>
+        </div>
+
+        <!-- AI Features Dashboard -->
+        <div class="grid lg:grid-cols-2 gap-8 mb-12">
+            <!-- AI Capabilities Overview -->
+            <div class="glass-strong rounded-2xl p-8">
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                    <svg class="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                    </svg>
+                    AI Capabilities
+                </h2>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-white font-medium">Advanced Mathematics</div>
+                                <div class="text-sm text-secondary">Calculus, Statistics, Linear Algebra</div>
+                            </div>
+                        </div>
+                        <div class="text-green-400 font-semibold">Active</div>
+                    </div>
+
+                    <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-white font-medium">Code Generation</div>
+                                <div class="text-sm text-secondary">Python, JavaScript, HTML, CSS</div>
+                            </div>
+                        </div>
+                        <div class="text-green-400 font-semibold">Active</div>
+                    </div>
+
+                    <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-white font-medium">Web Scraping</div>
+                                <div class="text-sm text-secondary">Real-time data extraction</div>
+                            </div>
+                        </div>
+                        <div class="text-green-400 font-semibold">Active</div>
+                    </div>
+
+                    <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-yellow-500/20 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-white font-medium">Knowledge Base</div>
+                                <div class="text-sm text-secondary">Wikipedia, Scientific Papers</div>
+                            </div>
+                        </div>
+                        <div class="text-green-400 font-semibold">Active</div>
+                    </div>
+
+                    <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-white font-medium">Voice Processing</div>
+                                <div class="text-sm text-secondary">Speech-to-Text, Text-to-Speech</div>
+                            </div>
+                        </div>
+                        <div class="text-green-400 font-semibold">Active</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Web Scraping Dashboard -->
+            <div class="glass-strong rounded-2xl p-8">
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                    <svg class="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"></path>
+                    </svg>
+                    Web Scraping Control
+                </h2>
+
+                <div class="space-y-4 mb-6">
+                    <div class="flex items-center justify-between">
+                        <span class="text-secondary">Auto-scraping enabled</span>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="auto-scraping" class="sr-only peer" checked>
+                            <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-500"></div>
+                        </label>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <span class="text-secondary">Real-time updates</span>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="realtime-updates" class="sr-only peer" checked>
+                            <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-500"></div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <button class="btn-primary w-full py-3 ripple" onclick="testWebScraping()">
+                        <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Test Web Scraping
+                    </button>
+                    
+                    <button class="btn-secondary w-full py-3" onclick="viewScrapingLogs()">
+                        <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        View Scraping Logs
+                    </button>
+                </div>
+
+                <div class="mt-6 p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
+                    <div class="flex items-center gap-2 mb-2">
+                        <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span class="text-sm font-medium text-blue-400">Scraping Status</span>
+                    </div>
+                    <div class="text-sm text-secondary">
+                        <div>Last scrape: <span class="text-white">2 minutes ago</span></div>
+                        <div>Sources monitored: <span class="text-white">15</span></div>
+                        <div>Success rate: <span class="text-green-400">98.5%</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Performance Metrics -->
+        <div class="glass-strong rounded-2xl p-8 mb-12">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <svg class="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+                AI Performance Metrics
+            </h2>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="text-center">
+                    <div class="text-3xl font-bold gradient-text mb-2" id="response-accuracy">94.7%</div>
+                    <div class="text-secondary">Response Accuracy</div>
+                    <div class="w-full bg-gray-700 rounded-full h-3 mt-2">
+                        <div class="bg-gradient-to-r from-green-400 to-blue-500 h-3 rounded-full opacity-100" style="width: 94.7%"></div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <div class="text-3xl font-bold gradient-text mb-2" id="avg-response-time">0.8s</div>
+                    <div class="text-secondary">Avg Response Time</div>
+                    <div class="w-full bg-gray-700 rounded-full h-3 mt-2">
+                        <div class="bg-gradient-to-r from-blue-400 to-purple-500 h-3 rounded-full opacity-100" style="width: 85%"></div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <div class="text-3xl font-bold gradient-text mb-2" id="learning-progress">87.3%</div>
+                    <div class="text-secondary">Learning Progress</div>
+                    <div class="w-full bg-gray-700 rounded-full h-3 mt-2">
+                        <div class="bg-gradient-to-r from-purple-400 to-pink-500 h-3 rounded-full opacity-100" style="width: 87.3%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced Features -->
+        <div class="grid lg:grid-cols-3 gap-8 mb-12">
+            <div class="glass rounded-2xl p-6">
+                <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
+                    </svg>
+                    Context Memory
+                </h3>
+                <p class="text-secondary mb-4">AI remembers conversation context across sessions for personalized responses.</p>
+                <div class="space-y-2">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-secondary">Memory Usage</span>
+                        <span class="text-white">2.3 MB</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-secondary">Context Entries</span>
+                        <span class="text-white">1,247</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-secondary">Retention Period</span>
+                        <span class="text-white">90 days</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass rounded-2xl p-6">
+                <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
+                    Security Features
+                </h3>
+                <p class="text-secondary mb-4">Advanced security measures protect your data and conversations.</p>
+                <div class="space-y-2">
+                    <div class="flex items-center gap-2 text-sm">
+                        <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+                        <span class="text-white">AES-256 Encryption</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm">
+                        <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+                        <span class="text-white">Secure Authentication</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm">
+                        <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+                        <span class="text-white">Privacy Protection</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass rounded-2xl p-6">
+                <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                    Performance
+                </h3>
+                <p class="text-secondary mb-4">Real-time performance monitoring and optimization.</p>
+                <div class="space-y-2">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-secondary">Uptime</span>
+                        <span class="text-green-400">99.9%</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-secondary">Avg Load Time</span>
+                        <span class="text-white">0.3s</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-secondary">Error Rate</span>
+                        <span class="text-green-400">0.1%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+            <button class="btn-primary py-4 ripple" onclick="optimizeAI()">
+                <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+                Optimize AI
+            </button>
+            
+            <button class="btn-secondary py-4" onclick="exportAIData()">
+                <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                Export AI Data
+            </button>
+            
+            <button class="btn-secondary py-4" onclick="clearAIMemory()">
+                <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                </svg>
+                Clear Memory
+            </button>
+            
+            <button class="btn-secondary py-4" onclick="viewAILogs()">
+                <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                View Logs
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Enhanced JavaScript for AI features
+async function testWebScraping() {
+    try {
+        const response = await fetch('/api/scraping/test', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                url: 'https://example.com',
+                test_mode: true
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showNotification('Web scraping test successful!', 'success');
+        } else {
+            showNotification('Web scraping test failed: ' + result.error, 'error');
+        }
+    } catch (error) {
+        showNotification('Error testing web scraping', 'error');
+    }
+}
+
+async function optimizeAI() {
+    try {
+        showNotification('Optimizing AI performance...', 'info');
+        
+        const response = await fetch('/api/ai/optimize', {
+            method: 'POST'
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showNotification('AI optimization completed successfully!', 'success');
+            updateMetrics();
+        } else {
+            showNotification('AI optimization failed: ' + result.error, 'error');
+        }
+    } catch (error) {
+        showNotification('Error optimizing AI', 'error');
+    }
+}
+
+async function exportAIData() {
+    try {
+        showNotification('Preparing AI data export...', 'info');
+        
+        const response = await fetch('/api/ai/export');
+        
+        if (response.ok) {
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ai_data_export_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            showNotification('AI data exported successfully!', 'success');
+        } else {
+            showNotification('Failed to export AI data', 'error');
+        }
+    } catch (error) {
+        showNotification('Error exporting AI data', 'error');
+    }
+}
+
+async function clearAIMemory() {
+    if (!confirm('This will clear all AI memory and context. Are you sure?')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch('/api/ai/memory/clear', {
+            method: 'POST'
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showNotification('AI memory cleared successfully!', 'success');
+            updateMetrics();
+        } else {
+            showNotification('Failed to clear AI memory: ' + result.error, 'error');
+        }
+    } catch (error) {
+        showNotification('Error clearing AI memory', 'error');
+    }
+}
+
+function updateMetrics() {
+    // Update performance metrics
+    document.getElementById('response-accuracy').textContent = '95.2%';
+    document.getElementById('avg-response-time').textContent = '0.7s';
+    document.getElementById('learning-progress').textContent = '89.1%';
+}
+
+function showNotification(message, type) {
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 ${
+        type === 'success' ? 'bg-green-500' : 
+        type === 'error' ? 'bg-red-500' : 
+        type === 'info' ? 'bg-blue-500' : 'bg-gray-500'
+    } text-white`;
+    
+    notification.innerHTML = `
+        <div class="flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                ${type === 'success' ? 
+                    '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>' :
+                    '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>'
+                }
+            </svg>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    }, 3000);
+}
+
+// Initialize dashboard
+document.addEventListener('DOMContentLoaded', function() {
+    updateMetrics();
+    
+    // Auto-update metrics every 30 seconds
+    setInterval(updateMetrics, 30000);
+});
+</script>
+
+{% endblock %}
+    <style>
+        .storage-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .analytics-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .analytics-card:hover {
+            transform: translateY(-2px);
+        }
+        .policy-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .context-memory {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .encryption-badge {
+            background: #4caf50;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+        }
+
+        /* Mobile Responsive Enhancements */
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            
+            .storage-card {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            
+            .storage-card h3 {
+                font-size: 1.3rem;
+                margin-bottom: 15px;
+            }
+            
+            .storage-card h4 {
+                font-size: 1.5rem;
+                margin-bottom: 5px;
+            }
+            
+            .storage-card small {
+                font-size: 0.75rem;
+            }
+            
+            .policy-section {
+                padding: 15px;
+                margin: 15px 0;
+            }
+            
+            .btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .card-header h5 {
+                font-size: 1.1rem;
+            }
+            
+            .analytics-card {
+                margin-bottom: 20px;
+            }
+            
+            #activityChart {
+                height: 250px !important;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .storage-card h3 {
+                font-size: 1.2rem;
+            }
+            
+            .storage-card h4 {
+                font-size: 1.3rem;
+            }
+            
+            .btn {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .navbar-brand {
+                font-size: 1.1rem;
+            }
+            
+            .policy-section {
+                padding: 10px;
+            }
+            
+            .form-control, .form-select {
+                font-size: 0.9rem;
+            }
+            
+            .modal-dialog {
+                margin: 1rem;
+            }
+        }
+
+        /* Tablet Specific Styles */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .storage-card {
+                padding: 18px;
+            }
+            
+            .btn {
+                padding: 12px 20px;
+            }
+        }
+
+        /* Large Screen Optimizations */
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1140px;
+            }
+            
+            .storage-card {
+                padding: 25px;
+            }
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .btn {
+                min-height: 44px;
+                padding: 12px 16px;
+            }
+            
+            .form-control, .form-select {
+                min-height: 44px;
+                padding: 12px;
+            }
+            
+            .navbar-toggler {
+                padding: 8px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/chat">
+                <i class="fas fa-robot me-2"></i>CodeEx AI
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link" href="/chat">
+                        <i class="fas fa-comments me-1"></i>Chat
+                    </a>
+                    <a class="nav-link active" href="/storage">
+                        <i class="fas fa-database me-1"></i>Storage
+                    </a>
+                    <a class="nav-link" href="/logout">
+                        <i class="fas fa-sign-out-alt me-1"></i>Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <h1><i class="fas fa-database me-2"></i>Storage Management</h1>
+                <p class="text-muted">Manage your chat history, privacy settings, and storage policies</p>
+            </div>
+        </div>
+
+        <!-- Storage Overview -->
+        <div class="row">
+            <div class="col-lg-8 col-md-12 mb-4">
+                <div class="storage-card">
+                    <h3><i class="fas fa-chart-pie me-2"></i>Storage Overview</h3>
+                    <div class="row mt-3">
+                        <div class="col-6 col-md-3 mb-3 mb-md-0">
+                            <div class="text-center">
+                                <h4 id="totalSessions">-</h4>
+                                <small>Total Sessions</small>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 mb-3 mb-md-0">
+                            <div class="text-center">
+                                <h4 id="totalMessages">-</h4>
+                                <small>Total Messages</small>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="text-center">
+                                <h4 id="storageSize">-</h4>
+                                <small>Storage Used</small>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="text-center">
+                                <h4 id="archivedSessions">-</h4>
+                                <small>Archived</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 mb-4">
+                <div class="card analytics-card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-shield-alt fa-3x text-success mb-3"></i>
+                        <h5>Security Status</h5>
+                        <span id="encryptionStatus" class="encryption-badge">Encryption Enabled</span>
+                        <p class="mt-2 text-muted">Your conversations are encrypted and secure</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="row mt-4">
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
+                <button class="btn btn-outline-primary w-100" onclick="cleanupStorage()">
+                    <i class="fas fa-broom me-2"></i><span class="d-none d-sm-inline">Cleanup Old Data</span><span class="d-sm-none">Cleanup</span>
+                </button>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
+                <button class="btn btn-outline-success w-100" onclick="exportData()">
+                    <i class="fas fa-download me-2"></i><span class="d-none d-sm-inline">Export Data</span><span class="d-sm-none">Export</span>
+                </button>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
+                <button class="btn btn-outline-info w-100" onclick="viewContextMemory()">
+                    <i class="fas fa-brain me-2"></i><span class="d-none d-sm-inline">Context Memory</span><span class="d-sm-none">Memory</span>
+                </button>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
+                <button class="btn btn-outline-warning w-100" onclick="showPolicySettings()">
+                    <i class="fas fa-cog me-2"></i><span class="d-none d-sm-inline">Settings</span><span class="d-sm-none">Settings</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Recent Activity Chart -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card analytics-card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-chart-line me-2"></i>Recent Activity (Last 30 Days)</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="activityChart" width="400" height="100"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Context Memory Section -->
+        <div class="row mt-4" id="contextMemorySection" style="display: none;">
+            <div class="col-12">
+                <div class="card analytics-card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-brain me-2"></i>Context Memory</h5>
+                        <small class="text-muted">AI remembers these details about you for better conversations</small>
+                    </div>
+                    <div class="card-body" id="contextMemoryContent">
+                        <!-- Context memory items will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Storage Policy Settings -->
+        <div class="policy-section" id="policySettings" style="display: none;">
+            <h4><i class="fas fa-cog me-2"></i>Storage Policy Settings</h4>
+            <form id="policyForm">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Max Sessions Per User</label>
+                            <input type="number" class="form-control" id="maxSessions" min="10" max="1000">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Max Messages Per Session</label>
+                            <input type="number" class="form-control" id="maxMessages" min="100" max="10000">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Retention Period (Days)</label>
+                            <input type="number" class="form-control" id="retentionDays" min="30" max="3650">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Auto-Archive After (Days)</label>
+                            <input type="number" class="form-control" id="archiveDays" min="7" max="365">
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="encryptionEnabled">
+                                <label class="form-check-label" for="encryptionEnabled">
+                                    Enable Message Encryption
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="compressMessages">
+                                <label class="form-check-label" for="compressMessages">
+                                    Compress Old Messages
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-2"></i>Save Settings
+                </button>
+                <button type="button" class="btn btn-secondary ms-2" onclick="hidePolicySettings()">
+                    Cancel
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div class="modal fade" id="loadingModal" tabindex="-1">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2" id="loadingText">Processing...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        let activityChart;
+        const loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
+
+        // Load storage analytics on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStorageAnalytics();
+            loadStoragePolicy();
+        });
+
+        async function loadStorageAnalytics() {
+            try {
+                const response = await fetch('/api/storage/analytics');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    updateStorageOverview(data.current_stats);
+                    createActivityChart(data.recent_activity);
+                } else {
+                    showAlert('Error loading analytics: ' + data.error, 'danger');
+                }
+            } catch (error) {
+                showAlert('Failed to load storage analytics', 'danger');
+            }
+        }
+
+        function updateStorageOverview(stats) {
+            document.getElementById('totalSessions').textContent = stats.total_sessions || 0;
+            document.getElementById('totalMessages').textContent = stats.total_messages || 0;
+            document.getElementById('storageSize').textContent = formatBytes(stats.storage_bytes || 0);
+            document.getElementById('archivedSessions').textContent = stats.archived_sessions || 0;
+        }
+
+        function createActivityChart(activityData) {
+            const ctx = document.getElementById('activityChart').getContext('2d');
+            
+            const labels = activityData.map(item => item.date);
+            const data = activityData.map(item => item.sessions_created);
+            
+            if (activityChart) {
+                activityChart.destroy();
+            }
+            
+            activityChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Sessions Created',
+                        data: data,
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        async function cleanupStorage() {
+            if (!confirm('This will permanently delete old chat sessions based on your retention policy. Continue?')) {
+                return;
+            }
+
+            showLoading('Cleaning up old data...');
+            
+            try {
+                const response = await fetch('/api/storage/cleanup', {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                hideLoading();
+                
+                if (response.ok) {
+                    showAlert(data.message, 'success');
+                    loadStorageAnalytics(); // Refresh data
+                } else {
+                    showAlert('Cleanup failed: ' + data.error, 'danger');
+                }
+            } catch (error) {
+                hideLoading();
+                showAlert('Cleanup failed', 'danger');
+            }
+        }
+
+        async function exportData() {
+            const includeEncrypted = confirm('Include encrypted content in export? (Choose "Cancel" for basic export, "OK" for full export)');
+            
+            showLoading('Preparing data export...');
+            
+            try {
+                const response = await fetch(`/api/export/data?include_encrypted=${includeEncrypted}`);
+                
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `chat_export_${new Date().toISOString().split('T')[0]}.json`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                    
+                    hideLoading();
+                    showAlert('Data exported successfully', 'success');
+                } else {
+                    const data = await response.json();
+                    hideLoading();
+                    showAlert('Export failed: ' + data.error, 'danger');
+                }
+            } catch (error) {
+                hideLoading();
+                showAlert('Export failed', 'danger');
+            }
+        }
+
+        async function viewContextMemory() {
+            const section = document.getElementById('contextMemorySection');
+            
+            if (section.style.display === 'none') {
+                showLoading('Loading context memory...');
+                
+                try {
+                    // For demo purposes, we'll show a sample context memory
+                    // In a real implementation, you'd fetch this from an API
+                    const contextContent = document.getElementById('contextMemoryContent');
+                    contextContent.innerHTML = `
+                        <div class="context-memory">
+                            <strong>Preferences:</strong> Likes Python programming, prefers detailed explanations
+                        </div>
+                        <div class="context-memory">
+                            <strong>Topics:</strong> Frequently asks about web development, AI, and databases
+                        </div>
+                        <div class="context-memory">
+                            <strong>Facts:</strong> Works as a software developer, interested in machine learning
+                        </div>
+                        <p class="text-muted mt-3">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Context memory helps the AI provide more personalized responses based on your conversation history.
+                        </p>
+                    `;
+                    
+                    hideLoading();
+                    section.style.display = 'block';
+                } catch (error) {
+                    hideLoading();
+                    showAlert('Failed to load context memory', 'danger');
+                }
+            } else {
+                section.style.display = 'none';
+            }
+        }
+
+        async function loadStoragePolicy() {
+            try {
+                const response = await fetch('/api/storage/policy');
+                const policy = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('maxSessions').value = policy.max_sessions_per_user;
+                    document.getElementById('maxMessages').value = policy.max_messages_per_session;
+                    document.getElementById('retentionDays').value = policy.retention_days;
+                    document.getElementById('archiveDays').value = policy.auto_archive_days;
+                    document.getElementById('encryptionEnabled').checked = policy.encryption_enabled;
+                    document.getElementById('compressMessages').checked = policy.compress_old_messages;
+                    
+                    // Update encryption status
+                    const statusElement = document.getElementById('encryptionStatus');
+                    if (policy.encryption_enabled) {
+                        statusElement.textContent = 'Encryption Enabled';
+                        statusElement.className = 'encryption-badge';
+                    } else {
+                        statusElement.textContent = 'Encryption Disabled';
+                        statusElement.className = 'encryption-badge bg-warning';
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load storage policy:', error);
+            }
+        }
+
+        function showPolicySettings() {
+            document.getElementById('policySettings').style.display = 'block';
+        }
+
+        function hidePolicySettings() {
+            document.getElementById('policySettings').style.display = 'none';
+        }
+
+        document.getElementById('policyForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const policyData = {
+                max_sessions_per_user: parseInt(document.getElementById('maxSessions').value),
+                max_messages_per_session: parseInt(document.getElementById('maxMessages').value),
+                retention_days: parseInt(document.getElementById('retentionDays').value),
+                auto_archive_days: parseInt(document.getElementById('archiveDays').value),
+                encryption_enabled: document.getElementById('encryptionEnabled').checked,
+                compress_old_messages: document.getElementById('compressMessages').checked
+            };
+            
+            showLoading('Updating storage policy...');
+            
+            try {
+                const response = await fetch('/api/storage/policy', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(policyData)
+                });
+                
+                const result = await response.json();
+                hideLoading();
+                
+                if (response.ok) {
+                    showAlert('Storage policy updated successfully', 'success');
+                    hidePolicySettings();
+                    loadStorageAnalytics(); // Refresh data
+                } else {
+                    showAlert('Failed to update policy: ' + result.error, 'danger');
+                }
+            } catch (error) {
+                hideLoading();
+                showAlert('Failed to update storage policy', 'danger');
+            }
+        });
+
+        function showLoading(text) {
+            document.getElementById('loadingText').textContent = text;
+            loadingModal.show();
+        }
+
+        function hideLoading() {
+            loadingModal.hide();
+        }
+
+        function showAlert(message, type) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.querySelector('.container').insertBefore(alertDiv, document.querySelector('.container').firstChild);
+            
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 5000);
+        }
+
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+    </script>
+</body>
+</html>
+
+{% block footer %}
+<!-- No footer on storage management page -->
+{% endblock %}

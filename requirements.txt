@@ -1,0 +1,100 @@
+# Core web framework
+Flask==3.0.3
+Flask-CORS==4.0.0
+
+# Security (Werkzeug comes with Flask)
+Werkzeug>=3.0.1
+
+# Google OAuth Authentication
+google-auth==2.23.4
+google-auth-oauthlib==1.1.0
+google-auth-httplib2==0.1.1
+requests==2.31.0
+
+# Enhanced Security Dependencies
+cryptography==41.0.7
+pyotp==2.9.0
+qrcode[pil]==7.4.2
+bcrypt==4.1.2
+flask-limiter==3.5.0
+flask-talisman==1.1.0
+
+# Advanced AI Brain Dependencies - Fully Offline Capable
+
+# Core Machine Learning & Data Science
+numpy==1.24.3
+pandas==2.0.3
+scikit-learn==1.3.0
+scipy==1.11.1
+
+# Advanced ML Algorithms
+xgboost==1.7.6
+lightgbm==4.0.0
+catboost==1.2
+
+# AutoML & High-Level ML
+# pycaret==3.0.4  # Uncomment if needed - large dependency
+
+# Deep Learning Frameworks
+tensorflow==2.13.0
+torch==2.0.1
+torchvision==0.15.2
+torchaudio==2.0.2
+
+# Model Optimization & Deployment
+onnx==1.14.1
+onnxruntime==1.15.1
+
+# Natural Language Processing
+nltk==3.8.1
+spacy==3.6.1
+gensim==4.3.1
+transformers==4.33.2
+tokenizers==0.13.3
+datasets==2.14.4
+
+# Computer Vision
+opencv-python==4.8.0.76
+Pillow==10.0.0
+scikit-image==0.21.0
+
+# Reinforcement Learning
+gymnasium==0.29.1  # Modern replacement for gym
+stable-baselines3==2.0.0
+sb3-contrib==2.0.0
+ale-py==0.8.1  # For Atari environments
+
+# Data Visualization & Analysis
+matplotlib==3.7.2
+seaborn==0.12.2
+plotly==5.15.0
+
+# Text Processing & Embeddings
+sentence-transformers==2.2.2
+wordcloud==1.9.2
+wikipedia==1.4.0
+wikipedia-api==0.6.0
+
+# Audio Processing (if needed)
+librosa==0.10.1
+
+# Time Series Analysis
+statsmodels==0.14.0
+
+# Model Interpretability
+shap==0.42.1
+lime==0.2.0.1
+
+# Caching & Performance
+joblib==1.3.2
+dill==0.3.7
+
+# AI API Integrations
+openai==1.3.0
+google-generativeai==0.3.0
+
+# Development
+python-dotenv==1.0.0
+
+# Production server
+gunicorn==21.2.0

@@ -1,0 +1,2539 @@
+{% extends "base.html" %}
+
+{% block title %}Chat - CodeEx AI{% endblock %}
+
+{% block content %}
+<div class="h-screen flex relative overflow-hidden">
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden lg:hidden"
+        onclick="toggleMobileSidebar()"></div>
+
+    <!-- Mobile-Optimized Sidebar -->
+    <div id="chat-sidebar"
+        class="w-full sm:w-80 lg:w-80 glass-strong border-r border-white/10 flex flex-col relative z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out fixed lg:relative h-full max-w-sm">
+        <!-- Sidebar Header -->
+        <div class="p-6 border-b border-white/10">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg">
+                    <img src="{{ url_for('static', filename='images/codeex-logo.svg') }}" alt="CodeEx AI Logo"
+                        class="w-10 h-10 rounded-xl">
+                </div>
+                <div>
+                    <h1 class="font-bold text-white text-lg">CODEEX AI</h1>
+                    <p class="text-xs text-gray-400">Intelligent Assistant</p>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="relative mb-4">
+                <input type="text" id="chat-search" placeholder="Search conversations..."
+                    class="w-full px-4 py-2 pl-10 glass-strong border border-white/20 rounded-lg text-white placeholder-gray-400 focus-ring text-sm">
+                <svg class="w-4 h-4 absolute left-3 top-3 text-gray-400" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="flex gap-2 mb-4">
+                <button id="filter-all"
+                    class="filter-btn active px-3 py-1 text-xs rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">All</button>
+                <button id="filter-recent"
+                    class="filter-btn px-3 py-1 text-xs rounded-full bg-gray-500/20 text-gray-300 border border-gray-500/30">Recent</button>
+                <button id="filter-archived"
+                    class="filter-btn px-3 py-1 text-xs rounded-full bg-gray-500/20 text-gray-300 border border-gray-500/30">Archived</button>
+            </div>
+
+            <button id="new-chat-btn"
+                class="w-full btn-primary py-3 px-4 rounded-xl flex items-center justify-center gap-3 group">
+                <svg class="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                <span class="font-semibold">New Conversation</span>
+            </button>
+        </div>
+
+        <!-- Chat Sessions -->
+        <div class="flex-1 overflow-y-auto p-4">
+            <div class="mb-4">
+                <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Recent Chats</h3>
+            </div>
+            <div id="chat-sessions" class="space-y-2">
+                <!-- Sessions will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Enhanced User Info -->
+        <div class="p-6 border-t border-white/10">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div
+                        class="w-10 h-10 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center shadow-lg">
+                        <span class="text-white font-semibold text-sm">{{ user.display_name[0].upper() if
+                            user.display_name else 'U' }}</span>
+                    </div>
+                    <div>
+                        <p class="text-white font-medium text-sm">{{ user.display_name or 'User' }}</p>
+                        <p class="text-gray-400 text-xs">{{ user.email }}</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <a href="/storage"
+                        class="p-2 text-gray-400 hover:text-cyan-400 transition-colors duration-200 rounded-lg hover:bg-white/10"
+                        title="Storage Management">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="/logout"
+                        class="p-2 text-gray-400 hover:text-red-400 transition-colors duration-200 rounded-lg hover:bg-white/10"
+                        title="Logout">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                            </path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Main Chat Area -->
+    <div class="flex-1 flex flex-col relative">
+        <!-- Enhanced Chat Header -->
+        <div class="glass p-4 sm:p-6 border-b border-white/10 relative z-10">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-btn"
+                        class="lg:hidden p-2 text-gray-400 hover:text-white transition-all duration-200 rounded-xl hover:bg-white/10"
+                        onclick="toggleMobileSidebar()">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+
+                    <div>
+                        <nav class="text-sm text-gray-400 mb-2 flex items-center gap-2">
+                            <a href="/" class="hover:text-blue-400 transition-colors">Home</a>
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                                </path>
+                            </svg>
+                            <span class="text-white font-medium">Chat</span>
+                        </nav>
+                        <h1 id="chat-title" class="text-xl sm:text-2xl font-bold text-white">Select a chat or start a
+                            new one</h1>
+                        <div id="chat-status" class="flex items-center gap-2 mt-2 hidden">
+                            <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                            <span class="text-sm text-gray-400">AI is ready</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <button id="voice-input-btn"
+                        class="p-3 text-gray-400 hover:text-white transition-all duration-200 rounded-xl hover:bg-white/10 group"
+                        title="Voice Input">
+                        <svg id="voice-icon" class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z">
+                            </path>
+                        </svg>
+                    </button>
+                    <button id="voice-output-btn"
+                        class="p-3 text-gray-400 hover:text-white transition-all duration-200 rounded-xl hover:bg-white/10 group"
+                        title="Toggle Voice Output">
+                        <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M6 10l6-6v4h8v4H12v4l-6-6z">
+                            </path>
+                        </svg>
+                    </button>
+                    <a href="/docs"
+                        class="p-3 text-gray-400 hover:text-purple-400 transition-all duration-200 rounded-xl hover:bg-white/10 group"
+                        title="Documentation">
+                        <svg class="w-5 h-5 group-hover:rotate-12 transition-transform" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                            </path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Messages Area with Quick Actions -->
+        <div id="messages-container" class="flex-1 overflow-y-auto p-6 space-y-6 relative">
+            <!-- Scroll to bottom button -->
+            <button id="scroll-to-bottom"
+                class="fixed bottom-32 right-8 p-3 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg transition-all duration-300 opacity-0 pointer-events-none z-20">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </button>
+
+            <!-- Message Actions Toolbar (appears on message hover) -->
+            <div id="message-actions"
+                class="fixed bg-gray-800 border border-gray-600 rounded-lg shadow-xl p-2 hidden z-30">
+                <div class="flex items-center gap-1">
+                    <button class="action-btn p-2 hover:bg-gray-700 rounded" title="Copy Message" data-action="copy">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                    </button>
+                    <button class="action-btn p-2 hover:bg-gray-700 rounded" title="Regenerate Response"
+                        data-action="regenerate">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                            </path>
+                        </svg>
+                    </button>
+                    <button class="action-btn p-2 hover:bg-gray-700 rounded" title="Edit Message" data-action="edit">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                            </path>
+                        </svg>
+                    </button>
+                    <button class="action-btn p-2 hover:bg-gray-700 rounded" title="Share Message" data-action="share">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div id="welcome-message" class="text-center mt-32">
+                <div
+                    class="w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl animate-pulse-glow">
+                    <img src="{{ url_for('static', filename='images/codeex-logo.svg') }}" alt="CodeEx AI Logo"
+                        class="w-24 h-24 rounded-3xl">
+                </div>
+                <h2 class="text-3xl font-bold text-white mb-4">Welcome to CodeEx AI</h2>
+                <p class="text-gray-400 text-lg max-w-md mx-auto leading-relaxed">
+                    Start an intelligent conversation with context memory and advanced reasoning capabilities.
+                </p>
+
+                <!-- Quick Start Suggestions -->
+                <div class="mt-8 max-w-2xl mx-auto">
+                    <h3 class="text-lg font-semibold text-white mb-4">Try asking me about:</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <button
+                            class="suggestion-btn p-4 glass-strong border border-white/20 rounded-xl text-left hover:border-blue-400/50 transition-all duration-300 group"
+                            data-suggestion="Help me debug this code">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium">Code Help</p>
+                                    <p class="text-gray-400 text-sm">Debug, optimize, or explain code</p>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button
+                            class="suggestion-btn p-4 glass-strong border border-white/20 rounded-xl text-left hover:border-purple-400/50 transition-all duration-300 group"
+                            data-suggestion="Explain how machine learning works">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium">Problem Solving</p>
+                                    <p class="text-gray-400 text-sm">Complex analysis and solutions</p>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button
+                            class="suggestion-btn p-4 glass-strong border border-white/20 rounded-xl text-left hover:border-green-400/50 transition-all duration-300 group"
+                            data-suggestion="Teach me about Python data structures">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium">Learning</p>
+                                    <p class="text-gray-400 text-sm">Concepts, tutorials, explanations</p>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button
+                            class="suggestion-btn p-4 glass-strong border border-white/20 rounded-xl text-left hover:border-cyan-400/50 transition-all duration-300 group"
+                            data-suggestion="Calculate 15% tip on $47.50">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-cyan-500/20 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium">Quick Tasks</p>
+                                    <p class="text-gray-400 text-sm">Calculations, conversions, facts</p>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-3 mt-8">
+                    <span class="px-4 py-2 bg-blue-500/20 text-blue-300 rounded-full text-sm font-medium">Context
+                        Aware</span>
+                    <span
+                        class="px-4 py-2 bg-purple-500/20 text-purple-300 rounded-full text-sm font-medium">Encrypted</span>
+                    <span
+                        class="px-4 py-2 bg-green-500/20 text-green-300 rounded-full text-sm font-medium">Intelligent</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile-Optimized Input Area -->
+        <div id="input-area" class="glass p-3 sm:p-6 border-t border-white/10 hidden">
+            <div class="max-w-4xl mx-auto">
+                <!-- Enhanced Quick Actions Bar with Templates -->
+                <div class="flex items-center gap-2 mb-3 sm:mb-4 overflow-x-auto pb-2 scrollbar-hide">
+                    <button
+                        class="quick-action-btn flex items-center gap-2 px-3 py-2 glass-strong border border-white/20 rounded-lg text-sm text-gray-300 hover:text-white hover:border-blue-400/50 transition-all duration-300 whitespace-nowrap"
+                        data-action="Review this code:">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                        </svg>
+                        Code Review
+                    </button>
+                    <button
+                        class="quick-action-btn flex items-center gap-2 px-3 py-2 glass-strong border border-white/20 rounded-lg text-sm text-gray-300 hover:text-white hover:border-purple-400/50 transition-all duration-300 whitespace-nowrap"
+                        data-action="Explain this concept:">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                            </path>
+                        </svg>
+                        Explain
+                    </button>
+                    <button
+                        class="quick-action-btn flex items-center gap-2 px-3 py-2 glass-strong border border-white/20 rounded-lg text-sm text-gray-300 hover:text-white hover:border-green-400/50 transition-all duration-300 whitespace-nowrap"
+                        data-action="Optimize this code:">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                        Optimize
+                    </button>
+                    <button
+                        class="quick-action-btn flex items-center gap-2 px-3 py-2 glass-strong border border-white/20 rounded-lg text-sm text-gray-300 hover:text-white hover:border-cyan-400/50 transition-all duration-300 whitespace-nowrap"
+                        data-action="Debug this error:">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
+                        Debug
+                    </button>
+                    <button
+                        class="quick-action-btn flex items-center gap-2 px-3 py-2 glass-strong border border-white/20 rounded-lg text-sm text-gray-300 hover:text-white hover:border-yellow-400/50 transition-all duration-300 whitespace-nowrap"
+                        data-action="Teach me about:">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                            </path>
+                        </svg>
+                        Learn
+                    </button>
+                    <button
+                        class="quick-action-btn flex items-center gap-2 px-3 py-2 glass-strong border border-white/20 rounded-lg text-sm text-gray-300 hover:text-white hover:border-pink-400/50 transition-all duration-300 whitespace-nowrap"
+                        data-action="Create a template for:">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                            </path>
+                        </svg>
+                        Template
+                    </button>
+                    <button
+                        class="quick-action-btn flex items-center gap-2 px-3 py-2 glass-strong border border-white/20 rounded-lg text-sm text-gray-300 hover:text-white hover:border-orange-400/50 transition-all duration-300 whitespace-nowrap"
+                        data-action="Summarize this:">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                            </path>
+                        </svg>
+                        Summarize
+                    </button>
+                </div>
+
+                <div class="flex gap-4 items-end">
+                    <div class="flex-1 relative">
+                        <textarea id="message-input"
+                            placeholder="Type your message... (Press Enter to send, Shift+Enter for new line)"
+                            class="w-full px-6 py-4 pr-20 glass-strong border border-white/20 rounded-2xl text-white placeholder-gray-400 focus-ring resize-none min-h-[60px] max-h-32"
+                            rows="1"></textarea>
+
+                        <!-- Input Controls -->
+                        <div class="absolute right-4 bottom-4 flex items-center gap-2">
+                            <span class="text-xs text-gray-500" id="char-count">0</span>
+                            <div class="w-px h-4 bg-gray-600"></div>
+                            <button id="voice-btn" class="p-1 text-gray-400 hover:text-white transition-colors"
+                                title="Voice Input">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z">
+                                    </path>
+                                </svg>
+                            </button>
+                            <button id="attach-btn" class="p-1 text-gray-400 hover:text-white transition-colors"
+                                title="Attach File">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13">
+                                    </path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Send Button with Loading State -->
+                    <button id="send-btn"
+                        class="btn-primary p-4 rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed group relative overflow-hidden"
+                        disabled>
+                        <svg id="send-icon" class="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                        </svg>
+                        <div id="loading-spinner" class="absolute inset-0 flex items-center justify-center hidden">
+                            <div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin">
+                            </div>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Enhanced Status Bar -->
+                <div class="flex items-center justify-between mt-4 text-xs text-gray-500">
+                    <div class="flex items-center gap-4">
+                        <span class="flex items-center gap-1">
+                            <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                            Encrypted
+                        </span>
+                        <span class="flex items-center gap-1">
+                            <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
+                            Context Memory
+                        </span>
+                        <span id="typing-indicator" class="flex items-center gap-1 hidden">
+                            <div class="w-2 h-2 bg-yellow-400 rounded-full animate-bounce"></div>
+                            AI is typing...
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="hidden sm:inline">Press Enter to send • Shift+Enter for new line</span>
+                        <button id="clear-chat" class="text-gray-400 hover:text-red-400 transition-colors"
+                            title="Clear Chat">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                </path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>p-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+</svg>
+<div id="loading-spinner" class="absolute inset-0 flex items-center justify-center hidden">
+    <div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+</div>
+</button>
+</div>
+
+<!-- Enhanced Status Bar -->
+<div class="flex items-center justify-between mt-4 text-xs text-gray-500">
+    <div class="flex items-center gap-4">
+        <span class="flex items-center gap-1">
+            <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+            Encrypted
+        </span>
+        <span class="flex items-center gap-1">
+            <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
+            Context Memory
+        </span>
+        <span id="typing-indicator" class="flex items-center gap-1 hidden">
+            <div class="w-2 h-2 bg-yellow-400 rounded-full animate-bounce"></div>
+            AI is typing...
+        </span>
+    </div>
+    <div class="flex items-center gap-4">
+        <span class="hidden sm:inline">Press Enter to send • Shift+Enter for new line</span>
+        <button id="clear-chat" class="text-gray-400 hover:text-red-400 transition-colors" title="Clear Chat">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                </path>
+            </svg>
+        </button>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>p-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+</svg>
+<div id="loading-spinner" class="absolute inset-0 flex items-center justify-center hidden">
+    <div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+</div>
+</button>
+</div>
+
+<!-- Enhanced Status Bar -->
+<div class="flex items-center justify-between mt-4 text-xs text-gray-500">
+    <div class="flex items-center gap-4">
+        <span class="flex items-center gap-1">
+            <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+            Encrypted
+        </span>
+        <span class="flex items-center gap-1">
+            <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
+            Context Memory
+        </span>
+        <span id="typing-indicator" class="flex items-center gap-1 hidden">
+            <div class="w-2 h-2 bg-yellow-400 rounded-full animate-bounce"></div>
+            AI is typing...
+        </span>
+    </div>
+    <div class="flex items-center gap-4">
+        <span>Press Enter to send • Shift+Enter for new line</span>
+        <button id="clear-chat" class="text-gray-400 hover:text-red-400 transition-colors" title="Clear Chat">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                </path>
+            </svg>
+        </button>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>p-hover:translate-x-1 transition-transform" fill="none"
+stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+</svg>
+<div id="loading-spinner" class="absolute inset-0 flex items-center justify-center hidden">
+    <div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin">
+    </div>
+</div>
+</button>
+</div>
+
+<!-- Enhanced Status Bar -->
+<div class="flex items-center justify-between mt-4 text-xs text-gray-500">
+    <div class="flex items-center gap-4">
+        <span class="flex items-center gap-1">
+            <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+            Encrypted
+        </span>
+        <span class="flex items-center gap-1">
+            <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
+            Context Memory
+        </span>
+        <span id="typing-indicator" class="flex items-center gap-1 hidden">
+            <div class="w-2 h-2 bg-yellow-400 rounded-full animate-bounce"></div>
+            AI is typing...
+        </span>
+    </div>
+    <div class="flex items-center gap-4">
+        <span>Press Enter to send • Shift+Enter for new line</span>
+        <button id="clear-chat" class="text-gray-400 hover:text-red-400 transition-colors" title="Clear Chat">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                </path>
+                p-hover:translate-x-1 transition-transform" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+            </svg>
+            <div id="loading-spinner" class="absolute inset-0 flex items-center justify-center hidden">
+                <div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin">
+                </div>
+            </div>
+        </button>
+    </div>
+
+    <!-- Enhanced Status Bar -->
+    <div class="flex items-center justify-between mt-4 text-xs text-gray-500">
+        <div class="flex items-center gap-4">
+            <span class="flex items-center gap-1">
+                <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                Encrypted
+            </span>
+            <span class="flex items-center gap-1">
+                <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
+                Context Memory
+            </span>
+            <span id="typing-indicator" class="flex items-center gap-1 hidden">
+                <div class="w-2 h-2 bg-yellow-400 rounded-full animate-bounce"></div>
+                AI is typing...
+            </span>
+        </div>
+        <div class="flex items-center gap-4">
+            <span>Press Enter to send • Shift+Enter for new line</span>
+            <button id="clear-chat" class="text-gray-400 hover:text-red-400 transition-colors" title="Clear Chat">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Send Button with Loading State -->
+    <button id="send-btn"
+        class="btn-primary p-4 rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed group relative overflow-hidden"
+        disabled>
+        <svg id="send-icon" class="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none"
+            stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8">
+            </path>
+        </svg>
+        <div id="loading-spinner" class="absolute inset-0 flex items-center justify-center hidden">
+            <div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin">
+            </div>
+        </div>
+    </button>
+</div>
+
+<!-- Enhanced Status Bar -->
+<div class="flex items-center justify-between mt-4 text-xs text-gray-500">
+    <div class="flex items-center gap-4">
+        <span class="flex items-center gap-1">
+            <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+            Encrypted
+        </span>
+        <span class="flex items-center gap-1">
+            <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
+            Context Memory
+        </span>
+        <span id="typing-indicator" class="flex items-center gap-1 hidden">
+            <div class="w-2 h-2 bg-yellow-400 rounded-full animate-bounce"></div>
+            AI is typing...
+        </span>
+    </div>
+    <div class="flex items-center gap-4">
+        <span>Press Enter to send • Shift+Enter for new line</span>
+        <button id="clear-chat" class="text-gray-400 hover:text-red-400 transition-colors" title="Clear Chat">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                </path>
+            </svg>
+        </button>
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+<!-- Enhanced File Upload Modal -->
+<div id="file-upload-modal"
+    class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="glass-strong rounded-2xl p-6 max-w-md w-full">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-white">Upload File</h3>
+            <button id="close-upload-modal" class="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-white/10">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
+        </div>
+
+        <div id="drop-zone"
+            class="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-blue-400 transition-colors">
+            <svg class="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
+                </path>
+            </svg>
+            <p class="text-gray-300 mb-2">Drop files here or click to browse</p>
+            <p class="text-sm text-gray-500">Supports: Images, Documents, Code files</p>
+            <input type="file" id="file-input" class="hidden" multiple
+                accept=".txt,.md,.py,.js,.html,.css,.json,.pdf,.png,.jpg,.jpeg,.gif">
+        </div>
+
+        <div id="file-preview" class="mt-4 hidden">
+            <h4 class="text-sm font-medium text-gray-300 mb-2">Selected Files:</h4>
+            <div id="file-list" class="space-y-2"></div>
+        </div>
+
+        <div class="flex gap-3 mt-6">
+            <button id="upload-files-btn" class="flex-1 btn-primary py-2 px-4 rounded-lg disabled:opacity-50" disabled>
+                Upload & Attach
+            </button>
+            <button id="cancel-upload-btn" class="px-4 py-2 text-gray-400 hover:text-white transition-colors">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Enhanced Message Styles */
+    .message-bubble-user,
+    .message-bubble-assistant {
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .message-bubble-user:hover,
+    .message-bubble-assistant:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Message Reactions */
+    .message-reactions {
+        display: flex;
+        gap: 0.25rem;
+        margin-top: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .reaction-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.25rem 0.5rem;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 1rem;
+        font-size: 0.75rem;
+        color: #e5e7eb;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .reaction-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.05);
+    }
+
+    .reaction-btn.active {
+        background: rgba(59, 130, 246, 0.3);
+        border-color: rgba(59, 130, 246, 0.5);
+    }
+
+    /* Code Syntax Highlighting */
+    .code-block {
+        position: relative;
+        margin: 1rem 0;
+    }
+
+    .code-header {
+        display: flex;
+        justify-content: between;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem 0.5rem 0 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .code-language {
+        font-size: 0.75rem;
+        color: #9ca3af;
+        font-weight: 500;
+    }
+
+    .copy-code-btn {
+        padding: 0.25rem 0.5rem;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 0.25rem;
+        color: #e5e7eb;
+        font-size: 0.75rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .copy-code-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* File Attachment Styles */
+    .file-attachment {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 0.5rem;
+        margin: 0.5rem 0;
+    }
+
+    .file-icon {
+        width: 2rem;
+        height: 2rem;
+        background: rgba(59, 130, 246, 0.2);
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .file-info h4 {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #e5e7eb;
+        margin: 0;
+    }
+
+    .file-info p {
+        font-size: 0.75rem;
+        color: #9ca3af;
+        margin: 0;
+    }
+
+    /* Mobile-First Chat Styles */
+    .chat-session {
+        padding: 0.75rem;
+        border-radius: 0.75rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+        background: rgba(255, 255, 255, 0.03);
+        touch-action: manipulation;
+    }
+
+    .chat-session:hover,
+    .chat-session:active {
+        border-color: rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateX(2px);
+    }
+
+    .chat-session.active {
+        border-color: rgba(59, 130, 246, 0.5);
+        background: rgba(59, 130, 246, 0.1);
+    }
+
+    /* Mobile Optimizations */
+    @media (max-width: 768px) {
+
+        /* Hide scrollbars on mobile */
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Mobile sidebar optimizations */
+        #chat-sidebar {
+            width: 85vw;
+            max-width: 320px;
+        }
+
+        /* Mobile header adjustments */
+        .glass {
+            padding: 1rem !important;
+        }
+
+        /* Mobile message area */
+        #messages-container {
+            padding: 1rem !important;
+            padding-bottom: 2rem !important;
+        }
+
+        /* Mobile input area */
+        #input-area {
+            padding: 1rem !important;
+            padding-bottom: calc(1rem + env(safe-area-inset-bottom)) !important;
+        }
+
+        /* Mobile message bubbles */
+        .message-bubble-user,
+        .message-bubble-assistant {
+            max-width: 85%;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        /* Mobile quick actions */
+        .quick-action-btn {
+            font-size: 0.8rem;
+            padding: 0.5rem 0.75rem;
+            min-width: auto;
+        }
+
+        /* Mobile suggestion buttons */
+        .suggestion-btn {
+            padding: 1rem !important;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Mobile welcome message */
+        #welcome-message {
+            margin-top: 2rem !important;
+            padding: 0 1rem;
+        }
+
+        #welcome-message h2 {
+            font-size: 1.75rem;
+        }
+
+        #welcome-message p {
+            font-size: 1rem;
+        }
+
+        /* Mobile status bar */
+        .flex.items-center.justify-between.mt-4 {
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: flex-start;
+        }
+
+        .flex.items-center.justify-between.mt-4>div:last-child {
+            display: none;
+            /* Hide keyboard shortcuts on mobile */
+        }
+
+        /* Touch-friendly buttons */
+        button,
+        .btn {
+            min-height: 44px;
+            touch-action: manipulation;
+        }
+
+        /* Mobile textarea */
+        #message-input {
+            font-size: 16px;
+            /* Prevent zoom on iOS */
+            padding: 1rem 4rem 1rem 1.5rem !important;
+            min-height: 50px;
+        }
+
+        /* Mobile send button */
+        #send-btn {
+            padding: 0.75rem !important;
+            min-width: 50px;
+            min-height: 50px;
+        }
+
+        /* Mobile voice controls */
+        #voice-input-btn,
+        #voice-output-btn {
+            padding: 0.5rem !important;
+        }
+
+        /* Mobile scroll to bottom button */
+        #scroll-to-bottom {
+            bottom: 6rem;
+            right: 1rem;
+            padding: 0.75rem;
+        }
+    }
+
+    /* Small mobile phones */
+    @media (max-width: 480px) {
+        #chat-sidebar {
+            width: 90vw;
+            max-width: 280px;
+        }
+
+        .suggestion-btn .grid {
+            grid-template-columns: 1fr !important;
+            gap: 0.5rem;
+        }
+
+        #welcome-message h2 {
+            font-size: 1.5rem;
+        }
+
+        .quick-action-btn span {
+            display: none;
+        }
+
+        .quick-action-btn {
+            padding: 0.5rem;
+            min-width: 40px;
+        }
+
+        /* Compact header on small screens */
+        #chat-title {
+            font-size: 1.25rem !important;
+        }
+
+        /* Hide breadcrumb on very small screens */
+        nav.text-sm {
+            display: none;
+        }
+    }
+
+    /* Landscape mobile */
+    @media (max-height: 500px) and (orientation: landscape) {
+        #welcome-message {
+            margin-top: 1rem !important;
+        }
+
+        #welcome-message h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .suggestion-btn {
+            padding: 0.75rem !important;
+        }
+
+        #messages-container {
+            padding: 0.5rem !important;
+        }
+    }
+
+    /* Touch improvements */
+    @media (hover: none) and (pointer: coarse) {
+        .chat-session:hover {
+            transform: none;
+        }
+
+        .chat-session:active {
+            transform: scale(0.98);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        button:active,
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Larger touch targets */
+        .filter-btn {
+            min-height: 36px;
+            padding: 0.5rem 1rem;
+        }
+
+        /* Better tap highlighting */
+        * {
+            -webkit-tap-highlight-color: rgba(59, 130, 246, 0.2);
+        }
+    }
+
+    /* iOS specific fixes */
+    @supports (-webkit-touch-callout: none) {
+        #input-area {
+            padding-bottom: calc(1rem + env(safe-area-inset-bottom, 20px)) !important;
+        }
+
+        #message-input {
+            border-radius: 1rem;
+            /* Prevent iOS zoom */
+        }
+    }
+
+    /* Android specific fixes */
+    @media screen and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: .001dpcm) {
+        #message-input {
+            font-size: 16px;
+        }
+    }
+
+    /* Message bubble styles */
+    .message-user {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+    }
+
+    .message-assistant {
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: 1rem;
+    }
+
+    .message-bubble-user {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.75rem 1rem;
+        border-radius: 1.25rem 1.25rem 0.25rem 1.25rem;
+        max-width: 70%;
+        word-wrap: break-word;
+        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    }
+
+    .message-bubble-assistant {
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #e5e7eb;
+        padding: 0.75rem 1rem;
+        border-radius: 1.25rem 1.25rem 1.25rem 0.25rem;
+        max-width: 70%;
+        word-wrap: break-word;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Enhanced animations for mobile */
+    @keyframes slideInFromRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideInFromLeft {
+        from {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .message-user {
+        animation: slideInFromRight 0.3s ease-out;
+    }
+
+    .message-assistant {
+        animation: slideInFromLeft 0.3s ease-out;
+    }
+
+    .message-user {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 1.5rem;
+    }
+
+    .message-assistant {
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: 1.5rem;
+    }
+
+    .message-bubble-user {
+        max-width: 28rem;
+        padding: 1rem 1.5rem;
+        border-radius: 1.5rem;
+        border-bottom-right-radius: 0.5rem;
+        color: white;
+        font-weight: 500;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+    }
+
+    .message-bubble-assistant {
+        max-width: 28rem;
+        padding: 1rem 1.5rem;
+        border-radius: 1.5rem;
+        border-bottom-left-radius: 0.5rem;
+        color: white;
+        background: rgba(182, 128, 96, 0.411);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(238, 176, 176, 0.575);
+    }
+
+    /* Auto-resize textarea */
+    #message-input {
+        field-sizing: content;
+    }
+</style>
+let currentSessionId = null;
+let recognition = null;
+let isListening = false;
+let voiceOutputEnabled = true;
+let speechSynthesis = window.speechSynthesis;
+
+// Load chat sessions on page load
+document.addEventListener('DOMContentLoaded', function() {
+loadChatSessions();
+initializeVoiceFeatures();
+});
+
+// Initialize voice features
+function initializeVoiceFeatures() {
+// Check if browser supports speech recognition
+if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+recognition = new SpeechRecognition();
+
+recognition.continuous = false;
+recognition.interimResults = false;
+recognition.lang = 'en-US';
+
+recognition.onstart = function() {
+isListening = true;
+updateVoiceInputButton();
+};
+
+recognition.onresult = function(event) {
+const transcript = event.results[0][0].transcript;
+const messageInput = document.getElementById('message-input');
+messageInput.value = transcript;
+messageInput.dispatchEvent(new Event('input'));
+};
+
+recognition.onend = function() {
+isListening = false;
+updateVoiceInputButton();
+};
+
+recognition.onerror = function(event) {
+console.error('Speech recognition error:', event.error);
+isListening = false;
+updateVoiceInputButton();
+showVoiceError(event.error);
+};
+} else {
+// Hide voice input button if not supported
+document.getElementById('voice-input-btn').style.display = 'none';
+}
+
+// Voice input button event listener
+document.getElementById('voice-input-btn').addEventListener('click', toggleVoiceInput);
+
+// Voice output button event listener
+document.getElementById('voice-output-btn').addEventListener('click', toggleVoiceOutput);
+
+// Update voice output button state
+updateVoiceOutputButton();
+}
+
+function toggleVoiceInput() {
+if (!recognition) return;
+
+if (isListening) {
+recognition.stop();
+} else {
+recognition.start();
+}
+}
+
+function updateVoiceInputButton() {
+const btn = document.getElementById('voice-input-btn');
+const icon = document.getElementById('voice-icon');
+
+if (isListening) {
+btn.classList.add('text-red-400', 'animate-pulse');
+btn.classList.remove('text-gray-400');
+btn.title = 'Stop Voice Input';
+icon.innerHTML = `
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+</path>
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+    d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"></path>
+`;
+} else {
+btn.classList.remove('text-red-400', 'animate-pulse');
+btn.classList.add('text-gray-400');
+btn.title = 'Voice Input';
+icon.innerHTML = `
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z">
+</path>
+`;
+}
+}
+
+function toggleVoiceOutput() {
+voiceOutputEnabled = !voiceOutputEnabled;
+updateVoiceOutputButton();
+
+// Stop any current speech
+if (!voiceOutputEnabled && speechSynthesis.speaking) {
+speechSynthesis.cancel();
+}
+}
+
+function updateVoiceOutputButton() {
+const btn = document.getElementById('voice-output-btn');
+
+if (voiceOutputEnabled) {
+btn.classList.remove('text-gray-400');
+btn.classList.add('text-green-400');
+btn.title = 'Voice Output: ON (Click to disable)';
+} else {
+btn.classList.remove('text-green-400');
+btn.classList.add('text-gray-400');
+btn.title = 'Voice Output: OFF (Click to enable)';
+}
+}
+
+function speakText(text) {
+if (!voiceOutputEnabled || !speechSynthesis) return;
+
+// Cancel any ongoing speech
+speechSynthesis.cancel();
+
+// Clean text for speech (remove markdown and HTML)
+const cleanText = text
+.replace(/```[\s\S]*?```/g, ' code block ')
+.replace(/`([^`]+)`/g, ' $1 ')
+.replace(/\*\*(.*?)\*\*/g, '$1')
+.replace(/<[^>]*>/g, '')
+    .replace(/\n/g, ' ')
+    .trim();
+
+    if (cleanText.length === 0) return;
+
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.rate = 0.9;
+    utterance.pitch = 1;
+    utterance.volume = 0.8;
+
+    // Try to use a more natural voice if available
+    const voices = speechSynthesis.getVoices();
+    const preferredVoice = voices.find(voice =>
+    voice.lang.startsWith('en') &&
+    (voice.name.includes('Google') || voice.name.includes('Microsoft'))
+    ) || voices.find(voice => voice.lang.startsWith('en'));
+
+    if (preferredVoice) {
+    utterance.voice = preferredVoice;
+    }
+
+    speechSynthesis.speak(utterance);
+    }
+
+    function showVoiceError(error) {
+    let message = 'Voice input error occurred.';
+
+    switch(error) {
+    case 'no-speech':
+    message = 'No speech detected. Please try again.';
+    break;
+    case 'audio-capture':
+    message = 'Microphone access denied or not available.';
+    break;
+    case 'not-allowed':
+    message = 'Microphone permission denied. Please allow microphone access.';
+    break;
+    case 'network':
+    message = 'Network error during voice recognition.';
+    break;
+    }
+
+    // Show error message briefly
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'fixed top-4 right-4 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg z-50';
+    errorDiv.textContent = message;
+    document.body.appendChild(errorDiv);
+
+    setTimeout(() => {
+    errorDiv.remove();
+    }, 3000);
+    }
+
+    // New chat button
+    document.getElementById('new-chat-btn').addEventListener('click', createNewChat);
+
+    // Send message
+    document.getElementById('send-btn').addEventListener('click', sendMessage);
+
+    // Handle input events
+    const messageInput = document.getElementById('message-input');
+    const sendBtn = document.getElementById('send-btn');
+    const charCount = document.getElementById('char-count');
+
+    messageInput.addEventListener('input', function() {
+    const value = this.value.trim();
+    sendBtn.disabled = !value;
+    charCount.textContent = this.value.length;
+
+    // Auto-resize textarea
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 128) + 'px';
+    });
+
+    // Handle Enter key for sending messages
+    messageInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
+
+    async function loadChatSessions() {
+    try {
+    const response = await fetch('/api/chat/sessions');
+    const sessions = await response.json();
+
+    const container = document.getElementById('chat-sessions');
+    container.innerHTML = '';
+
+    sessions.forEach(session => {
+    const sessionElement = document.createElement('div');
+    sessionElement.className = 'chat-session';
+    sessionElement.innerHTML = `
+    <div class="font-medium text-white text-sm truncate mb-1">${session.title}</div>
+    <div class="text-xs text-gray-400">${formatDate(session.created_at)}</div>
+    `;
+    sessionElement.addEventListener('click', () => selectSession(session.id, session.title));
+    container.appendChild(sessionElement);
+    });
+    } catch (error) {
+    console.error('Error loading chat sessions:', error);
+    }
+    }
+
+    async function createNewChat() {
+    try {
+    const response = await fetch('/api/chat/sessions', {
+    method: 'POST',
+    headers: {
+    'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ title: 'New Chat' })
+    });
+
+    const session = await response.json();
+    await loadChatSessions();
+    selectSession(session.session_id, session.title);
+    } catch (error) {
+    console.error('Error creating new chat:', error);
+    }
+    }
+
+    async function selectSession(sessionId, title) {
+    currentSessionId = sessionId;
+    document.getElementById('chat-title').textContent = title;
+    document.getElementById('welcome-message').style.display = 'none';
+    document.getElementById('input-area').classList.remove('hidden');
+
+    // Highlight selected session
+    document.querySelectorAll('#chat-sessions > div').forEach(el => {
+    el.classList.remove('border-blue-500', 'bg-blue-50', 'dark:bg-blue-900');
+    });
+
+    // Load messages
+    await loadMessages(sessionId);
+    }
+
+    async function loadMessages(sessionId) {
+    try {
+    const response = await fetch(`/api/chat/${sessionId}/messages`);
+    const messages = await response.json();
+
+    const container = document.getElementById('messages-container');
+    container.innerHTML = '';
+
+    messages.forEach(message => {
+    addMessageToUI(message.role, message.content);
+    });
+
+    scrollToBottom();
+    } catch (error) {
+    console.error('Error loading messages:', error);
+    }
+    }
+
+    async function sendMessage() {
+    const input = document.getElementById('message-input');
+    const message = input.value.trim();
+
+    if (!message || !currentSessionId) return;
+
+    // Add user message to UI
+    addMessageToUI('user', message);
+    input.value = '';
+
+    // Reset input height
+    input.style.height = 'auto';
+
+    // Disable send button and show typing indicator
+    const sendBtn = document.getElementById('send-btn');
+    sendBtn.disabled = true;
+
+    // Add typing indicator
+    const typingId = addTypingIndicator();
+
+    try {
+    const response = await fetch(`/api/chat/${currentSessionId}/messages`, {
+    method: 'POST',
+    headers: {
+    'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ message })
+    });
+
+    if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    // Remove typing indicator
+    removeTypingIndicator(typingId);
+
+    // Check if we got a valid response
+    if (result.response && result.response.trim()) {
+    addMessageToUI('assistant', result.response);
+    // Speak the AI response if voice output is enabled
+    speakText(result.response);
+    } else {
+    const fallbackMessage = 'I apologize, but I had trouble generating a response. Could you try rephrasing your
+    question?';
+    addMessageToUI('assistant', fallbackMessage);
+    speakText(fallbackMessage);
+    }
+
+    } catch (error) {
+    console.error('Error sending message:', error);
+    removeTypingIndicator(typingId);
+    addMessageToUI('assistant', 'Sorry, I encountered a connection error. Please check your internet connection
+    and
+    try again.');
+    } finally {
+    sendBtn.disabled = false;
+    scrollToBottom();
+    }
+    }
+
+    function addTypingIndicator() {
+    const container = document.getElementById('messages-container');
+    const typingDiv = document.createElement('div');
+    const typingId = 'typing-' + Date.now();
+    typingDiv.id = typingId;
+    typingDiv.className = 'message-assistant';
+    typingDiv.innerHTML = `
+    <div class="flex items-start gap-3">
+        <div
+            class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+            <svg class="w-4 h-4 text-white animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                </path>
+            </svg>
+        </div>
+        <div class="message-bubble-assistant">
+            <div class="flex items-center gap-1">
+                <div class="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
+                <div class="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.1s">
+                </div>
+                <div class="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.2s">
+                </div>
+                <span class="ml-2 text-gray-400 text-sm">AI is thinking...</span>
+            </div>
+        </div>
+    </div>
+    `;
+
+    container.appendChild(typingDiv);
+    scrollToBottom();
+    return typingId;
+    }
+
+    function removeTypingIndicator(typingId) {
+    const typingElement = document.getElementById(typingId);
+    if (typingElement) {
+    typingElement.remove();
+    }
+    }
+
+    function addMessageToUI(role, content) {
+    const container = document.getElementById('messages-container');
+    const messageDiv = document.createElement('div');
+
+    if (role === 'user') {
+    messageDiv.className = 'message-user';
+    messageDiv.innerHTML = `
+    <div class="message-bubble-user">
+        ${formatMessage(content)}
+    </div>
+    `;
+    } else {
+    messageDiv.className = 'message-assistant';
+    messageDiv.innerHTML = `
+    <div class="flex items-start gap-3">
+        <div
+            class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                </path>
+            </svg>
+        </div>
+        <div class="message-bubble-assistant">
+            ${formatMessage(content)}
+        </div>
+    </div>
+    `;
+    }
+
+    container.appendChild(messageDiv);
+    }
+
+    function formatMessage(content) {
+    // Handle code blocks
+    content = content.replace(/```(\w+)?\n([\s\S]*?)```/g, '
+    <pre class="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto my-2"><code>$2</code></pre>');
+
+    // Handle inline code
+    content = content.replace(/`([^`]+)`/g, '<code
+        class="bg-gray-700 text-cyan-300 px-2 py-1 rounded text-sm">$1</code>');
+
+    // Handle line breaks
+    content = content.replace(/\n/g, '<br>');
+
+    // Handle bold text
+    content = content.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>');
+
+    return content;
+    }
+
+    function scrollToBottom() {
+    const container = document.getElementById('messages-container');
+    container.scrollTop = container.scrollHeight;
+    }
+
+    function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+    }
+
+    // Enhanced Mobile sidebar functionality
+    function toggleMobileSidebar() {
+    const sidebar = document.getElementById('chat-sidebar');
+    const overlay = document.getElementById('mobile-sidebar-overlay');
+
+    if (sidebar && overlay) {
+    sidebar.classList.toggle('-translate-x-full');
+    overlay.classList.toggle('hidden');
+
+    // Prevent body scroll when sidebar is open on mobile
+    if (!overlay.classList.contains('hidden')) {
+    document.body.style.overflow = 'hidden';
+    } else {
+    document.body.style.overflow = '';
+    }
+    }
+    }
+
+    // Mobile-specific touch handling
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let isSwiping = false;
+
+    function handleTouchStart(e) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    isSwiping = false;
+    }
+
+    function handleTouchMove(e) {
+    if (!touchStartX || !touchStartY) return;
+
+    const touchEndX = e.touches[0].clientX;
+    const touchEndY = e.touches[0].clientY;
+    const diffX = touchStartX - touchEndX;
+    const diffY = touchStartY - touchEndY;
+
+    // Check if horizontal swipe is more significant than vertical
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+    isSwiping = true;
+
+    // Swipe right to open sidebar (from left edge)
+    if (diffX < -50 && touchStartX < 50) { const sidebar=document.getElementById('chat-sidebar'); const
+        overlay=document.getElementById('mobile-sidebar-overlay'); if (sidebar && overlay &&
+        sidebar.classList.contains('-translate-x-full')) { toggleMobileSidebar(); } } // Swipe left to close sidebar if
+        (diffX> 50) {
+        const sidebar = document.getElementById('chat-sidebar');
+        const overlay = document.getElementById('mobile-sidebar-overlay');
+        if (sidebar && overlay && !sidebar.classList.contains('-translate-x-full')) {
+        toggleMobileSidebar();
+        }
+        }
+        }
+        }
+
+        function handleTouchEnd() {
+        touchStartX = 0;
+        touchStartY = 0;
+        isSwiping = false;
+        }
+
+        // Auto-resize textarea
+        function autoResizeTextarea(textarea) {
+        textarea.style.height = 'auto';
+        textarea.style.height = Math.min(textarea.scrollHeight, 128) + 'px';
+        }
+
+        // Update character count
+        function updateCharCount() {
+        const messageInput = document.getElementById('message-input');
+        const charCount = document.getElementById('char-count');
+        if (charCount) {
+        charCount.textContent = messageInput.value.length;
+        }
+        }
+
+        // Update send button state
+        function updateSendButton() {
+        const messageInput = document.getElementById('message-input');
+        const sendBtn = document.getElementById('send-btn');
+        sendBtn.disabled = !messageInput.value.trim();
+        }
+
+        // Enhanced DOMContentLoaded with mobile support
+        document.addEventListener('DOMContentLoaded', function() {
+        loadChatSessions();
+
+        // Setup mobile touch events
+        if (window.innerWidth <= 768) { document.addEventListener('touchstart', handleTouchStart, { passive: true });
+            document.addEventListener('touchmove', handleTouchMove, { passive: false });
+            document.addEventListener('touchend', handleTouchEnd, { passive: true }); } // Setup textarea auto-resize
+            and functionality const messageInput=document.getElementById('message-input'); if (messageInput) {
+            messageInput.addEventListener('input', function() { autoResizeTextarea(this); updateCharCount();
+            updateSendButton(); }); // Mobile-specific input
+            handling messageInput.addEventListener('focus', function() { // Scroll to input on mobile when focused if
+            (window.innerWidth <=768) { setTimeout(()=> {
+            this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+            }
+            });
+            }
+
+            // Setup suggestion buttons
+            document.querySelectorAll('.suggestion-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+            const suggestion = this.dataset.suggestion;
+            if (messageInput) {
+            messageInput.value = suggestion;
+            autoResizeTextarea(messageInput);
+            updateCharCount();
+            updateSendButton();
+            messageInput.focus();
+
+            // Hide welcome message and show input area
+            document.getElementById('welcome-message').style.display = 'none';
+            document.getElementById('input-area').classList.remove('hidden');
+            }
+            });
+            });
+
+            // Setup quick action buttons
+            document.querySelectorAll('.quick-action-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+            const action = this.dataset.action;
+            if (messageInput) {
+            messageInput.value = action + ' ';
+            autoResizeTextarea(messageInput);
+            updateCharCount();
+            updateSendButton();
+            messageInput.focus();
+            }
+            });
+            });
+
+            // Close mobile sidebar when clicking outside
+            document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('chat-sidebar');
+            const overlay = document.getElementById('mobile-sidebar-overlay');
+            const menuBtn = document.getElementById('mobile-menu-btn');
+
+            if (sidebar && overlay && menuBtn &&
+            !sidebar.contains(event.target) &&
+            !menuBtn.contains(event.target) &&
+            !overlay.classList.contains('hidden')) {
+            toggleMobileSidebar();
+            }
+            });
+
+            // Handle window resize
+            window.addEventListener('resize', function() {
+            const sidebar = document.getElementById('chat-sidebar');
+            const overlay = document.getElementById('mobile-sidebar-overlay');
+
+            // Auto-close mobile sidebar on desktop
+            if (window.innerWidth >= 1024) {
+            if (sidebar) sidebar.classList.remove('-translate-x-full');
+            if (overlay) overlay.classList.add('hidden');
+            document.body.style.overflow = '';
+            }
+            });
+
+            // Mobile-specific optimizations
+            if (window.innerWidth <= 768) { // Prevent zoom on input focus (iOS) const
+                inputs=document.querySelectorAll('input, textarea'); inputs.forEach(input=> {
+                input.addEventListener('focus', function() {
+                document.querySelector('meta[name=viewport]').setAttribute('content',
+                'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+                });
+
+                input.addEventListener('blur', function() {
+                document.querySelector('meta[name=viewport]').setAttribute('content',
+                'width=device-width, initial-scale=1.0');
+                });
+                });
+
+                // Mobile scroll optimization
+                let isScrolling = false;
+                const messagesContainer = document.getElementById('messages-container');
+                if (messagesContainer) {
+                messagesContainer.addEventListener('scroll', function() {
+                if (!isScrolling) {
+                window.requestAnimationFrame(function() {
+                // Show/hide scroll to bottom button
+                const scrollBtn = document.getElementById('scroll-to-bottom');
+                if (scrollBtn) {
+                const isNearBottom = messagesContainer.scrollTop + messagesContainer.clientHeight >=
+                messagesContainer.scrollHeight - 100;
+                if (isNearBottom) {
+                scrollBtn.style.opacity = '0';
+                scrollBtn.style.pointerEvents = 'none';
+                } else {
+                scrollBtn.style.opacity = '1';
+                scrollBtn.style.pointerEvents = 'auto';
+                }
+                }
+                isScrolling = false;
+                });
+                }
+                isScrolling = true;
+                });
+                }
+
+                // Mobile keyboard handling
+                let initialViewportHeight = window.innerHeight;
+                window.addEventListener('resize', function() {
+                const currentHeight = window.innerHeight;
+                const heightDifference = initialViewportHeight - currentHeight;
+
+                // Keyboard is likely open if height decreased significantly
+                if (heightDifference > 150) {
+                document.body.classList.add('keyboard-open');
+                // Adjust input area position
+                const inputArea = document.getElementById('input-area');
+                if (inputArea) {
+                inputArea.style.paddingBottom = '1rem';
+                }
+                } else {
+                document.body.classList.remove('keyboard-open');
+                const inputArea = document.getElementById('input-area');
+                if (inputArea) {
+                inputArea.style.paddingBottom = '';
+                }
+                }
+                });
+                }
+
+                // Enhanced scroll to bottom functionality
+                const scrollToBottomBtn = document.getElementById('scroll-to-bottom');
+                if (scrollToBottomBtn) {
+                scrollToBottomBtn.addEventListener('click', function() {
+                const messagesContainer = document.getElementById('messages-container');
+                if (messagesContainer) {
+                messagesContainer.scrollTo({
+                top: messagesContainer.scrollHeight,
+                behavior: 'smooth'
+                });
+                }
+                });
+                }
+
+                // Mobile-optimized message actions
+                let messageActionsTimeout;
+                document.addEventListener('click', function(e) {
+                const messageActions = document.getElementById('message-actions');
+                if (messageActions && !messageActions.contains(e.target)) {
+                messageActions.classList.add('hidden');
+                }
+                });
+
+                // Long press for mobile message actions
+                let longPressTimer;
+                document.addEventListener('touchstart', function(e) {
+                if (e.target.closest('.message-bubble-user') || e.target.closest('.message-bubble-assistant')) {
+                longPressTimer = setTimeout(function() {
+                showMessageActions(e.target, e.touches[0].clientX, e.touches[0].clientY);
+                }, 500);
+                }
+                });
+
+                document.addEventListener('touchend', function() {
+                clearTimeout(longPressTimer);
+                });
+
+                document.addEventListener('touchmove', function() {
+                clearTimeout(longPressTimer);
+                });
+
+                function showMessageActions(element, x, y) {
+                const messageActions = document.getElementById('message-actions');
+                if (messageActions) {
+                messageActions.style.left = x + 'px';
+                messageActions.style.top = y + 'px';
+                messageActions.classList.remove('hidden');
+
+                // Vibrate on mobile if supported
+                if (navigator.vibrate) {
+                navigator.vibrate(50);
+                }
+                }
+                }
+                });
+
+                function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+                }
+
+                // Enhanced File Upload Functionality
+                let selectedFiles = [];
+
+                function initializeFileUpload() {
+                const attachBtn = document.getElementById('attach-btn');
+                const fileUploadModal = document.getElementById('file-upload-modal');
+                const closeUploadModal = document.getElementById('close-upload-modal');
+                const cancelUploadBtn = document.getElementById('cancel-upload-btn');
+                const dropZone = document.getElementById('drop-zone');
+                const fileInput = document.getElementById('file-input');
+                const uploadFilesBtn = document.getElementById('upload-files-btn');
+
+                // Open file upload modal
+                attachBtn?.addEventListener('click', () => {
+                fileUploadModal.classList.remove('hidden');
+                selectedFiles = [];
+                updateFilePreview();
+                });
+
+                // Close modal handlers
+                [closeUploadModal, cancelUploadBtn].forEach(btn => {
+                btn?.addEventListener('click', () => {
+                fileUploadModal.classList.add('hidden');
+                selectedFiles = [];
+                });
+                });
+
+                // Drag and drop functionality
+                dropZone?.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('border-blue-400');
+                });
+
+                dropZone?.addEventListener('dragleave', () => {
+                dropZone.classList.remove('border-blue-400');
+                });
+
+                dropZone?.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('border-blue-400');
+                handleFiles(e.dataTransfer.files);
+                });
+
+                // Click to browse
+                dropZone?.addEventListener('click', () => {
+                fileInput.click();
+                });
+
+                fileInput?.addEventListener('change', (e) => {
+                handleFiles(e.target.files);
+                });
+
+                // Upload files
+                uploadFilesBtn?.addEventListener('click', uploadFiles);
+                }
+
+                function handleFiles(files) {
+                selectedFiles = Array.from(files);
+                updateFilePreview();
+                }
+
+                function updateFilePreview() {
+                const filePreview = document.getElementById('file-preview');
+                const fileList = document.getElementById('file-list');
+                const uploadBtn = document.getElementById('upload-files-btn');
+
+                if (selectedFiles.length > 0) {
+                filePreview.classList.remove('hidden');
+                fileList.innerHTML = selectedFiles.map(file => `
+                <div class="flex items-center gap-3 p-2 bg-gray-700 rounded-lg">
+                    <div class="w-8 h-8 bg-blue-500/20 rounded flex items-center justify-center">
+                        <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-white text-sm font-medium">${file.name}</p>
+                        <p class="text-gray-400 text-xs">${formatFileSize(file.size)}</p>
+                    </div>
+                </div>
+                `).join('');
+                uploadBtn.disabled = false;
+                } else {
+                filePreview.classList.add('hidden');
+                uploadBtn.disabled = true;
+                }
+                }
+
+                function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+                }
+
+                async function uploadFiles() {
+                // Implementation for file upload would go here
+                // For now, just close the modal and show a success message
+                document.getElementById('file-upload-modal').classList.add('hidden');
+                showNotification('Files uploaded successfully!', 'success');
+                }
+
+                // Message Actions Functionality
+                function initializeMessageActions() {
+                const messageActions = document.getElementById('message-actions');
+                let currentMessage = null;
+
+                // Show message actions on hover (desktop)
+                document.addEventListener('mouseover', (e) => {
+                if (window.innerWidth <= 768) return; // Skip on mobile const
+                    messageBubble=e.target.closest('.message-bubble-user, .message-bubble-assistant'); if (messageBubble
+                    && !messageActions.classList.contains('hidden')) { return; // Already showing } if (messageBubble) {
+                    currentMessage=messageBubble; const rect=messageBubble.getBoundingClientRect();
+                    messageActions.style.left=`${rect.right - messageActions.offsetWidth}px`;
+                    messageActions.style.top=`${rect.top - 40}px`; messageActions.classList.remove('hidden'); } }); //
+                    Hide message actions when not hovering document.addEventListener('mouseleave', (e)=> {
+                    if (window.innerWidth <= 768) return; // Skip on mobile if
+                        (!e.relatedTarget?.closest('#message-actions') &&
+                        !e.relatedTarget?.closest('.message-bubble-user, .message-bubble-assistant')) {
+                        messageActions.classList.add('hidden'); } }); // Handle action clicks
+                        messageActions.addEventListener('click', (e)=> {
+                        const actionBtn = e.target.closest('.action-btn');
+                        if (!actionBtn || !currentMessage) return;
+
+                        const action = actionBtn.dataset.action;
+                        handleMessageAction(action, currentMessage);
+                        messageActions.classList.add('hidden');
+                        });
+                        }
+
+                        function handleMessageAction(action, messageElement) {
+                        const messageText = messageElement.textContent.trim();
+
+                        switch (action) {
+                        case 'copy':
+                        navigator.clipboard.writeText(messageText).then(() => {
+                        showNotification('Message copied to clipboard!', 'success');
+                        });
+                        break;
+
+                        case 'regenerate':
+                        if (messageElement.classList.contains('message-bubble-assistant')) {
+                        regenerateResponse(messageElement);
+                        }
+                        break;
+
+                        case 'edit':
+                        if (messageElement.classList.contains('message-bubble-user')) {
+                        editMessage(messageElement);
+                        }
+                        break;
+
+                        case 'share':
+                        shareMessage(messageText);
+                        break;
+                        }
+                        }
+
+                        function regenerateResponse(messageElement) {
+                        // Find the previous user message
+                        const messageContainer = messageElement.closest('.message-assistant');
+                        const prevUserMessage = messageContainer.previousElementSibling;
+
+                        if (prevUserMessage && prevUserMessage.classList.contains('message-user')) {
+                        const userText =
+                        prevUserMessage.querySelector('.message-bubble-user').textContent.trim();
+
+                        // Remove the current AI response
+                        messageContainer.remove();
+
+                        // Resend the user message
+                        sendMessageWithText(userText);
+                        }
+                        }
+
+                        function editMessage(messageElement) {
+                        const messageText = messageElement.textContent.trim();
+                        const messageInput = document.getElementById('message-input');
+
+                        messageInput.value = messageText;
+                        messageInput.focus();
+                        autoResizeTextarea(messageInput);
+                        updateCharCount();
+                        updateSendButton();
+                        }
+
+                        function shareMessage(messageText) {
+                        if (navigator.share) {
+                        navigator.share({
+                        title: 'CodeEx AI Conversation',
+                        text: messageText
+                        });
+                        } else {
+                        navigator.clipboard.writeText(messageText).then(() => {
+                        showNotification('Message copied for sharing!', 'success');
+                        });
+                        }
+                        }
+
+                        // Enhanced notification system
+                        function showNotification(message, type = 'info') {
+                        const notification = document.createElement('div');
+                        notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50
+                        transition-all duration-300 transform translate-x-full`;
+
+                        const colors = {
+                        success: 'bg-green-500 text-white',
+                        error: 'bg-red-500 text-white',
+                        info: 'bg-blue-500 text-white',
+                        warning: 'bg-yellow-500 text-black'
+                        };
+
+                        notification.className += ` ${colors[type] || colors.info}`;
+                        notification.textContent = message;
+
+                        document.body.appendChild(notification);
+
+                        // Animate in
+                        setTimeout(() => {
+                        notification.classList.remove('translate-x-full');
+                        }, 100);
+
+                        // Animate out and remove
+                        setTimeout(() => {
+                        notification.classList.add('translate-x-full');
+                        setTimeout(() => notification.remove(), 300);
+                        }, 3000);
+                        }
+
+                        function sendMessageWithText(text) {
+                        const messageInput = document.getElementById('message-input');
+                        messageInput.value = text;
+                        sendMessage();
+                        }
+
+                        // Initialize enhanced features
+                        document.addEventListener('DOMContentLoaded', function() {
+                        initializeFileUpload();
+                        initializeMessageActions();
+                        });
+
+                        </script>
+
+
+                        // PWA Chat Initialization
+                        function initializePWAChat() {
+                        // Listen for online/offline events
+                        window.addEventListener('online', handleOnlineStatus);
+                        window.addEventListener('offline', handleOfflineStatus);
+
+                        // Process any queued offline messages when online
+                        if (navigator.onLine) {
+                        processOfflineMessages();
+                        }
+
+                        // Listen for service worker messages
+                        if ('serviceWorker' in navigator) {
+                        navigator.serviceWorker.addEventListener('message', handleServiceWorkerMessage);
+                        }
+
+                        // Initialize connection status
+                        updateConnectionStatus(navigator.onLine);
+                        }
+
+                        function handleOnlineStatus() {
+                        console.log('📱 PWA: Back online');
+                        showPWANotification('Connection restored - syncing messages...', 'success');
+                        processOfflineMessages();
+                        updateConnectionStatus(true);
+                        }
+
+                        function handleOfflineStatus() {
+                        console.log('📱 PWA: Gone offline');
+                        showPWANotification('You\'re offline - messages will be queued', 'warning');
+                        updateConnectionStatus(false);
+                        }
+
+                        function updateConnectionStatus(isOnline) {
+                        // Add connection indicator to chat header
+                        let statusIndicator = document.getElementById('connection-status');
+
+                        if (!statusIndicator) {
+                        statusIndicator = document.createElement('div');
+                        statusIndicator.id = 'connection-status';
+                        statusIndicator.className = 'flex items-center gap-2 text-sm';
+
+                        const chatStatus = document.getElementById('chat-status');
+                        if (chatStatus) {
+                        chatStatus.appendChild(statusIndicator);
+                        chatStatus.classList.remove('hidden');
+                        }
+                        }
+
+                        if (isOnline) {
+                        statusIndicator.innerHTML = `
+                        <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+                        <span class="text-gray-400">Online</span>
+                        `;
+                        } else {
+                        statusIndicator.innerHTML = `
+                        <div class="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
+                        <span class="text-gray-400">Offline</span>
+                        `;
+                        }
+                        }
+
+                        function handleServiceWorkerMessage(event) {
+                        if (event.data && event.data.type === 'MESSAGE_SYNCED') {
+                        console.log('📱 PWA: Message synced by service worker');
+                        showPWANotification('Message sent successfully', 'success');
+
+                        if (currentSessionId === event.data.sessionId) {
+                        loadMessages(currentSessionId);
+                        }
+                        }
+                        }
+
+                        // PWA Offline Message Queue
+                        async function queueOfflineMessage(sessionId, message) {
+                        try {
+                        const offlineMessages = JSON.parse(localStorage.getItem('offlineMessages') || '[]');
+                        const messageData = {
+                        id: Date.now(),
+                        sessionId: sessionId,
+                        content: message,
+                        timestamp: new Date().toISOString(),
+                        synced: false
+                        };
+
+                        offlineMessages.push(messageData);
+                        localStorage.setItem('offlineMessages', JSON.stringify(offlineMessages));
+
+                        // Register background sync if available
+                        if ('serviceWorker' in navigator && 'sync' in window.ServiceWorkerRegistration.prototype) {
+                        const registration = await navigator.serviceWorker.ready;
+                        await registration.sync.register('send-message');
+                        console.log('📱 PWA: Background sync registered');
+                        }
+
+                        console.log('📱 PWA: Message queued for offline sync');
+                        } catch (error) {
+                        console.error('❌ PWA: Failed to queue offline message:', error);
+                        }
+                        }
+
+                        // Process offline messages when back online
+                        async function processOfflineMessages() {
+                        try {
+                        const offlineMessages = JSON.parse(localStorage.getItem('offlineMessages') || '[]');
+                        const unsynced = offlineMessages.filter(msg => !msg.synced);
+
+                        if (unsynced.length === 0) return;
+
+                        console.log(`📱 PWA: Processing ${unsynced.length} offline messages`);
+
+                        for (const message of unsynced) {
+                        try {
+                        const response = await fetch(`/api/chat/${message.sessionId}/messages`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: message.content })
+                        });
+
+                        if (response.ok) {
+                        message.synced = true;
+                        showPWANotification('Queued message sent', 'success');
+
+                        if (currentSessionId === message.sessionId) {
+                        await loadMessages(currentSessionId);
+                        }
+                        }
+                        } catch (error) {
+                        console.error('Failed to sync message:', error);
+                        }
+                        }
+
+                        localStorage.setItem('offlineMessages', JSON.stringify(offlineMessages));
+
+                        const remaining = offlineMessages.filter(msg => !msg.synced);
+                        localStorage.setItem('offlineMessages', JSON.stringify(remaining));
+
+                        } catch (error) {
+                        console.error('❌ PWA: Failed to process offline messages:', error);
+                        }
+                        }
+
+                        // Show PWA notification
+                        function showPWANotification(message, type = 'info') {
+                        const notification = document.createElement('div');
+                        notification.className = `fixed top-20 right-4 p-3 rounded-lg shadow-lg z-50 transition-all
+                        duration-300 transform translate-x-full max-w-sm`;
+
+                        const colors = {
+                        success: 'bg-green-600 text-white',
+                        error: 'bg-red-600 text-white',
+                        warning: 'bg-yellow-600 text-white',
+                        info: 'bg-blue-600 text-white'
+                        };
+
+                        notification.className += ` ${colors[type] || colors.info}`;
+
+                        const icons = {
+                        success: '✅',
+                        error: '❌',
+                        warning: '⚠️',
+                        info: 'ℹ️'
+                        };
+
+                        notification.innerHTML = `
+                        <div class="flex items-center gap-2">
+                            <span>${icons[type] || icons.info}</span>
+                            <span class="text-sm font-medium">${message}</span>
+                        </div>
+                        `;
+
+                        document.body.appendChild(notification);
+
+                        setTimeout(() => {
+                        notification.classList.remove('translate-x-full');
+                        }, 100);
+
+                        setTimeout(() => {
+                        notification.classList.add('translate-x-full');
+                        setTimeout(() => notification.remove(), 300);
+                        }, 3000);
+                        }
+
+                        // Override sendMessage for offline support
+                        let currentSessionId = null;
+                        let recognition = null;
+                        let isListening = false;
+                        let voiceOutputEnabled = true;
+                        let speechSynthesis = window.speechSynthesis;
+
+                        // Load chat sessions on page load
+                        // Override sendMessage for offline support
+                        loadChatSessions();
+                        initializeVoiceFeatures();
+                        });
+
+                        // Initialize voice features
+                        function initializeVoiceFeatures() {
+                        // Check if browser supports speech recognition
+                        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                        recognition = new SpeechRecognition();
+
+                        recognition.continuous = false;
+                        recognition.interimResults = false;
+                        recognition.lang = 'en-US';
+
+                        recognition.onstart = function() {
+                        isListening = true;
+                        updateVoiceInputButton();
+                        };
+
+                        recognition.onresult = function(event) {
+                        const transcript = event.results[0][0].transcript;
+                        const messageInput = document.getElementById('message-input');
+                        messageInput.value = transcript;
+                        messageInput.dispatchEvent(new Event('input'));
+                        };
+
+                        recognition.onend = function() {
+                        isListening = false;
+                        updateVoiceInputButton();
+                        };
+
+                        recognition.onerror = function(event) {
+                        console.error('Speech recognition error:', event.error);
+                        isListening = false;
+                        updateVoiceInputButton();
+                        showVoiceError(event.error);
+                        };
+                        } else {
+                        // Hide voice input button if not supported
+                        document.getElementById('voice-input-btn').style.display = 'none';
+                        }
+
+                        // Voice input button event listener
+                        document.getElementById('voice-input-btn').addEventListener('click', toggleVoiceInput);
+
+                        // Voice output button event listener
+                        document.getElementById('voice-output-btn').addEventListener('click', toggleVoiceOutput);
+
+                        // Update voice output button state
+                        updateVoiceOutputButton();
+                        }
+
+                        function toggleVoiceInput() {
+                        if (!recognition) return;
+
+                        if (isListening) {
+                        recognition.stop();
+                        } else {
+                        recognition.start();
+                        }
+                        }
+
+                        function updateVoiceInputButton() {
+                        const btn = document.getElementById('voice-input-btn');
+                        const icon = document.getElementById('voice-icon');
+
+                        if (isListening) {
+                        btn.classList.add('text-red-400', 'animate-pulse');
+                        btn.classList.remove('text-gray-400');
+                        btn.title = 'Stop Voice Input';
+                        icon.innerHTML = `
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                        </path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"></path>
+                        `;
+                        } else {
+                        btn.classList.remove('text-red-400', 'animate-pulse');
+                        btn.classList.add('text-gray-400');
+                        btn.title = 'Voice Input';
+                        icon.innerHTML = `
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z">
+                        </path>
+                        `;
+                        }
+                        }
+
+                        function toggleVoiceOutput() {
+                        voiceOutputEnabled = !voiceOutputEnabled;
+                        updateVoiceOutputButton();
+
+                        // Stop any current speech
+                        if (!voiceOutputEnabled && speechSynthesis.speaking) {
+                        speechSynthesis.cancel();
+                        }
+                        }
+
+                        function updateVoiceOutputButton() {
+                        const btn = document.getElementById('voice-output-btn');
+
+                        if (voiceOutputEnabled) {
+                        btn.classList.remove('text-gray-400');
+                        btn.classList.add('text-green-400');
+                        btn.title = 'Voice Output: ON (Click to disable)';
+                        } else {
+                        btn.classList.remove('text-green-400');
+                        btn.classList.add('text-gray-400');
+                        btn.title = 'Voice Output: OFF (Click to enable)';
+                        }
+                        }
+
+                        function speakText(text) {
+                        if (!voiceOutputEnabled || !speechSynthesis) return;
+
+                        // Cancel any ongoing speech
+                        speechSynthesis.cancel();
+
+                        // Clean text for speech (remove markdown and HTML)
+                        const cleanText = text
+                        .replace(/```[\s\S]*?```/g, ' code block ')
+                        .replace(/`([^`]+)`/g, ' $1 ')
+                        .replace(/\*\*(.*?)\*\*/g, '$1')
+                        .replace(/<[^>]*>/g, '')
+                            .replace(/\n/g, ' ')
+                            .trim();
+
+                            if (cleanText.length === 0) return;
+
+                            const utterance = new SpeechSynthesisUtterance(cleanText);
+                            utterance.rate = 0.9;
+                            utterance.pitch = 1;
+                            utterance.volume = 0.8;
+
+                            // Try to use a more natural voice if available
+                            const voices = speechSynthesis.getVoices();
+                            const preferredVoice = voices.find(voice =>
+                            voice.lang.startsWith('en') &&
+                            (voice.name.includes('Google') || voice.name.includes('Microsoft'))
+                            ) || voices.find(voice => voice.lang.startsWith('en'));
+
+                            if (preferredVoice) {
+                            utterance.voice = preferredVoice;
+                            }
+
+                            speechSynthesis.speak(utterance);
+                            }
+
+                            function showVoiceError(error) {
+                            let message = 'Voice input error occurred.';
+
+                            switch(error) {
+                            case 'no-speech':
+                            message = 'No speech detected. Please try again.';
+                            break;
+                            case 'audio-capture':
+                            message = 'Microphone access denied or not available.';
+                            break;
+                            case 'not-allowed':
+                            message = 'Microphone permission denied. Please allow microphone access.';
+                            break;
+                            case 'network':
+                            message = 'Network error during voice recognition.';
+                            break;
+                            }
+
+                            // Show error message briefly
+                            const errorDiv = document.createElement('div');
+                            errorDiv.className = 'fixed top-4 right-4 bg-red-500 text-white px-4 py-2 rounded-lg
+                            shadow-lg z-50

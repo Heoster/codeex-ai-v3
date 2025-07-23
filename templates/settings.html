@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - CodeEx AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Settings</h1>
+            <nav>
+                <a href="/chat">Chat</a>
+                <a href="/storage">Storage</a>
+                <a href="/ai-brain-dashboard">AI Dashboard</a>
+                <a href="/logout">Logout</a>
+            </nav>
+        </header>
+        
+        <main>
+            <section>
+                <h2>Account Settings</h2>
+                <div class="settings-group">
+                    <label>Email:</label>
+                    <span>{{ user.email }}</span>
+                </div>
+                <div class="settings-group">
+                    <label>Display Name:</label>
+                    <span>{{ user.display_name }}</span>
+                </div>
+            </section>
+            
+            <section>
+                <h2>AI Preferences</h2>
+                <div class="settings-group">
+                    <label for="preferred-provider">Preferred AI Provider:</label>
+                    <select id="preferred-provider">
+                        <option value="auto">Auto-select</option>
+                        <option value="openai">OpenAI GPT</option>
+                        <option value="gemini">Google Gemini</option>
+                        <option value="local">Local AI</option>
+                    </select>
+                </div>
+                <div class="settings-group">
+                    <label>
+                        <input type="checkbox" id="enable-learning" checked>
+                        Enable AI Learning
+                    </label>
+                </div>
+            </section>
+            
+            <section>
+                <h2>Privacy Settings</h2>
+                <div class="settings-group">
+                    <label>
+                        <input type="checkbox" id="encrypt-messages" checked>
+                        Encrypt Chat Messages
+                    </label>
+                </div>
+                <div class="settings-group">
+                    <label for="retention-days">Message Retention (days):</label>
+                    <select id="retention-days">
+                        <option value="30">30 days</option>
+                        <option value="90" selected>90 days</option>
+                        <option value="365">1 year</option>
+                        <option value="-1">Forever</option>
+                    </select>
+                </div>
+            </section>
+            
+            <section>
+                <h2>Data Management</h2>
+                <div class="settings-actions">
+                    <button onclick="exportData()">Export My Data</button>
+                    <button onclick="clearHistory()">Clear Chat History</button>
+                    <button onclick="optimizeStorage()">Optimize Storage</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script>
+        function exportData() {
+            window.location.href = '/api/export/data';
+        }
+        
+        function clearHistory() {
+            if (confirm('Are you sure you want to clear all chat history? This cannot be undone.')) {
+                fetch('/api/storage/cleanup', { method: 'POST' })
+                    .then(response => response.json())
+                    .then(data => alert(data.message || 'History cleared'));
+            }
+        }
+        
+        function optimizeStorage() {
+            fetch('/api/ai/optimize', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => alert(data.message || 'Storage optimized'));
+        }
+    </script>
+</body>
+</html>

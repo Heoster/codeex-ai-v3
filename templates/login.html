@@ -1,0 +1,411 @@
+{% extends "base.html" %}
+
+{% block title %}Login - CodeEx AI{% endblock %}
+
+{% block content %}
+<div class="flex min-h-screen relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-accent-secondary/5 pointer-events-none"></div>
+    <div class="m-auto w-full max-w-lg p-6 relative z-10">
+        <div class="text-center mb-10 animate-fade-in">
+            <div class="w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl">
+                <img src="{{ url_for('static', filename='images/codeex-logo.svg') }}" alt="CodeEx AI Logo"
+                    class="w-20 h-20 rounded-3xl">
+            </div>
+            <h1 class="text-3xl font-bold gradient-text mb-2">CodeEx AI</h1>
+            <p class="text-secondary text-lg">Your Next-Generation AI Assistant</p>
+        </div>
+
+        <div class="card shadow-2xl animate-slide-up">
+            <div class="flex mb-8 bg-dark-800/50 rounded-xl p-1">
+                <button id="signin-tab"
+                    class="flex-1 py-3 text-center font-semibold rounded-lg transition-all duration-300 bg-primary-500 text-white shadow-lg">Sign
+                    In</button>
+                <button id="signup-tab"
+                    class="flex-1 py-3 text-center font-semibold rounded-lg transition-all duration-300 text-secondary hover:text-white">Sign
+                    Up</button>
+            </div>
+
+            <form id="signin-form" class="space-y-6">
+                <div>
+                    <label for="email" class="block text-sm font-semibold text-white mb-2">Email Address</label>
+                    <input type="email" id="email" name="email" class="input-field" placeholder="Enter your email"
+                        required>
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-semibold text-white mb-2">Password</label>
+                    <input type="password" id="password" name="password" class="input-field"
+                        placeholder="Enter your password" required>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="remember" name="remember"
+                            class="h-4 w-4 bg-dark-700 border-border-color rounded text-primary-500 focus:ring-primary-500">
+                        <label for="remember" class="ml-3 block text-sm text-secondary">Remember me</label>
+                    </div>
+                    <a href="/forgot-password" class="text-sm text-primary-400 hover:text-primary-300 font-medium">Forgot password?</a>
+                </div>
+
+                <div>
+                    <button type="submit" class="btn-primary w-full text-lg py-4">Sign In to CodeEx AI</button>
+                </div>
+
+                <div class="relative my-6">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-border-color"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-4 bg-dark-800 text-secondary">Or continue with</span>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <button type="button" id="google-signin-btn"
+                        class="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-50 text-gray-900 font-semibold py-3 px-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24">
+                            <path fill="#4285F4"
+                                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                            <path fill="#34A853"
+                                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                            <path fill="#FBBC05"
+                                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                            <path fill="#EA4335"
+                                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                        </svg>
+                        <span>Continue with Google</span>
+                    </button>
+                </div>
+
+                <div id="signin-error" class="notification error text-sm hidden"></div>
+            </form>
+
+            <form id="signup-form" class="space-y-6 hidden">
+                <div>
+                    <label for="display_name" class="block text-sm font-semibold text-white mb-2">Display Name</label>
+                    <input type="text" id="display_name" name="display_name" class="input-field"
+                        placeholder="Enter your display name" required>
+                </div>
+
+                <div>
+                    <label for="signup_email" class="block text-sm font-semibold text-white mb-2">Email Address</label>
+                    <input type="email" id="signup_email" name="email" class="input-field"
+                        placeholder="Enter your email" required>
+                </div>
+
+                <div>
+                    <label for="signup_password" class="block text-sm font-semibold text-white mb-2">Password</label>
+                    <input type="password" id="signup_password" name="password" class="input-field"
+                        placeholder="Create a secure password" required>
+                </div>
+
+                <div>
+                    <button type="submit" class="btn-primary w-full text-lg py-4">Create Your Account</button>
+                </div>
+
+                <div class="relative my-6">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-border-color"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-4 bg-dark-800 text-secondary">Or continue with</span>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <button type="button" id="google-signup-btn"
+                        class="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-50 text-gray-900 font-semibold py-3 px-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24">
+                            <path fill="#4285F4"
+                                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                            <path fill="#34A853"
+                                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                            <path fill="#FBBC05"
+                                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                            <path fill="#EA4335"
+                                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                        </svg>
+                        <span>Continue with Google</span>
+                    </button>
+                </div>
+
+                <div id="signup-error" class="notification error text-sm hidden"></div>
+            </form>
+        </div>
+
+        <div class="text-center mt-8">
+            <p class="text-muted text-sm">
+                By using CodeEx AI, you agree to our
+                <a href="/terms" class="text-primary-400 hover:text-primary-300 font-medium">Terms of Service</a> and
+                <a href="/privacy" class="text-primary-400 hover:text-primary-300 font-medium">Privacy Policy</a>.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Google OAuth Script -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const signinTab = document.getElementById('signin-tab');
+        const signupTab = document.getElementById('signup-tab');
+        const signinForm = document.getElementById('signin-form');
+        const signupForm = document.getElementById('signup-form');
+        const signinError = document.getElementById('signin-error');
+        const signupError = document.getElementById('signup-error');
+        const googleSigninBtn = document.getElementById('google-signin-btn');
+        const googleSignupBtn = document.getElementById('google-signup-btn');
+
+        // Tab switching with new dark theme classes
+        signinTab.addEventListener('click', function () {
+            signinTab.classList.remove('text-secondary');
+            signinTab.classList.add('bg-primary-500', 'text-white', 'shadow-lg');
+            signupTab.classList.remove('bg-primary-500', 'text-white', 'shadow-lg');
+            signupTab.classList.add('text-secondary');
+            signinForm.classList.remove('hidden');
+            signupForm.classList.add('hidden');
+        });
+
+        signupTab.addEventListener('click', function () {
+            signupTab.classList.remove('text-secondary');
+            signupTab.classList.add('bg-primary-500', 'text-white', 'shadow-lg');
+            signinTab.classList.remove('bg-primary-500', 'text-white', 'shadow-lg');
+            signinTab.classList.add('text-secondary');
+            signupForm.classList.remove('hidden');
+            signinForm.classList.add('hidden');
+        });
+
+        // Form submission
+        signinForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            signinError.classList.add('hidden');
+
+            const formData = {
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value,
+                action: 'signin'
+            };
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    window.location.href = data.redirect || '/chat';
+                } else {
+                    signinError.textContent = data.error || 'Invalid credentials';
+                    signinError.classList.remove('hidden');
+                }
+            } catch (error) {
+                signinError.textContent = 'An error occurred. Please try again.';
+                signinError.classList.remove('hidden');
+            }
+        });
+
+        signupForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            signupError.classList.add('hidden');
+
+            const formData = {
+                display_name: document.getElementById('display_name').value,
+                email: document.getElementById('signup_email').value,
+                password: document.getElementById('signup_password').value,
+                action: 'signup'
+            };
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    window.location.href = data.redirect || '/chat';
+                } else {
+                    signupError.textContent = data.error || 'Failed to create account';
+                    signupError.classList.remove('hidden');
+                }
+            } catch (error) {
+                signupError.textContent = 'An error occurred. Please try again.';
+                signupError.classList.remove('hidden');
+            }
+        });
+
+        // Google OAuth functionality with enhanced debugging
+        function initializeGoogleAuth() {
+            console.log('Initializing Google Auth...');
+            console.log('Google Client ID:', '{{ google_client_id }}');
+
+            if (typeof google !== 'undefined' && google.accounts) {
+                console.log('Google API loaded successfully');
+                try {
+                    google.accounts.id.initialize({
+                        client_id: '{{ google_client_id }}',
+                        callback: handleGoogleResponse,
+                        auto_select: false,
+                        cancel_on_tap_outside: false,
+                        use_fedcm_for_prompt: false
+                    });
+                    console.log('Google Auth initialized successfully');
+                } catch (error) {
+                    console.error('Error initializing Google Auth:', error);
+                }
+            } else {
+                console.error('Google API not loaded');
+            }
+        }
+
+        // Handle Google OAuth response
+        async function handleGoogleResponse(response) {
+            try {
+                const result = await fetch('/auth/google', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        credential: response.credential,
+                        action: 'google_auth'
+                    })
+                });
+
+                const data = await result.json();
+
+                if (data.success) {
+                    window.location.href = data.redirect || '/chat';
+                } else {
+                    const errorElement = document.querySelector('.notification.error:not(.hidden)') || signinError;
+                    errorElement.textContent = data.error || 'Google authentication failed';
+                    errorElement.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Google auth error:', error);
+                const errorElement = document.querySelector('.notification.error:not(.hidden)') || signinError;
+                errorElement.textContent = 'Google authentication failed. Please try again.';
+                errorElement.classList.remove('hidden');
+            }
+        }
+
+        // Google Sign In button click handler with enhanced error handling
+        googleSigninBtn.addEventListener('click', function () {
+            console.log('Google Sign In button clicked');
+
+            if (typeof google !== 'undefined' && google.accounts) {
+                try {
+                    console.log('Attempting to show Google prompt...');
+                    google.accounts.id.prompt((notification) => {
+                        console.log('Google prompt notification:', notification);
+                        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+                            console.log('Google prompt not displayed, trying renderButton approach...');
+                            // Alternative approach: render button
+                            renderGoogleButton('google-signin-btn');
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error showing Google prompt:', error);
+                    showGoogleError('Failed to initialize Google Sign-In. Please try again.');
+                }
+            } else {
+                console.log('Google API not available, using fallback...');
+                // Fallback: redirect to Google OAuth URL
+                window.location.href = '/auth/google/login';
+            }
+        });
+
+        // Google Sign Up button click handler with enhanced error handling
+        googleSignupBtn.addEventListener('click', function () {
+            console.log('Google Sign Up button clicked');
+
+            if (typeof google !== 'undefined' && google.accounts) {
+                try {
+                    console.log('Attempting to show Google prompt...');
+                    google.accounts.id.prompt((notification) => {
+                        console.log('Google prompt notification:', notification);
+                        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+                            console.log('Google prompt not displayed, trying renderButton approach...');
+                            // Alternative approach: render button
+                            renderGoogleButton('google-signup-btn');
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error showing Google prompt:', error);
+                    showGoogleError('Failed to initialize Google Sign-In. Please try again.');
+                }
+            } else {
+                console.log('Google API not available, using fallback...');
+                // Fallback: redirect to Google OAuth URL
+                window.location.href = '/auth/google/signup';
+            }
+        });
+
+        // Alternative Google button rendering
+        function renderGoogleButton(containerId) {
+            try {
+                google.accounts.id.renderButton(
+                    document.getElementById(containerId),
+                    {
+                        theme: 'outline',
+                        size: 'large',
+                        width: '100%',
+                        text: 'continue_with',
+                        shape: 'rectangular'
+                    }
+                );
+                console.log('Google button rendered successfully');
+            } catch (error) {
+                console.error('Error rendering Google button:', error);
+                showGoogleError('Failed to render Google Sign-In button.');
+            }
+        }
+
+        // Show Google authentication errors
+        function showGoogleError(message) {
+            const errorElement = signinError;
+            errorElement.textContent = message;
+            errorElement.classList.remove('hidden');
+
+            // Auto-hide error after 5 seconds
+            setTimeout(() => {
+                errorElement.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Initialize Google Auth when the script loads
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeGoogleAuth);
+        } else {
+            // Check if Google script is already loaded
+            if (typeof google !== 'undefined') {
+                initializeGoogleAuth();
+            } else {
+                // Wait for Google script to load
+                const checkGoogleLoaded = setInterval(() => {
+                    if (typeof google !== 'undefined') {
+                        clearInterval(checkGoogleLoaded);
+                        initializeGoogleAuth();
+                    }
+                }, 100);
+
+                // Stop checking after 10 seconds
+                setTimeout(() => {
+                    clearInterval(checkGoogleLoaded);
+                }, 10000);
+            }
+        }
+    });
+</script>
+{% endblock %}

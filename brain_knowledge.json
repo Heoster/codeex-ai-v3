@@ -1,0 +1,565 @@
+{
+  "facts": {
+    "python": "Python is a high-level programming language known for its simplicity and readability.",
+    "ai": "Artificial Intelligence is the simulation of human intelligence in machines.",
+    "codeex": "CodeEx AI is a locally-powered intelligent assistant built entirely in Python.",
+    "india_pm": "Narendra Modi is the current Prime Minister of India, serving since May 2014. He is a member of the Bharatiya Janata Party (BJP).",
+    "india": "India is the world's largest democracy and the second-most populous country. It gained independence from British rule in 1947.",
+    "geography": "India is located in South Asia, bordered by Pakistan, China, Nepal, Bhutan, Bangladesh, and Myanmar.",
+    "capital_india": "New Delhi is the capital of India, while Mumbai is the financial capital.",
+    "currency_india": "The Indian Rupee (INR) is the official currency of India.",
+    "languages_india": "Hindi and English are the official languages of India, with 22 scheduled languages recognized by the constitution.",
+    "population_india": "India has a population of over 1.4 billion people, making it the most populous country in the world.",
+    "economy_india": "India is one of the world's fastest-growing major economies and is classified as a developing nation.",
+    "technology_india": "India is a major hub for information technology services and software development.",
+    "space_india": "ISRO (Indian Space Research Organisation) is India's national space agency, known for cost-effective space missions.",
+    "history_india": "India has a rich history spanning over 5,000 years, with ancient civilizations like the Indus Valley Civilization.",
+    "culture_india": "India is known for its diverse culture, festivals, cuisine, music, dance, and art forms.",
+    "education_india": "India has a large education system with institutions like IITs, IIMs, and numerous universities.",
+    "sports_india": "Cricket is the most popular sport in India, though field hockey is the national sport.",
+    "climate_india": "India has a tropical climate with three main seasons: summer, monsoon, and winter.",
+    "agriculture_india": "Agriculture employs about 50% of India's workforce and contributes significantly to the economy."
+  },
+  "responses": {
+    "greeting": [
+      "Hello! I'm CodeEx AI, your intelligent assistant. How can I help you today?",
+      "Hi there! Ready to solve some problems together?",
+      "Greetings! I'm here to assist you with anything you need."
+    ],
+    "thanks": [
+      "You're welcome! Happy to help!",
+      "Glad I could assist you!",
+      "Anytime! That's what I'm here for."
+    ]
+  },
+  "learning_data": [
+    {
+      "timestamp": "2025-07-19T17:40:02.970508",
+      "input": "Who is the PM of India?",
+      "response": "Narendra Modi is the current Prime Minister of India, serving since May 2014. He is a member of the Bharatiya Janata Party (BJP).",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:40:02.975726",
+      "input": "What is 5 + 3?",
+      "response": "5.0 + 3.0 = 8.0",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:40:02.980738",
+      "input": "Tell me about Python",
+      "response": "Python is a high-level programming language known for its simplicity and readability.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:40:26.472137",
+      "input": "What is the capital of India?",
+      "response": "Narendra Modi is the current Prime Minister of India, serving since May 2014. He is a member of the Bharatiya Janata Party (BJP).",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:40:26.473201",
+      "input": "sin(30)",
+      "response": "sin(30.0\u00b0) = 0.500000",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:40:26.474046",
+      "input": "Give me a quiz question",
+      "response": "Science question: What is the chemical symbol for gold? (Answer: Au)",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:41:13.984319",
+      "input": "Who is the PM of India?",
+      "response": "Narendra Modi is the current Prime Minister of India, serving since May 2014. He is a member of the Bharatiya Janata Party (BJP).",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:41:13.985626",
+      "input": "What is the capital of India?",
+      "response": "New Delhi is the capital of India, while Mumbai is the financial capital.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:41:13.987104",
+      "input": "What is 25 + 75?",
+      "response": "25.0 + 75.0 = 100.0",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:41:13.988255",
+      "input": "sin(90)",
+      "response": "sin(90.0\u00b0) = 1.000000",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:41:13.989259",
+      "input": "Tell me about Python",
+      "response": "Python is a high-level programming language known for its simplicity and readability.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:41:33.945786",
+      "input": "Hello",
+      "response": "Greetings! I'm here to assist you with anything you need.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:42:52.822653",
+      "input": "Tell me about JavaScript",
+      "response": "I have information about India, technology, geography, and many other topics. Could you be more specific about what you'd like to know?",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:42:52.824503",
+      "input": "What is sin(45)?",
+      "response": "I can help with basic math operations like addition, subtraction, multiplication, division, square roots, and factorials. Try asking something like 'What is 5 + 3?' or 'Square root of 25'.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:42:52.825869",
+      "input": "What is 15 * 7?",
+      "response": "15.0 * 7.0 = 105.0",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:42:52.828149",
+      "input": "What is the population of India?",
+      "response": "India has a population of over 1.4 billion people, making it the most populous country in the world.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:42:52.829422",
+      "input": "What is the square root of 144?",
+      "response": "The square root of 144.0 is 12.0",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:42:52.831004",
+      "input": "What time is it?",
+      "response": "The current time is 05:42 PM",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:42:52.831989",
+      "input": "What is ln(10)?",
+      "response": "I can help with basic math operations like addition, subtraction, multiplication, division, square roots, and factorials. Try asking something like 'What is 5 + 3?' or 'Square root of 25'.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:42:52.833006",
+      "input": "Help me with debugging",
+      "response": "I'm CodeEx AI, your intelligent assistant! Here's what I can help you with:\n\n\ud83d\udd22 **Math**: Basic calculations, square roots, factorials, trigonometry\n\ud83d\udcbb **Programming**: Python, JavaScript, HTML, CSS guidance  \n\ud83d\udd50 **Time & Date**: Current time and date information\n\ud83e\udde0 **Quiz**: Ask me for interesting questions and challenges\n\ud83c\udf0d **General Knowledge**: Information about countries, leaders, facts\n\ud83d\udcf0 **Current Affairs**: Information about current events and leaders\n\ud83d\udcac **General Chat**: I can have conversations on various topics\n\nJust ask me naturally! For example:\n- \"What is the square root of 144?\"\n- \"Who is the PM of India?\"\n- \"Tell me about Python programming\"\n- \"What time is it?\"\n- \"Give me a quiz question\"\n\nHow can I assist you today?",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:43:07.491340",
+      "input": "Who is the PM of India?",
+      "response": "Narendra Modi is the current Prime Minister of India, serving since May 2014. He is a member of the Bharatiya Janata Party (BJP).",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:43:07.492689",
+      "input": "What is the capital of India?",
+      "response": "New Delhi is the capital of India, while Mumbai is the financial capital.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:43:07.493771",
+      "input": "sin(30)",
+      "response": "sin(30.0\u00b0) = 0.500000",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:43:07.494846",
+      "input": "cos(60)",
+      "response": "cos(60.0\u00b0) = 0.500000",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:43:07.495985",
+      "input": "fibonacci 8",
+      "response": "The 8th Fibonacci number is 21",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:43:07.497102",
+      "input": "is 23 prime?",
+      "response": "23 is a prime number!",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:43:07.498220",
+      "input": "exp(2)",
+      "response": "exp(2.0) = e^2.0 = 7.389056",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:43:07.499601",
+      "input": "log(100)",
+      "response": "log\u2081\u2080(100.0) = 2.000000",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:43:07.500733",
+      "input": "What is Python?",
+      "response": "Python is a high-level programming language known for its simplicity and readability.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:43:07.501802",
+      "input": "Give me a quiz",
+      "response": "Science question: What is the chemical symbol for gold? (Answer: Au)",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:43:49.481408",
+      "input": "What is the meaning of life?",
+      "response": "I have information about India, technology, geography, and many other topics. Could you be more specific about what you'd like to know?",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:43:49.482845",
+      "input": "How do I learn programming?",
+      "response": "I'd love to help with programming! I can assist with Python, JavaScript, HTML, CSS, debugging tips, and general coding concepts. What specific programming topic interests you?",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:43:49.483998",
+      "input": "What is artificial intelligence?",
+      "response": "I have information about India, technology, geography, and many other topics. Could you be more specific about what you'd like to know?",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:43:49.485228",
+      "input": "Tell me about space exploration",
+      "response": "ISRO (Indian Space Research Organisation) is India's national space agency, known for cost-effective space missions.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:43:49.486699",
+      "input": "What is the fastest way to sort an array?",
+      "response": "I have information about India, technology, geography, and many other topics. Could you be more specific about what you'd like to know?",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:44:28.287686",
+      "input": "Who is the current Prime Minister of India?",
+      "response": "Narendra Modi is the current Prime Minister of India, serving since May 2014. He is a member of the Bharatiya Janata Party (BJP).",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:44:28.290427",
+      "input": "What is 144 divided by 12?",
+      "response": "I can help with basic math operations like addition, subtraction, multiplication, division, square roots, and factorials. Try asking something like 'What is 5 + 3?' or 'Square root of 25'.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:44:28.292076",
+      "input": "What is tan(45)?",
+      "response": "I can help with basic math operations like addition, subtraction, multiplication, division, square roots, and factorials. Try asking something like 'What is 5 + 3?' or 'Square root of 25'.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:44:28.293710",
+      "input": "Tell me about Python programming",
+      "response": "Python is a high-level programming language known for its simplicity and readability.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:44:28.295558",
+      "input": "What is force in physics?",
+      "response": "I have information about India, technology, geography, and many other topics. Could you be more specific about what you'd like to know?",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:44:28.297522",
+      "input": "What time is it now?",
+      "response": "The current time is 05:44 PM",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:44:28.299124",
+      "input": "Give me a challenging quiz question",
+      "response": "Here's a brain teaser: What has keys but no locks, space but no room, and you can enter but not go inside? (Answer: A keyboard)",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:44:28.302585",
+      "input": "What is the capital of India?",
+      "response": "New Delhi is the capital of India, while Mumbai is the financial capital.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:44:28.304602",
+      "input": "Is 29 a prime number?",
+      "response": "Specify a number to check if it's prime. Example: 'is 17 prime?' or 'check if 25 is prime'",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:44:28.306670",
+      "input": "Hello there!",
+      "response": "Hi there! Ready to solve some problems together?",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:45:32.929952",
+      "input": "Can you help me create a simple website with HTML and CSS?",
+      "response": "HTML (HyperText Markup Language) is the foundation of web pages. It provides the structure and content of websites using elements and tags.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:45:32.931963",
+      "input": "Create a basic HTML page with CSS styling",
+      "response": "HTML (HyperText Markup Language) is the foundation of web pages. It provides the structure and content of websites using elements and tags.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:45:32.933455",
+      "input": "How do I make a website using HTML?",
+      "response": "HTML (HyperText Markup Language) is the foundation of web pages. It provides the structure and content of websites using elements and tags.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:52:38.542944",
+      "input": "Create a simple website",
+      "response": "Here's a complete simple website for you:\n\n**HTML (index.html):**\n```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>My Simple Website</title>\n    <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n    <header>\n        <h1>Welcome to My Website</h1>\n        <nav>\n            <ul>\n                <li><a href=\"#home\">Home</a></li>\n                <li><a href=\"#about\">About</a></li>\n                <li><a href=\"#contact\">Contact</a></li>\n            </ul>\n        </nav>\n    </header>\n    \n    <main>\n        <section id=\"home\">\n            <h2>Home Section</h2>\n            <p>This is a simple, clean website template. Customize it as needed!</p>\n            <button onclick=\"showMessage()\">Click Me!</button>\n        </section>\n        \n        <section id=\"about\">\n            <h2>About Section</h2>\n            <p>Add your content here. This website is responsive and modern.</p>\n        </section>\n        \n        <section id=\"contact\">\n            <h2>Contact Section</h2>\n            <form id=\"contactForm\">\n                <input type=\"text\" placeholder=\"Your Name\" required>\n                <input type=\"email\" placeholder=\"Your Email\" required>\n                <textarea placeholder=\"Your Message\" required></textarea>\n                <button type=\"submit\">Send Message</button>\n            </form>\n        </section>\n    </main>\n    \n    <footer>\n        <p>&copy; 2024 My Website. All rights reserved.</p>\n    </footer>\n    \n    <script>\n        function showMessage() {\n            alert('Hello! Welcome to my website!');\n        }\n        \n        document.getElementById('contactForm').addEventListener('submit', function(e) {\n            e.preventDefault();\n            alert('Thank you for your message!');\n        });\n    </script>\n</body>\n</html>\n```\n\n**CSS (style.css):**\n```css\n* {\n    margin: 0;\n    padding: 0;\n    box-sizing: border-box;\n}\n\nbody {\n    font-family: 'Arial', sans-serif;\n    line-height: 1.6;\n    color: #333;\n    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n    min-height: 100vh;\n}\n\nheader {\n    background: rgba(255, 255, 255, 0.95);\n    backdrop-filter: blur(10px);\n    padding: 1rem 0;\n    text-align: center;\n    box-shadow: 0 2px 10px rgba(0,0,0,0.1);\n}\n\nheader h1 {\n    color: #333;\n    margin-bottom: 1rem;\n    font-size: 2.5rem;\n}\n\nnav ul {\n    list-style: none;\n    display: flex;\n    justify-content: center;\n    gap: 2rem;\n}\n\nnav a {\n    color: #333;\n    text-decoration: none;\n    padding: 0.5rem 1rem;\n    border-radius: 25px;\n    transition: all 0.3s ease;\n    font-weight: bold;\n}\n\nnav a:hover {\n    background: #667eea;\n    color: white;\n    transform: translateY(-2px);\n}\n\nmain {\n    max-width: 1000px;\n    margin: 2rem auto;\n    padding: 0 1rem;\n}\n\nsection {\n    background: rgba(255, 255, 255, 0.95);\n    margin: 2rem 0;\n    padding: 2rem;\n    border-radius: 15px;\n    box-shadow: 0 8px 25px rgba(0,0,0,0.1);\n    backdrop-filter: blur(10px);\n    transform: translateY(0);\n    transition: transform 0.3s ease;\n}\n\nsection:hover {\n    transform: translateY(-5px);\n}\n\nsection h2 {\n    color: #333;\n    margin-bottom: 1rem;\n    font-size: 2rem;\n}\n\nbutton {\n    background: linear-gradient(45deg, #667eea, #764ba2);\n    color: white;\n    border: none;\n    padding: 12px 24px;\n    border-radius: 25px;\n    cursor: pointer;\n    font-size: 1rem;\n    transition: all 0.3s ease;\n}\n\nbutton:hover {\n    transform: translateY(-2px);\n    box-shadow: 0 5px 15px rgba(0,0,0,0.2);\n}\n\nform {\n    display: flex;\n    flex-direction: column;\n    gap: 1rem;\n}\n\ninput, textarea {\n    padding: 12px;\n    border: 2px solid #ddd;\n    border-radius: 10px;\n    font-size: 1rem;\n    transition: border-color 0.3s ease;\n}\n\ninput:focus, textarea:focus {\n    outline: none;\n    border-color: #667eea;\n}\n\nfooter {\n    background: rgba(0, 0, 0, 0.8);\n    color: white;\n    text-align: center;\n    padding: 1rem 0;\n    margin-top: 2rem;\n}\n\n@media (max-width: 768px) {\n    nav ul {\n        flex-direction: column;\n        gap: 1rem;\n    }\n    \n    header h1 {\n        font-size: 2rem;\n    }\n    \n    section {\n        margin: 1rem 0;\n        padding: 1rem;\n    }\n}\n```\n\nThis creates a modern, responsive website with:\n\u2728 Beautiful gradient background\n\ud83c\udfa8 Glass-morphism design effects\n\ud83d\udcf1 Mobile-friendly responsive layout\n\u26a1 Interactive JavaScript functionality\n\ud83c\udfaf Contact form with validation\n\ud83c\udf1f Smooth animations and hover effects\n\nJust save as 'index.html' and 'style.css' in the same folder!",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:52:38.545068",
+      "input": "Write a JavaScript function",
+      "response": "Here's a comprehensive JavaScript example:\n\n**Interactive Calculator:**\n```javascript\nclass Calculator {\n    constructor() {\n        this.result = 0;\n        this.history = [];\n    }\n    \n    add(a, b) {\n        const result = a + b;\n        this.history.push(`${a} + ${b} = ${result}`);\n        return result;\n    }\n    \n    subtract(a, b) {\n        const result = a - b;\n        this.history.push(`${a} - ${b} = ${result}`);\n        return result;\n    }\n    \n    multiply(a, b) {\n        const result = a * b;\n        this.history.push(`${a} \u00d7 ${b} = ${result}`);\n        return result;\n    }\n    \n    divide(a, b) {\n        if (b === 0) {\n            throw new Error('Cannot divide by zero!');\n        }\n        const result = a / b;\n        this.history.push(`${a} \u00f7 ${b} = ${result}`);\n        return result;\n    }\n    \n    getHistory() {\n        return this.history;\n    }\n    \n    clearHistory() {\n        this.history = [];\n    }\n}\n\n// Usage\nconst calc = new Calculator();\nconsole.log(calc.add(10, 5));      // 15\nconsole.log(calc.multiply(3, 4));  // 12\nconsole.log(calc.getHistory());    // Shows calculation history\n\n// DOM Manipulation Example\nfunction createInteractiveApp() {\n    const app = document.createElement('div');\n    app.innerHTML = `\n        <h2>Interactive Calculator</h2>\n        <input type=\"number\" id=\"num1\" placeholder=\"First number\">\n        <select id=\"operation\">\n            <option value=\"add\">Add (+)</option>\n            <option value=\"subtract\">Subtract (-)</option>\n            <option value=\"multiply\">Multiply (\u00d7)</option>\n            <option value=\"divide\">Divide (\u00f7)</option>\n        </select>\n        <input type=\"number\" id=\"num2\" placeholder=\"Second number\">\n        <button onclick=\"calculate()\">Calculate</button>\n        <div id=\"result\"></div>\n        <div id=\"history\"></div>\n    `;\n    \n    document.body.appendChild(app);\n}\n\nfunction calculate() {\n    const num1 = parseFloat(document.getElementById('num1').value);\n    const num2 = parseFloat(document.getElementById('num2').value);\n    const operation = document.getElementById('operation').value;\n    const resultDiv = document.getElementById('result');\n    \n    if (isNaN(num1) || isNaN(num2)) {\n        resultDiv.innerHTML = '<p style=\"color: red;\">Please enter valid numbers!</p>';\n        return;\n    }\n    \n    try {\n        let result;\n        switch(operation) {\n            case 'add':\n                result = calc.add(num1, num2);\n                break;\n            case 'subtract':\n                result = calc.subtract(num1, num2);\n                break;\n            case 'multiply':\n                result = calc.multiply(num1, num2);\n                break;\n            case 'divide':\n                result = calc.divide(num1, num2);\n                break;\n        }\n        \n        resultDiv.innerHTML = `<h3>Result: ${result}</h3>`;\n        updateHistory();\n        \n    } catch (error) {\n        resultDiv.innerHTML = `<p style=\"color: red;\">${error.message}</p>`;\n    }\n}\n\nfunction updateHistory() {\n    const historyDiv = document.getElementById('history');\n    const history = calc.getHistory();\n    historyDiv.innerHTML = '<h4>History:</h4>' + \n        history.map(item => `<p>${item}</p>`).join('');\n}\n\n// Initialize the app\ncreateInteractiveApp();\n```\n\nThis JavaScript includes:\n\ud83e\uddee Object-oriented calculator class\n\ud83d\udcca Calculation history tracking\n\ud83c\udfaf Error handling for edge cases\n\ud83c\udf10 DOM manipulation and event handling\n\u2728 Modern ES6+ syntax and features\n\ud83d\udd27 Modular, reusable code structure",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:52:38.546822",
+      "input": "Create a Python script",
+      "response": "Here's a comprehensive JavaScript example:\n\n**Interactive Calculator:**\n```javascript\nclass Calculator {\n    constructor() {\n        this.result = 0;\n        this.history = [];\n    }\n    \n    add(a, b) {\n        const result = a + b;\n        this.history.push(`${a} + ${b} = ${result}`);\n        return result;\n    }\n    \n    subtract(a, b) {\n        const result = a - b;\n        this.history.push(`${a} - ${b} = ${result}`);\n        return result;\n    }\n    \n    multiply(a, b) {\n        const result = a * b;\n        this.history.push(`${a} \u00d7 ${b} = ${result}`);\n        return result;\n    }\n    \n    divide(a, b) {\n        if (b === 0) {\n            throw new Error('Cannot divide by zero!');\n        }\n        const result = a / b;\n        this.history.push(`${a} \u00f7 ${b} = ${result}`);\n        return result;\n    }\n    \n    getHistory() {\n        return this.history;\n    }\n    \n    clearHistory() {\n        this.history = [];\n    }\n}\n\n// Usage\nconst calc = new Calculator();\nconsole.log(calc.add(10, 5));      // 15\nconsole.log(calc.multiply(3, 4));  // 12\nconsole.log(calc.getHistory());    // Shows calculation history\n\n// DOM Manipulation Example\nfunction createInteractiveApp() {\n    const app = document.createElement('div');\n    app.innerHTML = `\n        <h2>Interactive Calculator</h2>\n        <input type=\"number\" id=\"num1\" placeholder=\"First number\">\n        <select id=\"operation\">\n            <option value=\"add\">Add (+)</option>\n            <option value=\"subtract\">Subtract (-)</option>\n            <option value=\"multiply\">Multiply (\u00d7)</option>\n            <option value=\"divide\">Divide (\u00f7)</option>\n        </select>\n        <input type=\"number\" id=\"num2\" placeholder=\"Second number\">\n        <button onclick=\"calculate()\">Calculate</button>\n        <div id=\"result\"></div>\n        <div id=\"history\"></div>\n    `;\n    \n    document.body.appendChild(app);\n}\n\nfunction calculate() {\n    const num1 = parseFloat(document.getElementById('num1').value);\n    const num2 = parseFloat(document.getElementById('num2').value);\n    const operation = document.getElementById('operation').value;\n    const resultDiv = document.getElementById('result');\n    \n    if (isNaN(num1) || isNaN(num2)) {\n        resultDiv.innerHTML = '<p style=\"color: red;\">Please enter valid numbers!</p>';\n        return;\n    }\n    \n    try {\n        let result;\n        switch(operation) {\n            case 'add':\n                result = calc.add(num1, num2);\n                break;\n            case 'subtract':\n                result = calc.subtract(num1, num2);\n                break;\n            case 'multiply':\n                result = calc.multiply(num1, num2);\n                break;\n            case 'divide':\n                result = calc.divide(num1, num2);\n                break;\n        }\n        \n        resultDiv.innerHTML = `<h3>Result: ${result}</h3>`;\n        updateHistory();\n        \n    } catch (error) {\n        resultDiv.innerHTML = `<p style=\"color: red;\">${error.message}</p>`;\n    }\n}\n\nfunction updateHistory() {\n    const historyDiv = document.getElementById('history');\n    const history = calc.getHistory();\n    historyDiv.innerHTML = '<h4>History:</h4>' + \n        history.map(item => `<p>${item}</p>`).join('');\n}\n\n// Initialize the app\ncreateInteractiveApp();\n```\n\nThis JavaScript includes:\n\ud83e\uddee Object-oriented calculator class\n\ud83d\udcca Calculation history tracking\n\ud83c\udfaf Error handling for edge cases\n\ud83c\udf10 DOM manipulation and event handling\n\u2728 Modern ES6+ syntax and features\n\ud83d\udd27 Modular, reusable code structure",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:53:03.526370",
+      "input": "Create a simple website",
+      "response": "Here's a complete simple website for you:\n\n**HTML (index.html):**\n```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>My Simple Website</title>\n    <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n    <header>\n        <h1>Welcome to My Website</h1>\n        <nav>\n            <ul>\n                <li><a href=\"#home\">Home</a></li>\n                <li><a href=\"#about\">About</a></li>\n                <li><a href=\"#contact\">Contact</a></li>\n            </ul>\n        </nav>\n    </header>\n    \n    <main>\n        <section id=\"home\">\n            <h2>Home Section</h2>\n            <p>This is a simple, clean website template. Customize it as needed!</p>\n            <button onclick=\"showMessage()\">Click Me!</button>\n        </section>\n        \n        <section id=\"about\">\n            <h2>About Section</h2>\n            <p>Add your content here. This website is responsive and modern.</p>\n        </section>\n        \n        <section id=\"contact\">\n            <h2>Contact Section</h2>\n            <form id=\"contactForm\">\n                <input type=\"text\" placeholder=\"Your Name\" required>\n                <input type=\"email\" placeholder=\"Your Email\" required>\n                <textarea placeholder=\"Your Message\" required></textarea>\n                <button type=\"submit\">Send Message</button>\n            </form>\n        </section>\n    </main>\n    \n    <footer>\n        <p>&copy; 2024 My Website. All rights reserved.</p>\n    </footer>\n    \n    <script>\n        function showMessage() {\n            alert('Hello! Welcome to my website!');\n        }\n        \n        document.getElementById('contactForm').addEventListener('submit', function(e) {\n            e.preventDefault();\n            alert('Thank you for your message!');\n        });\n    </script>\n</body>\n</html>\n```\n\n**CSS (style.css):**\n```css\n* {\n    margin: 0;\n    padding: 0;\n    box-sizing: border-box;\n}\n\nbody {\n    font-family: 'Arial', sans-serif;\n    line-height: 1.6;\n    color: #333;\n    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n    min-height: 100vh;\n}\n\nheader {\n    background: rgba(255, 255, 255, 0.95);\n    backdrop-filter: blur(10px);\n    padding: 1rem 0;\n    text-align: center;\n    box-shadow: 0 2px 10px rgba(0,0,0,0.1);\n}\n\nheader h1 {\n    color: #333;\n    margin-bottom: 1rem;\n    font-size: 2.5rem;\n}\n\nnav ul {\n    list-style: none;\n    display: flex;\n    justify-content: center;\n    gap: 2rem;\n}\n\nnav a {\n    color: #333;\n    text-decoration: none;\n    padding: 0.5rem 1rem;\n    border-radius: 25px;\n    transition: all 0.3s ease;\n    font-weight: bold;\n}\n\nnav a:hover {\n    background: #667eea;\n    color: white;\n    transform: translateY(-2px);\n}\n\nmain {\n    max-width: 1000px;\n    margin: 2rem auto;\n    padding: 0 1rem;\n}\n\nsection {\n    background: rgba(255, 255, 255, 0.95);\n    margin: 2rem 0;\n    padding: 2rem;\n    border-radius: 15px;\n    box-shadow: 0 8px 25px rgba(0,0,0,0.1);\n    backdrop-filter: blur(10px);\n    transform: translateY(0);\n    transition: transform 0.3s ease;\n}\n\nsection:hover {\n    transform: translateY(-5px);\n}\n\nsection h2 {\n    color: #333;\n    margin-bottom: 1rem;\n    font-size: 2rem;\n}\n\nbutton {\n    background: linear-gradient(45deg, #667eea, #764ba2);\n    color: white;\n    border: none;\n    padding: 12px 24px;\n    border-radius: 25px;\n    cursor: pointer;\n    font-size: 1rem;\n    transition: all 0.3s ease;\n}\n\nbutton:hover {\n    transform: translateY(-2px);\n    box-shadow: 0 5px 15px rgba(0,0,0,0.2);\n}\n\nform {\n    display: flex;\n    flex-direction: column;\n    gap: 1rem;\n}\n\ninput, textarea {\n    padding: 12px;\n    border: 2px solid #ddd;\n    border-radius: 10px;\n    font-size: 1rem;\n    transition: border-color 0.3s ease;\n}\n\ninput:focus, textarea:focus {\n    outline: none;\n    border-color: #667eea;\n}\n\nfooter {\n    background: rgba(0, 0, 0, 0.8);\n    color: white;\n    text-align: center;\n    padding: 1rem 0;\n    margin-top: 2rem;\n}\n\n@media (max-width: 768px) {\n    nav ul {\n        flex-direction: column;\n        gap: 1rem;\n    }\n    \n    header h1 {\n        font-size: 2rem;\n    }\n    \n    section {\n        margin: 1rem 0;\n        padding: 1rem;\n    }\n}\n```\n\nThis creates a modern, responsive website with:\n\u2728 Beautiful gradient background\n\ud83c\udfa8 Glass-morphism design effects\n\ud83d\udcf1 Mobile-friendly responsive layout\n\u26a1 Interactive JavaScript functionality\n\ud83c\udfaf Contact form with validation\n\ud83c\udf1f Smooth animations and hover effects\n\nJust save as 'index.html' and 'style.css' in the same folder!",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:53:03.528349",
+      "input": "Who is the PM of India?",
+      "response": "Narendra Modi is the current Prime Minister of India, serving since May 2014. He is a member of the Bharatiya Janata Party (BJP).",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:53:03.530377",
+      "input": "What is 25 * 4?",
+      "response": "25.0 * 4.0 = 100.0",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:53:03.531885",
+      "input": "Write a Python script",
+      "response": "Here's a comprehensive Python example:\n\n**Multi-Purpose Python Script:**\n```python\nimport os\nimport json\nimport requests\nfrom datetime import datetime\nimport sqlite3\n\nclass TaskManager:\n    def __init__(self, db_name='tasks.db'):\n        self.db_name = db_name\n        self.init_database()\n    \n    def init_database(self):\n        \"\"\"Initialize SQLite database\"\"\"\n        conn = sqlite3.connect(self.db_name)\n        cursor = conn.cursor()\n        cursor.execute('''\n            CREATE TABLE IF NOT EXISTS tasks (\n                id INTEGER PRIMARY KEY AUTOINCREMENT,\n                title TEXT NOT NULL,\n                description TEXT,\n                completed BOOLEAN DEFAULT FALSE,\n                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n            )\n        ''')\n        conn.commit()\n        conn.close()\n    \n    def add_task(self, title, description=\"\"):\n        \"\"\"Add a new task\"\"\"\n        conn = sqlite3.connect(self.db_name)\n        cursor = conn.cursor()\n        cursor.execute(\n            \"INSERT INTO tasks (title, description) VALUES (?, ?)\",\n            (title, description)\n        )\n        conn.commit()\n        conn.close()\n        print(f\"\u2705 Task added: {title}\")\n    \n    def list_tasks(self):\n        \"\"\"List all tasks\"\"\"\n        conn = sqlite3.connect(self.db_name)\n        cursor = conn.cursor()\n        cursor.execute(\"SELECT * FROM tasks ORDER BY created_at DESC\")\n        tasks = cursor.fetchall()\n        conn.close()\n        \n        if not tasks:\n            print(\"\ud83d\udcdd No tasks found!\")\n            return\n        \n        print(\"\\n\ud83d\udccb Your Tasks:\")\n        print(\"-\" * 50)\n        for task in tasks:\n            status = \"\u2705\" if task[3] else \"\u23f3\"\n            print(f\"{status} [{task[0]}] {task[1]}\")\n            if task[2]:\n                print(f\"    \ud83d\udcc4 {task[2]}\")\n            print(f\"    \ud83d\udd50 {task[4]}\")\n            print()\n    \n    def complete_task(self, task_id):\n        \"\"\"Mark task as completed\"\"\"\n        conn = sqlite3.connect(self.db_name)\n        cursor = conn.cursor()\n        cursor.execute(\n            \"UPDATE tasks SET completed = TRUE WHERE id = ?\",\n            (task_id,)\n        )\n        conn.commit()\n        conn.close()\n        print(f\"\u2705 Task {task_id} completed!\")\n\nclass WeatherApp:\n    def __init__(self):\n        self.base_url = \"http://api.openweathermap.org/data/2.5/weather\"\n    \n    def get_weather_info(self, city=\"London\"):\n        \"\"\"Get weather information (demo function)\"\"\"\n        # This is a demo - you'd need an API key for real usage\n        demo_data = {\n            \"London\": {\"temp\": 15, \"desc\": \"Cloudy\", \"humidity\": 65},\n            \"New York\": {\"temp\": 22, \"desc\": \"Sunny\", \"humidity\": 45},\n            \"Tokyo\": {\"temp\": 18, \"desc\": \"Rainy\", \"humidity\": 80}\n        }\n        \n        weather = demo_data.get(city, {\"temp\": 20, \"desc\": \"Clear\", \"humidity\": 50})\n        \n        print(f\"\ud83c\udf24\ufe0f  Weather in {city}:\")\n        print(f\"\ud83c\udf21\ufe0f  Temperature: {weather['temp']}\u00b0C\")\n        print(f\"\u2601\ufe0f  Description: {weather['desc']}\")\n        print(f\"\ud83d\udca7 Humidity: {weather['humidity']}%\")\n\ndef file_organizer(directory_path):\n    \"\"\"Organize files by extension\"\"\"\n    if not os.path.exists(directory_path):\n        print(f\"\u274c Directory {directory_path} not found!\")\n        return\n    \n    # File type categories\n    categories = {\n        'Images': ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg'],\n        'Documents': ['.pdf', '.doc', '.docx', '.txt', '.rtf', '.odt'],\n        'Videos': ['.mp4', '.avi', '.mkv', '.mov', '.wmv', '.flv'],\n        'Audio': ['.mp3', '.wav', '.flac', '.aac', '.ogg'],\n        'Archives': ['.zip', '.rar', '.7z', '.tar', '.gz'],\n        'Code': ['.py', '.js', '.html', '.css', '.java', '.cpp']\n    }\n    \n    # Create category folders\n    for category in categories:\n        folder_path = os.path.join(directory_path, category)\n        os.makedirs(folder_path, exist_ok=True)\n    \n    # Organize files\n    moved_files = 0\n    for filename in os.listdir(directory_path):\n        file_path = os.path.join(directory_path, filename)\n        \n        if os.path.isfile(file_path):\n            file_ext = os.path.splitext(filename)[1].lower()\n            \n            for category, extensions in categories.items():\n                if file_ext in extensions:\n                    dest_path = os.path.join(directory_path, category, filename)\n                    try:\n                        os.rename(file_path, dest_path)\n                        moved_files += 1\n                        print(f\"\ud83d\udcc1 Moved {filename} to {category}/\")\n                        break\n                    except Exception as e:\n                        print(f\"\u274c Error moving {filename}: {e}\")\n    \n    print(f\"\\n\u2705 Organized {moved_files} files!\")\n\ndef main():\n    \"\"\"Main application\"\"\"\n    print(\"\ud83d\udc0d Python Multi-Tool Application\")\n    print(\"=\" * 40)\n    \n    # Task Manager Demo\n    print(\"\\n1\ufe0f\u20e3  Task Manager Demo:\")\n    task_manager = TaskManager()\n    task_manager.add_task(\"Learn Python\", \"Complete Python tutorial\")\n    task_manager.add_task(\"Build a project\", \"Create a web application\")\n    task_manager.list_tasks()\n    \n    # Weather App Demo\n    print(\"\\n2\ufe0f\u20e3  Weather App Demo:\")\n    weather_app = WeatherApp()\n    weather_app.get_weather_info(\"London\")\n    \n    # File Organizer Demo\n    print(\"\\n3\ufe0f\u20e3  File Organizer:\")\n    print(\"\ud83d\udcc1 Use file_organizer('/path/to/directory') to organize files\")\n    \n    print(\"\\n\ud83c\udf89 All demos completed!\")\n\nif __name__ == \"__main__\":\n    main()\n```\n\nThis Python script includes:\n\ud83d\udccb SQLite database task manager\n\ud83c\udf24\ufe0f Weather information system\n\ud83d\udcc1 Automatic file organizer\n\ud83d\udd27 Error handling and logging\n\ud83c\udfaf Object-oriented design\n\u2728 Modern Python best practices\n\ud83d\ude80 Ready-to-run application\n\nRun with: `python script.py`",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:53:03.533741",
+      "input": "What is sin(60)?",
+      "response": "I can help with basic math: addition, subtraction, multiplication, division, square roots, factorials.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:53:03.535513",
+      "input": "Give me a quiz question",
+      "response": "Math: If you have 3 apples and take 2, how many do you have? (Answer: 2)",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:53:03.537020",
+      "input": "Hello there!",
+      "response": "Greetings! I'm here to assist you with anything you need.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:53:03.540348",
+      "input": "What time is it?",
+      "response": "The current time is 05:53 PM",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:53:44.793558",
+      "input": "Create a simple website with HTML and CSS",
+      "response": "Here's a complete simple website for you:\n\n**HTML (index.html):**\n```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>My Simple Website</title>\n    <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n    <header>\n        <h1>Welcome to My Website</h1>\n        <nav>\n            <ul>\n                <li><a href=\"#home\">Home</a></li>\n                <li><a href=\"#about\">About</a></li>\n                <li><a href=\"#contact\">Contact</a></li>\n            </ul>\n        </nav>\n    </header>\n    \n    <main>\n        <section id=\"home\">\n            <h2>Home Section</h2>\n            <p>This is a simple, clean website template. Customize it as needed!</p>\n            <button onclick=\"showMessage()\">Click Me!</button>\n        </section>\n        \n        <section id=\"about\">\n            <h2>About Section</h2>\n            <p>Add your content here. This website is responsive and modern.</p>\n        </section>\n        \n        <section id=\"contact\">\n            <h2>Contact Section</h2>\n            <form id=\"contactForm\">\n                <input type=\"text\" placeholder=\"Your Name\" required>\n                <input type=\"email\" placeholder=\"Your Email\" required>\n                <textarea placeholder=\"Your Message\" required></textarea>\n                <button type=\"submit\">Send Message</button>\n            </form>\n        </section>\n    </main>\n    \n    <footer>\n        <p>&copy; 2024 My Website. All rights reserved.</p>\n    </footer>\n    \n    <script>\n        function showMessage() {\n            alert('Hello! Welcome to my website!');\n        }\n        \n        document.getElementById('contactForm').addEventListener('submit', function(e) {\n            e.preventDefault();\n            alert('Thank you for your message!');\n        });\n    </script>\n</body>\n</html>\n```\n\n**CSS (style.css):**\n```css\n* {\n    margin: 0;\n    padding: 0;\n    box-sizing: border-box;\n}\n\nbody {\n    font-family: 'Arial', sans-serif;\n    line-height: 1.6;\n    color: #333;\n    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n    min-height: 100vh;\n}\n\nheader {\n    background: rgba(255, 255, 255, 0.95);\n    backdrop-filter: blur(10px);\n    padding: 1rem 0;\n    text-align: center;\n    box-shadow: 0 2px 10px rgba(0,0,0,0.1);\n}\n\nheader h1 {\n    color: #333;\n    margin-bottom: 1rem;\n    font-size: 2.5rem;\n}\n\nnav ul {\n    list-style: none;\n    display: flex;\n    justify-content: center;\n    gap: 2rem;\n}\n\nnav a {\n    color: #333;\n    text-decoration: none;\n    padding: 0.5rem 1rem;\n    border-radius: 25px;\n    transition: all 0.3s ease;\n    font-weight: bold;\n}\n\nnav a:hover {\n    background: #667eea;\n    color: white;\n    transform: translateY(-2px);\n}\n\nmain {\n    max-width: 1000px;\n    margin: 2rem auto;\n    padding: 0 1rem;\n}\n\nsection {\n    background: rgba(255, 255, 255, 0.95);\n    margin: 2rem 0;\n    padding: 2rem;\n    border-radius: 15px;\n    box-shadow: 0 8px 25px rgba(0,0,0,0.1);\n    backdrop-filter: blur(10px);\n    transform: translateY(0);\n    transition: transform 0.3s ease;\n}\n\nsection:hover {\n    transform: translateY(-5px);\n}\n\nsection h2 {\n    color: #333;\n    margin-bottom: 1rem;\n    font-size: 2rem;\n}\n\nbutton {\n    background: linear-gradient(45deg, #667eea, #764ba2);\n    color: white;\n    border: none;\n    padding: 12px 24px;\n    border-radius: 25px;\n    cursor: pointer;\n    font-size: 1rem;\n    transition: all 0.3s ease;\n}\n\nbutton:hover {\n    transform: translateY(-2px);\n    box-shadow: 0 5px 15px rgba(0,0,0,0.2);\n}\n\nform {\n    display: flex;\n    flex-direction: column;\n    gap: 1rem;\n}\n\ninput, textarea {\n    padding: 12px;\n    border: 2px solid #ddd;\n    border-radius: 10px;\n    font-size: 1rem;\n    transition: border-color 0.3s ease;\n}\n\ninput:focus, textarea:focus {\n    outline: none;\n    border-color: #667eea;\n}\n\nfooter {\n    background: rgba(0, 0, 0, 0.8);\n    color: white;\n    text-align: center;\n    padding: 1rem 0;\n    margin-top: 2rem;\n}\n\n@media (max-width: 768px) {\n    nav ul {\n        flex-direction: column;\n        gap: 1rem;\n    }\n    \n    header h1 {\n        font-size: 2rem;\n    }\n    \n    section {\n        margin: 1rem 0;\n        padding: 1rem;\n    }\n}\n```\n\nThis creates a modern, responsive website with:\n\u2728 Beautiful gradient background\n\ud83c\udfa8 Glass-morphism design effects\n\ud83d\udcf1 Mobile-friendly responsive layout\n\u26a1 Interactive JavaScript functionality\n\ud83c\udfaf Contact form with validation\n\ud83c\udf1f Smooth animations and hover effects\n\nJust save as 'index.html' and 'style.css' in the same folder!",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:53:44.797145",
+      "input": "What is sin(30)?",
+      "response": "I can help with basic math: addition, subtraction, multiplication, division, square roots, factorials.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:53:44.799009",
+      "input": "Who is the Prime Minister of India?",
+      "response": "Narendra Modi is the current Prime Minister of India, serving since May 2014. He is a member of the Bharatiya Janata Party (BJP).",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:53:44.800822",
+      "input": "What is the square root of 144?",
+      "response": "The square root of 144.0 is 12.0",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:53:44.802636",
+      "input": "Tell me about Python programming",
+      "response": "Python is a high-level programming language known for its simplicity and readability.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:53:44.805180",
+      "input": "What time is it now?",
+      "response": "The current time is 05:53 PM",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:53:44.807894",
+      "input": "Give me a challenging quiz question",
+      "response": "Math: If you have 3 apples and take 2, how many do you have? (Answer: 2)",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:53:44.809714",
+      "input": "Explain force in physics",
+      "response": "Force is measured in Newtons (N). Newton's laws: F = ma (Force = mass \u00d7 acceleration).",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:53:44.811648",
+      "input": "Write a JavaScript calculator function",
+      "response": "Here's a comprehensive JavaScript example:\n\n**Interactive Calculator:**\n```javascript\nclass Calculator {\n    constructor() {\n        this.result = 0;\n        this.history = [];\n    }\n    \n    add(a, b) {\n        const result = a + b;\n        this.history.push(`${a} + ${b} = ${result}`);\n        return result;\n    }\n    \n    subtract(a, b) {\n        const result = a - b;\n        this.history.push(`${a} - ${b} = ${result}`);\n        return result;\n    }\n    \n    multiply(a, b) {\n        const result = a * b;\n        this.history.push(`${a} \u00d7 ${b} = ${result}`);\n        return result;\n    }\n    \n    divide(a, b) {\n        if (b === 0) {\n            throw new Error('Cannot divide by zero!');\n        }\n        const result = a / b;\n        this.history.push(`${a} \u00f7 ${b} = ${result}`);\n        return result;\n    }\n    \n    getHistory() {\n        return this.history;\n    }\n    \n    clearHistory() {\n        this.history = [];\n    }\n}\n\n// Usage\nconst calc = new Calculator();\nconsole.log(calc.add(10, 5));      // 15\nconsole.log(calc.multiply(3, 4));  // 12\nconsole.log(calc.getHistory());    // Shows calculation history\n\n// DOM Manipulation Example\nfunction createInteractiveApp() {\n    const app = document.createElement('div');\n    app.innerHTML = `\n        <h2>Interactive Calculator</h2>\n        <input type=\"number\" id=\"num1\" placeholder=\"First number\">\n        <select id=\"operation\">\n            <option value=\"add\">Add (+)</option>\n            <option value=\"subtract\">Subtract (-)</option>\n            <option value=\"multiply\">Multiply (\u00d7)</option>\n            <option value=\"divide\">Divide (\u00f7)</option>\n        </select>\n        <input type=\"number\" id=\"num2\" placeholder=\"Second number\">\n        <button onclick=\"calculate()\">Calculate</button>\n        <div id=\"result\"></div>\n        <div id=\"history\"></div>\n    `;\n    \n    document.body.appendChild(app);\n}\n\nfunction calculate() {\n    const num1 = parseFloat(document.getElementById('num1').value);\n    const num2 = parseFloat(document.getElementById('num2').value);\n    const operation = document.getElementById('operation').value;\n    const resultDiv = document.getElementById('result');\n    \n    if (isNaN(num1) || isNaN(num2)) {\n        resultDiv.innerHTML = '<p style=\"color: red;\">Please enter valid numbers!</p>';\n        return;\n    }\n    \n    try {\n        let result;\n        switch(operation) {\n            case 'add':\n                result = calc.add(num1, num2);\n                break;\n            case 'subtract':\n                result = calc.subtract(num1, num2);\n                break;\n            case 'multiply':\n                result = calc.multiply(num1, num2);\n                break;\n            case 'divide':\n                result = calc.divide(num1, num2);\n                break;\n        }\n        \n        resultDiv.innerHTML = `<h3>Result: ${result}</h3>`;\n        updateHistory();\n        \n    } catch (error) {\n        resultDiv.innerHTML = `<p style=\"color: red;\">${error.message}</p>`;\n    }\n}\n\nfunction updateHistory() {\n    const historyDiv = document.getElementById('history');\n    const history = calc.getHistory();\n    historyDiv.innerHTML = '<h4>History:</h4>' + \n        history.map(item => `<p>${item}</p>`).join('');\n}\n\n// Initialize the app\ncreateInteractiveApp();\n```\n\nThis JavaScript includes:\n\ud83e\uddee Object-oriented calculator class\n\ud83d\udcca Calculation history tracking\n\ud83c\udfaf Error handling for edge cases\n\ud83c\udf10 DOM manipulation and event handling\n\u2728 Modern ES6+ syntax and features\n\ud83d\udd27 Modular, reusable code structure",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:55:46.519349",
+      "input": "How do I install Python on my PC?",
+      "response": "Python is excellent! Known for clean syntax and versatility. Great for web dev, data science, AI, automation.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:55:46.521509",
+      "input": "How to install Python on Windows?",
+      "response": "Python is excellent! Known for clean syntax and versatility. Great for web dev, data science, AI, automation.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:55:46.523327",
+      "input": "What is the process to install Python?",
+      "response": "Python is a high-level programming language known for its simplicity and readability.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:55:46.525135",
+      "input": "Guide me to install Python on my computer",
+      "response": "Python is excellent! Known for clean syntax and versatility. Great for web dev, data science, AI, automation.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T17:55:46.526926",
+      "input": "Steps to install Python",
+      "response": "Python is excellent! Known for clean syntax and versatility. Great for web dev, data science, AI, automation.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T18:04:57.863438",
+      "input": "How do I install Python on my PC?",
+      "response": "Here's how to install Python on your PC:\n\n## \ud83d\udc0d Python Installation Guide for Windows\n\n### Method 1: Official Website (Recommended)\n\n**Step 1: Download Python**\n1. Go to https://www.python.org/downloads/\n2. Click the yellow \"Download Python 3.x.x\" button\n3. This downloads the latest stable version\n\n**Step 2: Run the Installer**\n1. Double-click the downloaded .exe file\n2. \u26a0\ufe0f **IMPORTANT**: Check \"Add Python to PATH\" checkbox\n3. Click \"Install Now\" for default installation\n4. Wait for installation to complete\n\n**Step 3: Verify Installation**\n1. Open Command Prompt (cmd) or PowerShell\n2. Type: `python --version`\n3. You should see: `Python 3.x.x`\n4. Type: `pip --version` to verify pip is installed\n\n### Method 2: Microsoft Store (Windows 10/11)\n\n1. Open Microsoft Store\n2. Search for \"Python\"\n3. Install \"Python 3.x\" by Python Software Foundation\n4. It automatically adds Python to PATH\n\n### \ud83d\udd27 Post-Installation Setup\n\n**Install Essential Packages:**\n```cmd\npip install --upgrade pip\npip install requests numpy pandas matplotlib\n```\n\n**Create Your First Python Script:**\n```python\n# hello.py\nprint(\"Hello, World!\")\nprint(\"Python is successfully installed!\")\n\nimport sys\nprint(f\"Python version: {sys.version}\")\n```\n\n**Run the script:**\n```cmd\npython hello.py\n```\n\n### \u2705 Verification Commands\n\n```cmd\npython --version\npip --version\npython -c \"print('Python is working!')\"\n```\n\n### \ud83d\udea8 Common Issues & Solutions\n\n**\"Python is not recognized\" error:**\n- Reinstall Python and check \"Add to PATH\"\n- Or manually add Python to PATH in Environment Variables\n\n**Permission errors:**\n- Run Command Prompt as Administrator\n- Or use `python -m pip install package_name`\n\nThat's it! Python should now be installed and ready to use on your PC. \ud83d\ude80\n\n**Next Steps:**\n- Try Python tutorials online\n- Install VS Code for a better coding experience\n- Start with simple scripts and gradually build projects\n\nHappy coding! \ud83d\udc0d",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T18:04:57.867622",
+      "input": "How to install Python on Windows?",
+      "response": "Here's how to install Python on your PC:\n\n## \ud83d\udc0d Python Installation Guide for Windows\n\n### Method 1: Official Website (Recommended)\n\n**Step 1: Download Python**\n1. Go to https://www.python.org/downloads/\n2. Click the yellow \"Download Python 3.x.x\" button\n3. This downloads the latest stable version\n\n**Step 2: Run the Installer**\n1. Double-click the downloaded .exe file\n2. \u26a0\ufe0f **IMPORTANT**: Check \"Add Python to PATH\" checkbox\n3. Click \"Install Now\" for default installation\n4. Wait for installation to complete\n\n**Step 3: Verify Installation**\n1. Open Command Prompt (cmd) or PowerShell\n2. Type: `python --version`\n3. You should see: `Python 3.x.x`\n4. Type: `pip --version` to verify pip is installed\n\n### Method 2: Microsoft Store (Windows 10/11)\n\n1. Open Microsoft Store\n2. Search for \"Python\"\n3. Install \"Python 3.x\" by Python Software Foundation\n4. It automatically adds Python to PATH\n\n### \ud83d\udd27 Post-Installation Setup\n\n**Install Essential Packages:**\n```cmd\npip install --upgrade pip\npip install requests numpy pandas matplotlib\n```\n\n**Create Your First Python Script:**\n```python\n# hello.py\nprint(\"Hello, World!\")\nprint(\"Python is successfully installed!\")\n\nimport sys\nprint(f\"Python version: {sys.version}\")\n```\n\n**Run the script:**\n```cmd\npython hello.py\n```\n\n### \u2705 Verification Commands\n\n```cmd\npython --version\npip --version\npython -c \"print('Python is working!')\"\n```\n\n### \ud83d\udea8 Common Issues & Solutions\n\n**\"Python is not recognized\" error:**\n- Reinstall Python and check \"Add to PATH\"\n- Or manually add Python to PATH in Environment Variables\n\n**Permission errors:**\n- Run Command Prompt as Administrator\n- Or use `python -m pip install package_name`\n\nThat's it! Python should now be installed and ready to use on your PC. \ud83d\ude80\n\n**Next Steps:**\n- Try Python tutorials online\n- Install VS Code for a better coding experience\n- Start with simple scripts and gradually build projects\n\nHappy coding! \ud83d\udc0d",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T18:04:57.871680",
+      "input": "Steps to install Python",
+      "response": "Here's how to install Python on your PC:\n\n## \ud83d\udc0d Python Installation Guide for Windows\n\n### Method 1: Official Website (Recommended)\n\n**Step 1: Download Python**\n1. Go to https://www.python.org/downloads/\n2. Click the yellow \"Download Python 3.x.x\" button\n3. This downloads the latest stable version\n\n**Step 2: Run the Installer**\n1. Double-click the downloaded .exe file\n2. \u26a0\ufe0f **IMPORTANT**: Check \"Add Python to PATH\" checkbox\n3. Click \"Install Now\" for default installation\n4. Wait for installation to complete\n\n**Step 3: Verify Installation**\n1. Open Command Prompt (cmd) or PowerShell\n2. Type: `python --version`\n3. You should see: `Python 3.x.x`\n4. Type: `pip --version` to verify pip is installed\n\n### Method 2: Microsoft Store (Windows 10/11)\n\n1. Open Microsoft Store\n2. Search for \"Python\"\n3. Install \"Python 3.x\" by Python Software Foundation\n4. It automatically adds Python to PATH\n\n### \ud83d\udd27 Post-Installation Setup\n\n**Install Essential Packages:**\n```cmd\npip install --upgrade pip\npip install requests numpy pandas matplotlib\n```\n\n**Create Your First Python Script:**\n```python\n# hello.py\nprint(\"Hello, World!\")\nprint(\"Python is successfully installed!\")\n\nimport sys\nprint(f\"Python version: {sys.version}\")\n```\n\n**Run the script:**\n```cmd\npython hello.py\n```\n\n### \u2705 Verification Commands\n\n```cmd\npython --version\npip --version\npython -c \"print('Python is working!')\"\n```\n\n### \ud83d\udea8 Common Issues & Solutions\n\n**\"Python is not recognized\" error:**\n- Reinstall Python and check \"Add to PATH\"\n- Or manually add Python to PATH in Environment Variables\n\n**Permission errors:**\n- Run Command Prompt as Administrator\n- Or use `python -m pip install package_name`\n\nThat's it! Python should now be installed and ready to use on your PC. \ud83d\ude80\n\n**Next Steps:**\n- Try Python tutorials online\n- Install VS Code for a better coding experience\n- Start with simple scripts and gradually build projects\n\nHappy coding! \ud83d\udc0d",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T18:04:57.875687",
+      "input": "Install Node.js on Windows",
+      "response": "Here's how to install Node.js on your PC:\n\n## \ud83d\udfe2 Node.js Installation Guide\n\n**Step 1: Download Node.js**\n1. Go to https://nodejs.org/\n2. Download the LTS (Long Term Support) version\n3. Choose Windows Installer (.msi)\n\n**Step 2: Install Node.js**\n1. Run the downloaded .msi file\n2. Follow the installation wizard\n3. Accept the license agreement\n4. Choose installation directory (default is fine)\n5. Select \"Add to PATH\" option\n6. Click Install\n\n**Step 3: Verify Installation**\n```cmd\nnode --version\nnpm --version\n```\n\n**Create your first Node.js app:**\n```javascript\n// app.js\nconsole.log(\"Hello, Node.js!\");\nconsole.log(\"Node.js version:\", process.version);\n```\n\n**Run the app:**\n```cmd\nnode app.js\n```\n\nNode.js is now ready to use! \ud83c\udf89",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T18:04:57.878123",
+      "input": "How to setup Python?",
+      "response": "Here's how to install Python on your PC:\n\n## \ud83d\udc0d Python Installation Guide for Windows\n\n### Method 1: Official Website (Recommended)\n\n**Step 1: Download Python**\n1. Go to https://www.python.org/downloads/\n2. Click the yellow \"Download Python 3.x.x\" button\n3. This downloads the latest stable version\n\n**Step 2: Run the Installer**\n1. Double-click the downloaded .exe file\n2. \u26a0\ufe0f **IMPORTANT**: Check \"Add Python to PATH\" checkbox\n3. Click \"Install Now\" for default installation\n4. Wait for installation to complete\n\n**Step 3: Verify Installation**\n1. Open Command Prompt (cmd) or PowerShell\n2. Type: `python --version`\n3. You should see: `Python 3.x.x`\n4. Type: `pip --version` to verify pip is installed\n\n### Method 2: Microsoft Store (Windows 10/11)\n\n1. Open Microsoft Store\n2. Search for \"Python\"\n3. Install \"Python 3.x\" by Python Software Foundation\n4. It automatically adds Python to PATH\n\n### \ud83d\udd27 Post-Installation Setup\n\n**Install Essential Packages:**\n```cmd\npip install --upgrade pip\npip install requests numpy pandas matplotlib\n```\n\n**Create Your First Python Script:**\n```python\n# hello.py\nprint(\"Hello, World!\")\nprint(\"Python is successfully installed!\")\n\nimport sys\nprint(f\"Python version: {sys.version}\")\n```\n\n**Run the script:**\n```cmd\npython hello.py\n```\n\n### \u2705 Verification Commands\n\n```cmd\npython --version\npip --version\npython -c \"print('Python is working!')\"\n```\n\n### \ud83d\udea8 Common Issues & Solutions\n\n**\"Python is not recognized\" error:**\n- Reinstall Python and check \"Add to PATH\"\n- Or manually add Python to PATH in Environment Variables\n\n**Permission errors:**\n- Run Command Prompt as Administrator\n- Or use `python -m pip install package_name`\n\nThat's it! Python should now be installed and ready to use on your PC. \ud83d\ude80\n\n**Next Steps:**\n- Try Python tutorials online\n- Install VS Code for a better coding experience\n- Start with simple scripts and gradually build projects\n\nHappy coding! \ud83d\udc0d",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T18:07:23.831074",
+      "input": "How do I install Python on my PC?",
+      "response": "Here's how to install Python on your PC:\n\n## \ud83d\udc0d Python Installation Guide for Windows\n\n### Method 1: Official Website (Recommended)\n\n**Step 1: Download Python**\n1. Go to https://www.python.org/downloads/\n2. Click the yellow \"Download Python 3.x.x\" button\n3. This downloads the latest stable version\n\n**Step 2: Run the Installer**\n1. Double-click the downloaded .exe file\n2. \u26a0\ufe0f **IMPORTANT**: Check \"Add Python to PATH\" checkbox\n3. Click \"Install Now\" for default installation\n4. Wait for installation to complete\n\n**Step 3: Verify Installation**\n1. Open Command Prompt (cmd) or PowerShell\n2. Type: `python --version`\n3. You should see: `Python 3.x.x`\n4. Type: `pip --version` to verify pip is installed\n\n### Method 2: Microsoft Store (Windows 10/11)\n\n1. Open Microsoft Store\n2. Search for \"Python\"\n3. Install \"Python 3.x\" by Python Software Foundation\n4. It automatically adds Python to PATH\n\n### \ud83d\udd27 Post-Installation Setup\n\n**Install Essential Packages:**\n```cmd\npip install --upgrade pip\npip install requests numpy pandas matplotlib\n```\n\n**Create Your First Python Script:**\n```python\n# hello.py\nprint(\"Hello, World!\")\nprint(\"Python is successfully installed!\")\n\nimport sys\nprint(f\"Python version: {sys.version}\")\n```\n\n**Run the script:**\n```cmd\npython hello.py\n```\n\n### \u2705 Verification Commands\n\n```cmd\npython --version\npip --version\npython -c \"print('Python is working!')\"\n```\n\n### \ud83d\udea8 Common Issues & Solutions\n\n**\"Python is not recognized\" error:**\n- Reinstall Python and check \"Add to PATH\"\n- Or manually add Python to PATH in Environment Variables\n\n**Permission errors:**\n- Run Command Prompt as Administrator\n- Or use `python -m pip install package_name`\n\nThat's it! Python should now be installed and ready to use on your PC. \ud83d\ude80\n\n**Next Steps:**\n- Try Python tutorials online\n- Install VS Code for a better coding experience\n- Start with simple scripts and gradually build projects\n\nHappy coding! \ud83d\udc0d",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T18:07:23.834883",
+      "input": "Create a simple website",
+      "response": "Here's a complete simple website for you:\n\n**HTML (index.html):**\n```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>My Simple Website</title>\n    <style>\n        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f4f4f4; }\n        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; }\n        h1 { color: #333; text-align: center; }\n        .section { margin: 20px 0; padding: 15px; border-left: 4px solid #007bff; }\n        button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }\n        button:hover { background: #0056b3; }\n    </style>\n</head>\n<body>\n    <div class=\"container\">\n        <h1>Welcome to My Website</h1>\n        <div class=\"section\">\n            <h2>About</h2>\n            <p>This is a simple, clean website template. You can customize it as needed!</p>\n            <button onclick=\"alert('Hello! Welcome to my website!')\">Click Me!</button>\n        </div>\n        <div class=\"section\">\n            <h2>Contact</h2>\n            <p>Email: your-email@example.com</p>\n            <p>Phone: (123) 456-7890</p>\n        </div>\n    </div>\n</body>\n</html>\n```\n\nThis creates a modern, responsive website with clean styling and interactive elements!",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T18:07:23.837430",
+      "input": "Who is the Prime Minister of India?",
+      "response": "Narendra Modi is the current Prime Minister of India, serving since May 2014. He is a member of the Bharatiya Janata Party (BJP).",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T18:07:23.840194",
+      "input": "What is the square root of 144?",
+      "response": "The square root of 144.0 is 12.0",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T18:07:23.842789",
+      "input": "What is sin(30)?",
+      "response": "I can help with basic math: addition, subtraction, multiplication, division, square roots, factorials.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T18:07:23.844997",
+      "input": "Tell me about Python programming",
+      "response": "Python is a high-level programming language known for its simplicity and readability.",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T18:07:23.848293",
+      "input": "How to install Node.js?",
+      "response": "Here's how to install Node.js on your PC:\n\n## \ud83d\udfe2 Node.js Installation Guide\n\n**Step 1: Download Node.js**\n1. Go to https://nodejs.org/\n2. Download the LTS (Long Term Support) version\n3. Choose Windows Installer (.msi)\n\n**Step 2: Install Node.js**\n1. Run the downloaded .msi file\n2. Follow the installation wizard\n3. Accept the license agreement\n4. Choose installation directory (default is fine)\n5. Select \"Add to PATH\" option\n6. Click Install\n\n**Step 3: Verify Installation**\n```cmd\nnode --version\nnpm --version\n```\n\n**Create your first Node.js app:**\n```javascript\n// app.js\nconsole.log(\"Hello, Node.js!\");\nconsole.log(\"Node.js version:\", process.version);\n```\n\n**Run the app:**\n```cmd\nnode app.js\n```\n\nNode.js is now ready to use! \ud83c\udf89",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T18:07:23.852515",
+      "input": "What time is it?",
+      "response": "The current time is 06:07 PM",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T18:07:23.855045",
+      "input": "Give me a quiz question",
+      "response": "Brain teaser: What has keys but no locks, space but no room? (Answer: A keyboard)",
+      "feedback": null
+    },
+    {
+      "timestamp": "2025-07-19T18:07:23.857399",
+      "input": "Hello there!",
+      "response": "Greetings! I'm here to assist you with anything you need.",
+      "feedback": null
+    }
+  ]
+}

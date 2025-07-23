@@ -1,0 +1,201 @@
+2025-07-20 09:49:19,660 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.234:5000
+2025-07-20 09:49:19,660 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-20 09:49:19,662 - werkzeug - INFO -  * Restarting with stat
+2025-07-20 09:49:20,510 - werkzeug - WARNING -  * Debugger is active!
+2025-07-20 09:49:20,514 - werkzeug - INFO -  * Debugger PIN: 129-630-693
+2025-07-20 09:52:17,125 - werkzeug - INFO - 192.168.31.234 - - [20/Jul/2025 09:52:17] "GET / HTTP/1.1" 200 -
+2025-07-20 09:52:17,429 - werkzeug - INFO - 192.168.31.234 - - [20/Jul/2025 09:52:17] "GET /static/images/favicon-32x32.png HTTP/1.1" 200 -
+2025-07-20 09:52:17,438 - werkzeug - INFO - 192.168.31.234 - - [20/Jul/2025 09:52:17] "GET /static/images/favicon-16x16.png HTTP/1.1" 200 -
+2025-07-20 09:52:19,192 - werkzeug - INFO - 192.168.31.234 - - [20/Jul/2025 09:52:19] "GET /login HTTP/1.1" 200 -
+2025-07-20 09:52:19,396 - werkzeug - INFO - 192.168.31.234 - - [20/Jul/2025 09:52:19] "[36mGET /static/images/favicon-32x32.png HTTP/1.1[0m" 304 -
+2025-07-20 09:52:19,409 - werkzeug - INFO - 192.168.31.234 - - [20/Jul/2025 09:52:19] "[36mGET /static/images/favicon-16x16.png HTTP/1.1[0m" 304 -
+2025-07-20 09:52:21,951 - werkzeug - INFO - 192.168.31.234 - - [20/Jul/2025 09:52:21] "[32mGET /auth/google HTTP/1.1[0m" 302 -
+2025-07-20 09:52:28,225 - __main__ - ERROR - Google OAuth error: 'state'
+Traceback (most recent call last):
+  File "C:\Users\90fre\Downloads\CodeEx-AI-ver-2.0-main\python_app\app.py", line 276, in google_callback
+    state=session['state']
+          ~~~~~~~^^^^^^^^^
+  File "C:\Users\90fre\AppData\Roaming\Python\Python313\site-packages\flask\sessions.py", line 79, in __getitem__
+    return super().__getitem__(key)
+           ~~~~~~~~~~~~~~~~~~~^^^^^
+KeyError: 'state'
+2025-07-20 09:52:28,231 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:28] "[32mGET /auth/google/callback?state=Remus8SUAwWUNRa1cqoC54Ixj4fHJG&code=4/0AVMBsJgtxoLXNs2wWG9mJDQMzBdtivLIm0sF5OFXYIzO8imxaptXHNrS-FqUYjM-TxdRyw&scope=email+profile+https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email+openid&authuser=0&prompt=consent HTTP/1.1[0m" 302 -
+2025-07-20 09:52:28,493 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:28] "GET /login HTTP/1.1" 200 -
+2025-07-20 09:52:29,731 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:29] "GET /static/images/favicon-32x32.png HTTP/1.1" 200 -
+2025-07-20 09:52:30,049 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:30] "GET /static/manifest.json HTTP/1.1" 200 -
+2025-07-20 09:52:30,049 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:30] "GET /static/images/favicon-16x16.png HTTP/1.1" 200 -
+2025-07-20 09:52:30,298 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:30] "GET /static/images/icon-144x144.png HTTP/1.1" 200 -
+2025-07-20 09:52:34,427 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:34] "[32mGET /auth/google HTTP/1.1[0m" 302 -
+2025-07-20 09:52:35,267 - __main__ - ERROR - Google OAuth error: Scope has changed from "openid email profile" to "openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email".
+Traceback (most recent call last):
+  File "C:\Users\90fre\Downloads\CodeEx-AI-ver-2.0-main\python_app\app.py", line 282, in google_callback
+    flow.fetch_token(authorization_response=authorization_response)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\90fre\AppData\Roaming\Python\Python313\site-packages\google_auth_oauthlib\flow.py", line 285, in fetch_token
+    return self.oauth2session.fetch_token(self.client_config["token_uri"], **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\90fre\AppData\Roaming\Python\Python313\site-packages\requests_oauthlib\oauth2_session.py", line 406, in fetch_token
+    self._client.parse_request_body_response(r.text, scope=self.scope)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\90fre\AppData\Roaming\Python\Python313\site-packages\oauthlib\oauth2\rfc6749\clients\base.py", line 426, in parse_request_body_response
+    self.token = parse_token_response(body, scope=scope)
+                 ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\90fre\AppData\Roaming\Python\Python313\site-packages\oauthlib\oauth2\rfc6749\parameters.py", line 444, in parse_token_response
+    validate_token_parameters(params)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\90fre\AppData\Roaming\Python\Python313\site-packages\oauthlib\oauth2\rfc6749\parameters.py", line 473, in validate_token_parameters
+    raise w
+Warning: Scope has changed from "openid email profile" to "openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email".
+2025-07-20 09:52:35,270 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:35] "[32mGET /auth/google/callback?state=R6Ta1i4Jn24fiNNEHUuWUQ5wk17n2e&code=4/0AVMBsJh0TJytmYfCsmqgt1DuI2daBnkxkpgLNCL-v-pbWh_qGuFm8tlQwtrOAjIn4MZ1eQ&scope=email+profile+https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email+openid&authuser=0&prompt=none HTTP/1.1[0m" 302 -
+2025-07-20 09:52:35,584 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:35] "GET /login HTTP/1.1" 200 -
+2025-07-20 09:52:35,713 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:35] "[36mGET /static/manifest.json HTTP/1.1[0m" 304 -
+2025-07-20 09:52:35,836 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:35] "[36mGET /static/images/favicon-32x32.png HTTP/1.1[0m" 304 -
+2025-07-20 09:52:36,019 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:36] "[36mGET /static/images/icon-144x144.png HTTP/1.1[0m" 304 -
+2025-07-20 09:52:36,023 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:36] "[36mGET /static/images/favicon-16x16.png HTTP/1.1[0m" 304 -
+2025-07-20 09:52:37,463 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:37] "[32mGET /auth/google HTTP/1.1[0m" 302 -
+2025-07-20 09:52:38,311 - __main__ - ERROR - Google OAuth error: Scope has changed from "openid email profile" to "openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email".
+Traceback (most recent call last):
+  File "C:\Users\90fre\Downloads\CodeEx-AI-ver-2.0-main\python_app\app.py", line 282, in google_callback
+    flow.fetch_token(authorization_response=authorization_response)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\90fre\AppData\Roaming\Python\Python313\site-packages\google_auth_oauthlib\flow.py", line 285, in fetch_token
+    return self.oauth2session.fetch_token(self.client_config["token_uri"], **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\90fre\AppData\Roaming\Python\Python313\site-packages\requests_oauthlib\oauth2_session.py", line 406, in fetch_token
+    self._client.parse_request_body_response(r.text, scope=self.scope)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\90fre\AppData\Roaming\Python\Python313\site-packages\oauthlib\oauth2\rfc6749\clients\base.py", line 426, in parse_request_body_response
+    self.token = parse_token_response(body, scope=scope)
+                 ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\90fre\AppData\Roaming\Python\Python313\site-packages\oauthlib\oauth2\rfc6749\parameters.py", line 444, in parse_token_response
+    validate_token_parameters(params)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\90fre\AppData\Roaming\Python\Python313\site-packages\oauthlib\oauth2\rfc6749\parameters.py", line 473, in validate_token_parameters
+    raise w
+Warning: Scope has changed from "openid email profile" to "openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email".
+2025-07-20 09:52:38,313 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:38] "[32mGET /auth/google/callback?state=XNw1fXdNtWy9aTgpIeSZu1OtfZDiEa&code=4/0AVMBsJieV3VP8-JwIIUt9qEHjjRMzX8PqquRu_DYTticAUYtd7YPETmE-wW_xobQqTa5FA&scope=email+profile+https://www.googleapis.com/auth/userinfo.profile+openid+https://www.googleapis.com/auth/userinfo.email&authuser=0&prompt=none HTTP/1.1[0m" 302 -
+2025-07-20 09:52:38,621 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:38] "GET /login HTTP/1.1" 200 -
+2025-07-20 09:52:38,887 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:38] "[36mGET /static/images/favicon-32x32.png HTTP/1.1[0m" 304 -
+2025-07-20 09:52:39,056 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:39] "[36mGET /static/manifest.json HTTP/1.1[0m" 304 -
+2025-07-20 09:52:39,057 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:39] "[36mGET /static/images/favicon-16x16.png HTTP/1.1[0m" 304 -
+2025-07-20 09:52:39,205 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:39] "[36mGET /static/images/icon-144x144.png HTTP/1.1[0m" 304 -
+2025-07-20 09:52:53,840 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:53] "GET /login HTTP/1.1" 200 -
+2025-07-20 09:52:53,998 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:53] "[36mGET /static/manifest.json HTTP/1.1[0m" 304 -
+2025-07-20 09:52:54,150 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:54] "[36mGET /static/images/favicon-32x32.png HTTP/1.1[0m" 304 -
+2025-07-20 09:52:54,318 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:54] "[36mGET /static/images/icon-144x144.png HTTP/1.1[0m" 304 -
+2025-07-20 09:52:54,468 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:54] "[36mGET /static/images/favicon-16x16.png HTTP/1.1[0m" 304 -
+2025-07-20 09:52:55,902 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:55] "GET /login HTTP/1.1" 200 -
+2025-07-20 09:52:56,028 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:56] "[36mGET /static/images/favicon-32x32.png HTTP/1.1[0m" 304 -
+2025-07-20 09:52:56,152 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:56] "[36mGET /static/images/favicon-16x16.png HTTP/1.1[0m" 304 -
+2025-07-20 09:52:56,335 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:56] "[36mGET /static/manifest.json HTTP/1.1[0m" 304 -
+2025-07-20 09:52:56,652 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:56] "[36mGET /static/images/icon-144x144.png HTTP/1.1[0m" 304 -
+2025-07-20 09:52:57,690 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:57] "GET / HTTP/1.1" 200 -
+2025-07-20 09:52:57,913 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:57] "[36mGET /static/manifest.json HTTP/1.1[0m" 304 -
+2025-07-20 09:52:57,994 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:57] "[36mGET /static/images/favicon-32x32.png HTTP/1.1[0m" 304 -
+2025-07-20 09:52:58,226 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:58] "[36mGET /static/images/icon-144x144.png HTTP/1.1[0m" 304 -
+2025-07-20 09:52:58,226 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:58] "[36mGET /static/images/favicon-16x16.png HTTP/1.1[0m" 304 -
+2025-07-20 09:52:58,317 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 09:52:58] "GET /static/sw.js HTTP/1.1" 200 -
+2025-07-20 09:57:37,942 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.234:5000
+2025-07-20 09:57:37,942 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-20 09:57:37,944 - werkzeug - INFO -  * Restarting with stat
+2025-07-20 09:57:38,897 - werkzeug - WARNING -  * Debugger is active!
+2025-07-20 09:57:38,901 - werkzeug - INFO -  * Debugger PIN: 129-630-693
+2025-07-20 14:27:59,451 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.234:5000
+2025-07-20 14:27:59,451 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-20 14:27:59,457 - werkzeug - INFO -  * Restarting with stat
+2025-07-20 14:27:59,917 - werkzeug - WARNING -  * Debugger is active!
+2025-07-20 14:27:59,920 - werkzeug - INFO -  * Debugger PIN: 294-687-603
+2025-07-20 14:28:17,830 - werkzeug - INFO - 192.168.31.234 - - [20/Jul/2025 14:28:17] "GET / HTTP/1.1" 200 -
+2025-07-20 14:28:19,708 - werkzeug - INFO - 192.168.31.234 - - [20/Jul/2025 14:28:19] "GET /static/images/favicon-32x32.png HTTP/1.1" 200 -
+2025-07-20 14:28:30,571 - werkzeug - INFO - 192.168.31.234 - - [20/Jul/2025 14:28:30] "GET /login HTTP/1.1" 200 -
+2025-07-20 14:28:32,785 - werkzeug - INFO - 192.168.31.234 - - [20/Jul/2025 14:28:32] "[32mGET /auth/google HTTP/1.1[0m" 302 -
+2025-07-20 14:28:33,505 - __main__ - ERROR - Google OAuth error: 'state'
+Traceback (most recent call last):
+  File "C:\Users\90fre\Downloads\CodeEx-AI-ver-2.0-main\python_app\app.py", line 294, in google_callback
+    state=session['state']
+          ~~~~~~~^^^^^^^^^
+  File "C:\Users\90fre\AppData\Roaming\Python\Python313\site-packages\flask\sessions.py", line 79, in __getitem__
+    return super().__getitem__(key)
+           ~~~~~~~~~~~~~~~~~~~^^^^^
+KeyError: 'state'
+2025-07-20 14:28:33,512 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:28:33] "[32mGET /auth/google/callback?state=QMaerdDepdTfRYoW10NYPUzmKOeB5q&code=4/0AVMBsJgEN3CuRlT8HhZWAaDpKtz0WYEncvZ-3acLXm70bDRmHK_dhIvG7aou0Ya_WQhEcA&scope=email+profile+openid+https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile&authuser=0&prompt=none HTTP/1.1[0m" 302 -
+2025-07-20 14:28:33,757 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:28:33] "GET /login HTTP/1.1" 200 -
+2025-07-20 14:28:34,371 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:28:34] "GET /static/images/favicon-32x32.png HTTP/1.1" 200 -
+2025-07-20 14:28:34,673 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:28:34] "[36mGET /static/manifest.json HTTP/1.1[0m" 304 -
+2025-07-20 14:28:34,994 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:28:34] "GET /static/images/icon-144x144.png HTTP/1.1" 200 -
+2025-07-20 14:28:38,425 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:28:38] "[32mGET /auth/google HTTP/1.1[0m" 302 -
+2025-07-20 14:28:39,734 - __main__ - ERROR - Google OAuth error: Scope has changed from "email profile openid" to "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid".
+Traceback (most recent call last):
+  File "C:\Users\90fre\Downloads\CodeEx-AI-ver-2.0-main\python_app\app.py", line 300, in google_callback
+    flow.fetch_token(authorization_response=authorization_response)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\90fre\AppData\Roaming\Python\Python313\site-packages\google_auth_oauthlib\flow.py", line 285, in fetch_token
+    return self.oauth2session.fetch_token(self.client_config["token_uri"], **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\90fre\AppData\Roaming\Python\Python313\site-packages\requests_oauthlib\oauth2_session.py", line 406, in fetch_token
+    self._client.parse_request_body_response(r.text, scope=self.scope)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\90fre\AppData\Roaming\Python\Python313\site-packages\oauthlib\oauth2\rfc6749\clients\base.py", line 426, in parse_request_body_response
+    self.token = parse_token_response(body, scope=scope)
+                 ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\90fre\AppData\Roaming\Python\Python313\site-packages\oauthlib\oauth2\rfc6749\parameters.py", line 444, in parse_token_response
+    validate_token_parameters(params)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\90fre\AppData\Roaming\Python\Python313\site-packages\oauthlib\oauth2\rfc6749\parameters.py", line 473, in validate_token_parameters
+    raise w
+Warning: Scope has changed from "email profile openid" to "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid".
+2025-07-20 14:28:39,759 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:28:39] "[32mGET /auth/google/callback?state=6RaukmoJDxn0NkSVnlIyLtbteQfJZg&code=4/0AVMBsJgXnvHJwB417QduBTd0EwG8nQD1wUp5-Gu6B23WSoWfMFfyo27FuDtUc71teBuOgQ&scope=email+profile+https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email+openid&authuser=0&prompt=none HTTP/1.1[0m" 302 -
+2025-07-20 14:28:40,077 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:28:40] "GET /login HTTP/1.1" 200 -
+2025-07-20 14:28:40,216 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:28:40] "[36mGET /static/manifest.json HTTP/1.1[0m" 304 -
+2025-07-20 14:28:40,328 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:28:40] "[36mGET /static/images/icon-144x144.png HTTP/1.1[0m" 304 -
+2025-07-20 14:30:52,023 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:30:52] "GET / HTTP/1.1" 200 -
+2025-07-20 14:30:52,689 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:30:52] "[36mGET /static/sw.js HTTP/1.1[0m" 304 -
+2025-07-20 14:30:52,697 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:30:52] "[36mGET /static/manifest.json HTTP/1.1[0m" 304 -
+2025-07-20 14:30:52,697 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:30:52] "GET /static/images/favicon-32x32.png HTTP/1.1" 200 -
+2025-07-20 14:30:52,708 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:30:52] "GET /static/images/icon-144x144.png HTTP/1.1" 200 -
+2025-07-20 14:30:52,733 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:30:52] "GET / HTTP/1.1" 200 -
+2025-07-20 14:30:52,734 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:30:52] "[32mGET /chat HTTP/1.1[0m" 302 -
+2025-07-20 14:30:52,736 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:30:52] "GET /login HTTP/1.1" 200 -
+2025-07-20 14:30:52,743 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:30:52] "[32mGET /storage HTTP/1.1[0m" 302 -
+2025-07-20 14:30:52,744 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:30:52] "GET /login HTTP/1.1" 200 -
+2025-07-20 14:30:52,748 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:30:52] "GET /static/manifest.json HTTP/1.1" 200 -
+2025-07-20 14:30:52,758 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:30:52] "GET /login HTTP/1.1" 200 -
+2025-07-20 14:30:52,759 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:30:52] "GET /static/sw.js HTTP/1.1" 200 -
+2025-07-20 14:30:56,132 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:30:56] "GET /login HTTP/1.1" 200 -
+2025-07-20 14:30:56,352 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:30:56] "[36mGET /static/manifest.json HTTP/1.1[0m" 304 -
+2025-07-20 14:30:56,358 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:30:56] "[36mGET /static/images/icon-144x144.png HTTP/1.1[0m" 304 -
+2025-07-20 14:31:09,348 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:31:09] "POST /login HTTP/1.1" 200 -
+2025-07-20 14:31:17,662 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:31:17] "POST /login HTTP/1.1" 200 -
+2025-07-20 14:31:31,728 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:31:31] "POST /login HTTP/1.1" 200 -
+2025-07-20 14:31:31,771 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:31:31] "GET /chat HTTP/1.1" 200 -
+2025-07-20 14:31:32,020 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:31:32] "[36mGET /static/manifest.json HTTP/1.1[0m" 304 -
+2025-07-20 14:31:32,020 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:31:32] "[36mGET /static/sw.js HTTP/1.1[0m" 304 -
+2025-07-20 14:31:32,035 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:31:32] "[36mGET /static/images/icon-144x144.png HTTP/1.1[0m" 304 -
+2025-07-20 14:31:32,048 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:31:32] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-20 14:31:32,051 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:31:32] "GET /chat HTTP/1.1" 200 -
+2025-07-20 14:31:32,052 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:31:32] "GET /login HTTP/1.1" 200 -
+2025-07-20 14:31:32,055 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:31:32] "GET /chat HTTP/1.1" 200 -
+2025-07-20 14:31:32,069 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:31:32] "GET /storage HTTP/1.1" 200 -
+2025-07-20 14:31:32,070 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:31:32] "GET /static/manifest.json HTTP/1.1" 200 -
+2025-07-20 14:31:32,073 - werkzeug - INFO - 127.0.0.1 - - [20/Jul/2025 14:31:32] "GET /static/sw.js HTTP/1.1" 200 -
+2025-07-20 14:32:50,472 - werkzeug - INFO -  * Detected change in 'C:\\Users\\90fre\\Downloads\\CodeEx-AI-ver-2.0-main\\python_app\\security_service.py', reloading
+2025-07-20 14:32:50,535 - werkzeug - INFO -  * Restarting with stat
+2025-07-20 14:32:51,074 - werkzeug - WARNING -  * Debugger is active!
+2025-07-20 14:32:51,078 - werkzeug - INFO -  * Debugger PIN: 294-687-603
+2025-07-20 14:33:10,977 - werkzeug - INFO -  * Detected change in 'C:\\Users\\90fre\\Downloads\\CodeEx-AI-ver-2.0-main\\python_app\\security_service.py', reloading
+2025-07-20 14:33:11,227 - werkzeug - INFO -  * Restarting with stat
+2025-07-20 14:33:12,133 - werkzeug - WARNING -  * Debugger is active!
+2025-07-20 14:33:12,138 - werkzeug - INFO -  * Debugger PIN: 294-687-603
+2025-07-20 14:36:33,000 - werkzeug - INFO -  * Detected change in 'C:\\Users\\90fre\\Downloads\\CodeEx-AI-ver-2.0-main\\python_app\\app.py', reloading
+2025-07-20 14:36:33,132 - werkzeug - INFO -  * Restarting with stat
+2025-07-20 14:36:33,641 - werkzeug - WARNING -  * Debugger is active!
+2025-07-20 14:36:33,644 - werkzeug - INFO -  * Debugger PIN: 294-687-603
