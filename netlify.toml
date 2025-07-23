@@ -1,6 +1,11 @@
 [build]
+  command = "echo 'Static deployment - no build needed'"
   publish = "static"
   ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF"
+
+[build.environment]
+  NPM_FLAGS = "--production=false"
+  SKIP_DEPENDENCY_INSTALL = "true"
 
 [[redirects]]
   from = "/*"

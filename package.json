@@ -1,0 +1,10 @@
+{
+  "name": "codeex-ai-static-notice",
+  "version": "1.0.0",
+  "description": "Static notice page for CodeEx AI Flask app",
+  "scripts": {
+    "build": "echo 'No build needed - static files only'"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
