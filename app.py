@@ -27,33 +27,7 @@ from google.auth.transport import requests as google_requests
 from google.oauth2 import id_token
 import requests
 
-# Load environment variables
-load_dotenv()
-
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-# Filter out SSL handshake noise in development
-class SSLFilter(logging.Filter):
-    def filter(self, record):
-        # Filter out SSL/TLS handshake error messages
-        if hasattr(record, 'getMessage'):
-            message = record.getMessage()
-            if any(phrase in message for phrase in [
-                'Bad request version',
-                'Bad HTTP/0.9 request type',
-                'Bad request syntax',
-                'code 400, message Bad'
-            ]):
-                return False
-        return True
-
-# Apply filter to werkzeug logger to reduce SSL noise
-werkzeug_logger = logging.getLogger('werkzeug')
-werkzeug_logger.addFilter(SSLFilter())
-
-# Security imports
+# Security imports (conditional)
 try:
     from flask_limiter import Limiter
     from flask_limiter.util import get_remote_address
@@ -61,7 +35,6 @@ try:
     SECURITY_AVAILABLE = True
 except ImportError:
     SECURITY_AVAILABLE = False
-    logger.warning("Security packages not available - install flask-limiter and flask-talisman for production")
 
 # Local imports
 from web_scraper import get_scraping_service
@@ -69,6 +42,41 @@ from chat_history_service import chat_history_service
 from ai_brain_integration import (get_intelligent_response, submit_feedback,
                                   get_ai_metrics, configure_ai_learning)
 from ai_integration_update import handle_chat_request, handle_feedback_request, handle_stats_request
+
+# Load environment variables
+load_dotenv()
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Enhanced SSL Filter for development
+class SSLFilter(logging.Filter):
+    def filter(self, record):
+        # Filter out SSL/TLS handshake error messages and binary data
+        if hasattr(record, 'getMessage'):
+            message = record.getMessage()
+            # Filter SSL handshake attempts and binary data
+            if any(phrase in message for phrase in [
+                'Bad request version',
+                'Bad HTTP/0.9 request type', 
+                'Bad request syntax',
+                'code 400, message Bad',
+                '\x16\x03',  # SSL/TLS handshake start
+                'HTTP/1.1" 400',
+                'code 400'
+            ]) or any(ord(c) > 127 for c in message if isinstance(c, str)):
+                return False
+        return True
+
+# Apply enhanced filter to werkzeug logger
+werkzeug_logger = logging.getLogger('werkzeug')
+werkzeug_logger.addFilter(SSLFilter())
+werkzeug_logger.setLevel(logging.WARNING)  # Reduce verbosity
+
+# Log security package availability
+if not SECURITY_AVAILABLE:
+    logger.warning("Security packages not available - install flask-limiter and flask-talisman for production")
 
 app = Flask(__name__)
 
@@ -793,6 +801,13 @@ def login_required(f):
     return decorated_function
 
 # Routes
+
+
+@app.route('/favicon.ico')
+def favicon():
+    """Serve favicon to prevent 404 errors"""
+    return redirect(url_for('static', filename='images/favicon.ico'), code=301)
+
 
 
 @app.route('/')
@@ -2203,14 +2218,40 @@ def create_app():
     init_db()
     return app
 
+@app.before_request
+def force_https():
+    """Force HTTPS in production, handle SSL gracefully in development"""
+    # Skip HTTPS redirect for local development
+    if request.is_secure or request.headers.get('X-Forwarded-Proto') == 'https':
+        return
+    
+    # Allow local development without HTTPS
+    if request.host.startswith('127.0.0.1') or request.host.startswith('localhost'):
+        return
+        
+    # In production, redirect to HTTPS
+    if os.environ.get('FORCE_HTTPS', 'false').lower() == 'true':
+        return redirect(request.url.replace('http://', 'https://'), code=301)
+
 if __name__ == '__main__':
-    # Development server
+    # Enhanced development server
     init_db()
     debug_mode = os.environ.get('FLASK_DEBUG', 'false').lower() == 'true'
     port = int(os.environ.get('PORT', 5000))
-    host = os.environ.get('HOST', '127.0.0.1')
+    host = os.environ.get('HOST', '0.0.0.0')  # Allow external connections
  
     if debug_mode:
         logger.warning("Running in DEBUG mode - not suitable for production!")
     
-    app.run(debug=debug_mode, host=host, port=port)
+    print(f"🚀 Starting CodeEx AI server...")
+    print(f"🌐 Local access: http://127.0.0.1:{port}")
+    print(f"📱 Network access: http://192.168.31.234:{port}")
+    print(f"⚡ Debug mode: {'ON' if debug_mode else 'OFF'}")
+    
+    app.run(
+        debug=debug_mode, 
+        host=host, 
+        port=port,
+        threaded=True,
+        use_reloader=False  # Prevent double initialization in debug mode
+    )
