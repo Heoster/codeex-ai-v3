@@ -3,10 +3,32 @@ requirements.txt.bak
 *.py
 __pycache__/
 *.pyc
-.env
+*.pyo
+*.pyd
+.Python
 venv/
 .venv/
 *.egg-info/
+*.egg
+
+# Ignore sensitive files
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+config.py
+secrets.json
+
+# Ignore database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Ignore logs
+*.log
+logs/
 
 # Keep only static files
 !static/
