@@ -98,3 +98,6 @@ python-dotenv>=1.0.0
 
 # Production server
 gunicorn>=21.2.0
+
+# Serverless deployment
+serverless-wsgi>=3.0.0

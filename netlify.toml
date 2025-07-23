@@ -1,12 +1,6 @@
 [build]
-  command = "pip install --upgrade pip setuptools wheel && pip install -r requirements.txt"
-  publish = "."
+  command = "echo 'This is a Flask app that requires a Python server. Please deploy to Render, Railway, or Heroku instead.'"
+  publish = "static"
 
 [build.environment]
   PYTHON_VERSION = "3.11"
-  PIP_UPGRADE = "true"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
