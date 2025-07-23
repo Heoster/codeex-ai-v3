@@ -37,7 +37,7 @@ catboost==1.2
 
 # Deep Learning Frameworks
 tensorflow==2.13.0
-torch==2.0.1
+torch==2.7.1
 torchvision==0.15.2
 torchaudio==2.0.2
 
