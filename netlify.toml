@@ -1,3 +1,8 @@
 [build]
-  command = "echo 'This is a Flask app that requires a Python server. Please deploy to Render, Railway, or Heroku instead.'"
   publish = "static"
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
