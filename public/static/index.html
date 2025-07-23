@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeEx AI - Deployment Notice</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        h1 { margin-bottom: 20px; }
+        .notice {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .deploy-links {
+            margin-top: 30px;
+        }
+        .deploy-links a {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .deploy-links a:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 CodeEx AI</h1>
+        
+        <div class="notice">
+            <h2>⚠️ Deployment Notice</h2>
+            <p>This is a Flask Python application that requires a server environment. Netlify is designed for static sites and cannot run Python Flask apps.</p>
+        </div>
+
+        <h3>🚀 Deploy to a Python-compatible platform:</h3>
+        
+        <div class="deploy-links">
+            <a href="https://render.com" target="_blank">Deploy on Render</a>
+            <a href="https://railway.app" target="_blank">Deploy on Railway</a>
+            <a href="https://heroku.com" target="_blank">Deploy on Heroku</a>
+            <a href="https://vercel.com" target="_blank">Deploy on Vercel</a>
+        </div>
+
+        <div class="notice">
+            <h3>📁 Files included for deployment:</h3>
+            <ul style="text-align: left; display: inline-block;">
+                <li><code>render.yaml</code> - Render deployment config</li>
+                <li><code>railway.toml</code> - Railway deployment config</li>
+                <li><code>runtime.txt</code> - Python version specification</li>
+                <li><code>requirements.txt</code> - Python dependencies</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+Allow: /about
+Allow: /contact
+Allow: /docs
+Allow: /faq
+Allow: /privacy
+Allow: /terms
+
+Disallow: /api/
+Disallow: /admin/
+Disallow: /auth/
+Disallow: /logout
+Disallow: /settings
+Disallow: /storage
+Disallow: /ai-brain-dashboard
+
+Sitemap: https://yourdomain.com/sitemap.xml
