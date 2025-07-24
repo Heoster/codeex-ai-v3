@@ -78,7 +78,7 @@ werkzeug_logger.setLevel(logging.WARNING)  # Reduce verbosity
 if not SECURITY_AVAILABLE:
     logger.warning("Security packages not available - install flask-limiter and flask-talisman for production")
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='static', static_folder='static')
 
 # Production-ready configuration
 app.config.update(

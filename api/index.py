@@ -24,7 +24,7 @@ project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Create Flask app with correct paths
 app = Flask(__name__, 
-           template_folder=os.path.join(project_root, 'templates'),
+           template_folder=os.path.join(project_root, 'static'),
            static_folder=os.path.join(project_root, 'static'))
 
 # App configuration
