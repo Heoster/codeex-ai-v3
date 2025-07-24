@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - CodeEx AI{% endblock %}
+
+{% block content %}
+<div class="min-h-screen py-12 px-4 md:px-8">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header Section -->
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-6xl font-bold gradient-text mb-6">
+                Get in Touch
+            </h1>
+            <p class="text-xl text-secondary max-w-3xl mx-auto">
+                Have questions about CodeEx AI? Need technical support? Want to collaborate?
+                We're here to help and would love to hear from you!
+            </p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-12">
+            <!-- Contact Form -->
+            <div class="glass-strong rounded-2xl p-8">
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                    <svg class="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                        </path>
+                    </svg>
+                    Send us a Message
+                </h2>
+
+                <form id="contact-form" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="block text-sm font-semibold text-white mb-2">Full Name</label>
+                            <input type="text" id="name" name="name" class="input-field" placeholder="Your full name"
+                                required>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-semibold text-white mb-2">Email Address</label>
+                            <input type="email" id="email" name="email" class="input-field" placeholder="your@email.com"
+                                required>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="subject" class="block text-sm font-semibold text-white mb-2">Subject</label>
+                        <select id="subject" name="subject" class="input-field" required>
+                            <option value="">Select a topic</option>
+                            <option value="general">General Inquiry</option>
+                            <option value="technical">Technical Support</option>
+                            <option value="bug">Bug Report</option>
+                            <option value="feature">Feature Request</option>
+                            <option value="business">Business Partnership</option>
+                            <option value="privacy">Privacy & Security</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="message" class="block text-sm font-semibold text-white mb-2">Message</label>
+                        <textarea id="message" name="message" rows="6" class="input-field"
+                            placeholder="Tell us how we can help you..." required></textarea>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <input type="checkbox" id="privacy-agree" name="privacy-agree"
+                            class="mt-1 h-4 w-4 bg-dark-700 border-border-color rounded text-primary-500 focus:ring-primary-500"
+                            required>
+                        <label for="privacy-agree" class="text-sm text-secondary">
+                            I agree to the <a href="/privacy" class="text-primary-400 hover:text-primary-300">Privacy
+                                Policy</a> and consent to my data being processed to respond to my inquiry.
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-primary w-full py-4 text-lg font-semibold ripple">
+                        <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                        </svg>
+                        Send Message
+                    </button>
+                </form>
+
+                <div id="form-status" class="mt-4 hidden"></div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="space-y-8">
+                <!-- Quick Contact -->
+                <div class="glass rounded-2xl p-6">
+                    <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-3">
+                        <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Quick Contact
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3 text-secondary">
+                            <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            <a href="mailto:the.heoster@mail.com"
+                                class="hover:text-white transition-colors">the.heoster@mail.com</a>
+                        </div>
+                        <div class="flex items-center gap-3 text-secondary">
+                            <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                                </path>
+                            </svg>
+                            <a href="mailto:the.heoster@mail.com" class="hover:text-white transition-colors">Privacy &
+                                Security</a>
+                        </div>
+                        <div class="flex items-center gap-3 text-secondary">
+                            <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2h8z">
+                                </path>
+                            </svg>
+                            <a href="mailto:the.heoster@mail.com" class="hover:text-white transition-colors">Business
+                                Inquiries</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Support Categories -->
+                <div class="glass rounded-2xl p-6">
+                    <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-3">
+                        <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
+                        Support Categories
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex items-start gap-3">
+                            <div class="w-2 h-2 bg-blue-400 rounded-full mt-2"></div>
+                            <div>
+                                <h4 class="font-semibold text-white">Technical Support</h4>
+                                <p class="text-sm text-secondary">Issues with login, features, or functionality</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-2 h-2 bg-purple-400 rounded-full mt-2"></div>
+                            <div>
+                                <h4 class="font-semibold text-white">Bug Reports</h4>
+                                <p class="text-sm text-secondary">Found a bug? Help us improve CodeEx AI</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-2 h-2 bg-green-400 rounded-full mt-2"></div>
+                            <div>
+                                <h4 class="font-semibold text-white">Feature Requests</h4>
+                                <p class="text-sm text-secondary">Suggest new features or improvements</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-2 h-2 bg-yellow-400 rounded-full mt-2"></div>
+                            <div>
+                                <h4 class="font-semibold text-white">Business Inquiries</h4>
+                                <p class="text-sm text-secondary">Partnerships, licensing, and enterprise solutions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Response Times -->
+                <div class="glass rounded-2xl p-6">
+                    <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-3">
+                        <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Response Times
+                    </h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between items-center">
+                            <span class="text-secondary">Technical Support</span>
+                            <span class="text-green-400 font-semibold">
+                                < 24 hours</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-secondary">General Inquiries</span>
+                            <span class="text-blue-400 font-semibold">
+                                < 48 hours</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-secondary">Business Partnerships</span>
+                            <span class="text-purple-400 font-semibold">
+                                < 72 hours</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-secondary">Bug Reports</span>
+                            <span class="text-yellow-400 font-semibold">
+                                < 12 hours</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alternative Support -->
+                <div class="glass rounded-2xl p-6">
+                    <h3 class="text-xl font-bold text-white mb-4">Alternative Support</h3>
+                    <div class="space-y-4">
+                        <a href="/docs"
+                            class="flex items-center gap-3 text-secondary hover:text-white transition-colors">
+                            <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                </path>
+                            </svg>
+                            <span>Browse Documentation</span>
+                        </a>
+                        <a href="/chat"
+                            class="flex items-center gap-3 text-secondary hover:text-white transition-colors">
+                            <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z">
+                                </path>
+                            </svg>
+                            <span>Ask CodeEx AI Directly</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('contact-form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const statusDiv = document.getElementById('form-status');
+        const submitBtn = this.querySelector('button[type="submit"]');
+
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+        <svg class="w-5 h-5 inline mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+        </svg>
+        Sending...
+    `;
+
+        try {
+            const response = await fetch('/contact', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                statusDiv.className = 'mt-4 notification success';
+                statusDiv.innerHTML = `
+                <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Thank you! Your message has been sent successfully. We'll get back to you soon.
+            `;
+                this.reset();
+            } else {
+                throw new Error(result.error || 'Failed to send message');
+            }
+        } catch (error) {
+            statusDiv.className = 'mt-4 notification error';
+            statusDiv.innerHTML = `
+            <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            Sorry, there was an error sending your message. Please try again or contact us directly at the.heoster@mail.com
+        `;
+        } finally {
+            // Restore button state
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `
+            <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+            </svg>
+            Send Message
+        `;
+
+            statusDiv.classList.remove('hidden');
+
+            // Auto-hide status after 5 seconds
+            setTimeout(() => {
+                statusDiv.classList.add('hidden');
+            }, 5000);
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="https://schema.org/WebApplication">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Primary SEO Meta Tags -->
+  <title>{% block title %}CODEEX AI by Heoster - Advanced Conversational AI Assistant{% endblock %}</title>
+  <meta name="title"
+    content="{% block meta_title %}CODEEX AI by Heoster - Advanced Conversational AI Assistant{% endblock %}">
+  <meta name="description"
+    content="{% block meta_description %}CODEEX AI by Heoster - Revolutionary conversational AI with context memory, encrypted chat history, and intelligent reasoning. Experience secure, local AI processing with advanced machine learning capabilities.{% endblock %}">
+  <meta name="keywords"
+    content="{% block meta_keywords %}heoster, codeex, codeex ai, heoster ai, artificial intelligence, AI assistant, conversational AI, machine learning, natural language processing, encrypted chat, context memory, AI productivity, intelligent assistant, advanced AI, secure AI, local AI processing, AI brain, smart assistant, AI technology, neural networks, deep learning, NLP, chatbot, virtual assistant{% endblock %}">
+
+  <!-- Enhanced SEO Meta Tags -->
+  <meta name="author" content="Heoster - CODEEX AI Development Team">
+  <meta name="publisher" content="Heoster Technologies">
+  <meta name="copyright" content="© 2025 Heoster - CODEEX AI. All rights reserved.">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+  <!-- Additional SEO Attributes -->
+  <meta name="language" content="English">
+  <meta name="geo.region" content="US">
+  <meta name="geo.placename" content="United States">
+  <meta name="revisit-after" content="1 days">
+  <meta name="distribution" content="global">
+  <meta name="rating" content="general">
+  <meta name="category" content="Technology, Artificial Intelligence, Software, Machine Learning">
+  <meta name="coverage" content="Worldwide">
+  <meta name="target" content="developers, businesses, AI enthusiasts, tech professionals">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+
+  <!-- Canonical and Alternate URLs -->
+  <link rel="canonical"
+    href="{% block canonical %}{{ request.url if request else 'https://codeex.heoster.com' }}{% endblock %}">
+  <link rel="alternate" hreflang="en" href="{{ request.url if request else 'https://codeex.heoster.com' }}">
+  <link rel="alternate" hreflang="x-default" href="{{ request.url if request else 'https://codeex.heoster.com' }}">
+
+  <!-- Open Graph / Facebook Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="CODEEX AI by Heoster">
+  <meta property="og:title"
+    content="{% block og_title %}CODEEX AI by Heoster - Advanced Conversational AI Assistant{% endblock %}">
+  <meta property="og:description"
+    content="{% block og_description %}Revolutionary AI assistant by Heoster featuring context memory, encrypted conversations, and intelligent reasoning. Experience the future of secure AI technology.{% endblock %}">
+  <meta property="og:image"
+    content="{% block og_image %}{{ url_for('static', filename='images/og-codeex-heoster.png') if url_for else '/static/images/og-codeex-heoster.png' }}{% endblock %}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="CODEEX AI by Heoster - Advanced Conversational AI Platform">
+  <meta property="og:url" content="{{ request.url if request else 'https://codeex.heoster.com' }}">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@HeosterAI">
+  <meta name="twitter:creator" content="@HeosterAI">
+  <meta name="twitter:title"
+    content="{% block twitter_title %}CODEEX AI by Heoster - Advanced Conversational AI{% endblock %}">
+  <meta name="twitter:description"
+    content="{% block twitter_description %}Revolutionary AI assistant featuring context memory, encrypted conversations, and intelligent reasoning by Heoster.{% endblock %}">
+  <meta name="twitter:image"
+    content="{{ url_for('static', filename='images/twitter-codeex-heoster.png') if url_for else '/static/images/twitter-codeex-heoster.png' }}">
+  <meta name="twitter:image:alt" content="CODEEX AI by Heoster Platform">
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "CODEEX AI",
+    "alternateName": "CodeEx AI by Heoster",
+    "description": "Advanced conversational AI assistant with context memory, encrypted chat history, and intelligent reasoning capabilities.",
+    "url": "{{ request.url if request else 'https://codeex.heoster.com' }}",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web Browser, PWA",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Heoster",
+      "url": "https://heoster.com",
+      "logo": "{{ url_for('static', filename='images/codeex-logo.svg') if url_for else '/static/images/codeex-logo.svg' }}"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Heoster Technologies",
+      "url": "https://heoster.com"
+    },
+    "featureList": [
+      "Conversational AI with Context Memory",
+      "Encrypted Chat History",
+      "Advanced Natural Language Processing",
+      "Machine Learning Integration",
+      "Secure Local Processing",
+      "Progressive Web App",
+      "Real-time AI Responses",
+      "Intelligent Knowledge Graph"
+    ],
+    "screenshot": "{{ url_for('static', filename='screenshots/codeex-dashboard.png') if url_for else '/static/screenshots/codeex-dashboard.png' }}",
+    "softwareVersion": "2.0",
+    "datePublished": "2025-01-20",
+    "dateModified": "2025-01-20",
+    "inLanguage": "en-US",
+    "isAccessibleForFree": true,
+    "browserRequirements": "Requires JavaScript. Requires HTML5.",
+    "memoryRequirements": "512MB",
+    "storageRequirements": "100MB"
+  }
+  </script>
+
+  <!-- Additional Structured Data for Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Heoster",
+    "alternateName": "Heoster Technologies",
+    "url": "https://heoster.com",
+    "logo": "{{ url_for('static', filename='images/codeex-logo.svg') if url_for else '/static/images/codeex-logo.svg' }}",
+    "description": "Leading AI technology company specializing in conversational AI, machine learning, and intelligent software solutions.",
+    "foundingDate": "2024",
+    "industry": "Artificial Intelligence",
+    "knowsAbout": [
+      "Artificial Intelligence",
+      "Machine Learning",
+      "Natural Language Processing",
+      "Conversational AI",
+      "Deep Learning",
+      "Neural Networks",
+      "Software Development"
+    ],
+    "sameAs": [
+      "https://twitter.com/HeosterAI",
+      "https://linkedin.com/company/heoster",
+      "https://github.com/heoster"
+    ]
+  }
+  </script>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/static/manifest.json">
+
+  <!-- Theme Colors -->
+  <meta name="theme-color" content="#667eea">
+  <meta name="msapplication-TileColor" content="#667eea">
+  <meta name="msapplication-navbutton-color" content="#667eea">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- PWA Display -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="CODEEX AI">
+  <meta name="application-name" content="CODEEX AI">
+
+  <!-- Icons for different platforms -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png">
+  <link rel="mask-icon" href="/static/images/safari-pinned-tab.svg" color="#667eea">
+
+  <!-- Microsoft Tiles -->
+  <meta name="msapplication-TileImage" content="/static/images/mstile-144x144.png">
+  <meta name="msapplication-config" content="/static/browserconfig.xml">
+
+  <!-- Preload critical resources -->
+  <link rel="preload"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    as="style">
+  <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
+
+  <!-- DNS Prefetch for performance -->
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//cdn.tailwindcss.com">
+
+  <!-- Stylesheets -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --dark-gradient: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%);
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #0a0a0f 0%, #16213e 50%, #0f3460 100%);
+      color: #e5e7eb;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    /* Enhanced Aurora Effects */
+    .aurora {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(102, 126, 234, 0.3), transparent),
+        radial-gradient(ellipse 80% 50% at 50% 120%, rgba(118, 75, 162, 0.2), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 50%, rgba(79, 172, 254, 0.15), transparent);
+      animation: auroraAnim 8s ease-in-out infinite alternate;
+      z-index: -2;
+    }
+
+    @keyframes auroraAnim {
+      0% {
+        transform: translateY(0px) scale(1) rotate(0deg);
+        opacity: 0.6;
+      }
+
+      50% {
+        transform: translateY(-20px) scale(1.05) rotate(1deg);
+        opacity: 0.8;
+      }
+
+      100% {
+        transform: translateY(-40px) scale(1.1) rotate(-1deg);
+        opacity: 1;
+      }
+    }
+
+    /* Enhanced Floating Orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.4;
+      animation: floatOrb 30s linear infinite;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    @keyframes floatOrb {
+      0% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+      }
+
+      25% {
+        transform: translate(150px, -120px) scale(1.2) rotate(90deg);
+      }
+
+      50% {
+        transform: translate(300px, -80px) scale(1.4) rotate(180deg);
+      }
+
+      75% {
+        transform: translate(100px, -200px) scale(1.1) rotate(270deg);
+      }
+
+      100% {
+        transform: translate(0, 0) scale(1) rotate(360deg);
+      }
+    }
+
+    /* Glass Morphism Effects */
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .glass-strong {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Enhanced Grid Canvas */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -3;
+      opacity: 0.6;
+    }
+
+    /* Smooth Transitions */
+    * {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(135deg, #764ba2, #667eea);
+    }
+
+    /* Enhanced Button Styles */
+    .btn-primary {
+      background: var(--primary-gradient);
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+    }
+
+    .btn-secondary {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      color: #e5e7eb;
+      font-weight: 500;
+      padding: 12px 24px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
+    }
+
+    /* Typography Enhancements */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-weight: 700;
+      letter-spacing: -0.025em;
+    }
+
+    .text-gradient {
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .text-gradient-secondary {
+      background: var(--secondary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Mobile Optimizations */
+    @media (max-width: 768px) {
+      .orb {
+        opacity: 0.2;
+        filter: blur(80px);
+      }
+
+      .aurora {
+        opacity: 0.7;
+      }
+    }
+
+    /* Loading Animation */
+    @keyframes pulse-glow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+      }
+
+      50% {
+        box-shadow: 0 0 40px rgba(102, 126, 234, 0.8);
+      }
+    }
+
+    .animate-pulse-glow {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    /* Focus States */
+    .focus-ring:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.5);
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+  <!-- Background Effects -->
+  <canvas id="bg-grid"></canvas>
+  <div class="aurora"></div>
+  <div class="orb" style="width:300px;height:300px;background:#355cb4;top:30%;left:10%;"></div>
+  <div class="orb" style="width:200px;height:200px;background:#d26de8;top:60%;left:70%;animation-delay:5s;"></div>
+
+  <!-- Enhanced Header with SEO-optimized content -->
+  <header
+    class="fixed top-0 left-0 w-full h-18 flex justify-between items-center px-4 md:px-8 glass z-50 border-b border-white/10">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg">
+        <img src="{{ url_for('static', filename='images/codeex-logo.png') }}" alt="CodeEx AI Logo"
+          class="w-10 h-10 rounded-xl">
+      </div>
+      <a href="/" class="text-xl md:text-2xl font-bold text-gradient hover:scale-105 transition-transform duration-200"
+        title="CODEEX AI by Heoster - Home">
+        CODEEX AI
+      </a>
+      <span class="text-xs text-gray-400 hidden md:inline">by Heoster</span>
+    </div>
+
+    <nav class="hidden md:flex gap-8 text-gray-300 text-sm font-medium" role="navigation" aria-label="Main navigation">
+      <a href="/"
+        class="hover:text-blue-400 transition-all duration-200 py-2 px-3 rounded-lg hover:bg-white/5 relative group"
+        title="CODEEX AI Home">
+        <span>Home</span>
+        <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-200 group-hover:w-full">
+        </div>
+      </a>
+      <a href="/docs"
+        class="hover:text-purple-400 transition-all duration-200 py-2 px-3 rounded-lg hover:bg-white/5 relative group"
+        title="AI Documentation">
+        <span>Docs</span>
+        <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-400 transition-all duration-200 group-hover:w-full">
+        </div>
+      </a>
+      {% if session.user_id %}
+      <a href="/chat"
+        class="hover:text-green-400 transition-all duration-200 py-2 px-3 rounded-lg hover:bg-white/5 relative group"
+        title="AI Chat Interface">
+        <span>Chat</span>
+        <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-green-400 transition-all duration-200 group-hover:w-full">
+        </div>
+      </a>
+      <a href="/storage"
+        class="hover:text-cyan-400 transition-all duration-200 py-2 px-3 rounded-lg hover:bg-white/5 relative group"
+        title="Storage Management">
+        <span>Storage</span>
+        <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-200 group-hover:w-full">
+        </div>
+      </a>
+      <a href="/logout"
+        class="hover:text-red-400 transition-all duration-200 py-2 px-3 rounded-lg hover:bg-white/5 relative group"
+        title="Logout">
+        <span>Logout</span>
+        <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all duration-200 group-hover:w-full"></div>
+      </a>
+      {% else %}
+      <a href="/login" class="btn-primary text-sm px-6 py-2 rounded-lg font-semibold" title="Sign In to CODEEX AI">
+        Sign In
+      </a>
+      {% endif %}
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <button onclick="toggleDarkMode()"
+        class="p-3 text-gray-400 hover:text-white transition-all duration-200 rounded-xl hover:bg-white/10 group"
+        title="Toggle dark mode" aria-label="Toggle dark mode">
+        <svg class="w-5 h-5 group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+        </svg>
+      </button>
+
+      <!-- Mobile menu button -->
+      <button
+        class="md:hidden p-3 text-gray-400 hover:text-white transition-all duration-200 rounded-xl hover:bg-white/10"
+        onclick="toggleMobileMenu()" aria-label="Toggle mobile menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <main class="pt-16 min-h-screen relative z-10" role="main">{% block content %}{% endblock %}</main>
+
+  <!-- SEO-Enhanced Footer -->
+  {% block footer %}
+  <footer class="relative z-10 mt-24 py-12 border-t border-gray-700/50 text-gray-500 bg-black/20 backdrop-blur-sm"
+    role="contentinfo">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div class="md:col-span-1">
+          <h3 class="text-lg font-bold text-blue-400 mb-4">CODEEX AI by Heoster</h3>
+          <p class="text-sm leading-relaxed mb-4">Revolutionary conversational AI platform featuring advanced machine
+            learning, context memory, and secure encrypted conversations.</p>
+          <div class="flex space-x-4">
+            <a href="https://twitter.com/HeosterAI" class="text-gray-400 hover:text-blue-400 transition-colors"
+              title="Follow Heoster on Twitter" aria-label="Twitter">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
+              </svg>
+            </a>
+            <a href="https://github.com/heoster" class="text-gray-400 hover:text-purple-400 transition-colors"
+              title="Heoster on GitHub" aria-label="GitHub">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-semibold text-gray-300 mb-4">AI Features</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a href="/docs#conversational-ai"
+                class="hover:text-blue-400 transition-colors duration-200">Conversational AI</a></li>
+            <li><a href="/docs#context-memory" class="hover:text-purple-400 transition-colors duration-200">Context
+                Memory</a></li>
+            <li><a href="/docs#encryption" class="hover:text-green-400 transition-colors duration-200">Encrypted
+                Storage</a></li>
+            <li><a href="/docs#machine-learning" class="hover:text-yellow-400 transition-colors duration-200">Machine
+                Learning</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-gray-300 mb-4">Technology</h4>
+          <ul class="space-y-3 text-sm">
+            <li class="text-gray-400">Neural Networks</li>
+            <li class="text-gray-400">Natural Language Processing</li>
+            <li class="text-gray-400">Deep Learning</li>
+            <li class="text-gray-400">Knowledge Graphs</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-gray-300 mb-4">Account</h4>
+          <ul class="space-y-3 text-sm">
+            {% if session.user_id %}
+            <li class="text-gray-400">Welcome, {{ session.display_name or session.email }}</li>
+            <li><a href="/logout" class="hover:text-red-400 transition-colors duration-200">Logout</a></li>
+            {% else %}
+            <li><a href="/login" class="hover:text-blue-400 transition-colors duration-200">Sign In</a></li>
+            <li><a href="/login" class="hover:text-green-400 transition-colors duration-200">Get Started</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+      <div class="text-center pt-8 border-t border-gray-800/50">
+        <p class="text-sm">&copy; {{ current_year or 2025 }} <strong>CODEEX AI</strong> by <strong>Heoster</strong>.
+          Advanced AI Technology Platform.</p>
+        <p class="text-xs mt-2 text-gray-600">Artificial Intelligence • Machine Learning • Natural Language Processing •
+          Conversational AI</p>
+      </div>
+    </div>
+  </footer>
+  {% endblock %}
+
+  <!-- Enhanced JavaScript with SEO considerations -->
+  <script>
+    // Dark mode
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+    }
+    if (localStorage.getItem('darkMode') === 'true') {
+      document.documentElement.classList.add('dark');
+    }
+
+    // Mobile menu toggle
+    function toggleMobileMenu() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenu) {
+        mobileMenu.classList.toggle('hidden');
+      }
+    }
+
+    // Canvas Grid + Ripple Animation
+    const canvas = document.getElementById("bg-grid");
+    if (canvas) {
+      const ctx = canvas.getContext("2d");
+      let width, height;
+      const BLOCK = 40;
+      const effects = [];
+      const colors = ["#355cb4", "#d26de8", "#4ade80", "#facc15"];
+
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener("resize", resize);
+
+      function drawGrid() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.strokeStyle = "rgba(255,255,255,0.05)";
+        for (let x = 0; x < width; x += BLOCK) {
+          for (let y = 0; y < height; y += BLOCK) {
+            ctx.strokeRect(x, y, BLOCK, BLOCK);
+          }
+        }
+      }
+
+      document.addEventListener("mousemove", e => {
+        effects.push({ x: e.clientX, y: e.clientY, time: Date.now(), color: colors[Math.floor(Math.random() * colors.length)] });
+      });
+
+      function animate() {
+        drawGrid();
+        const now = Date.now();
+        effects.forEach((fx, i) => {
+          const age = now - fx.time;
+          const radius = age / 4;
+          ctx.beginPath();
+          ctx.strokeStyle = fx.color;
+          ctx.globalAlpha = 1 - age / 1000;
+          ctx.arc(fx.x, fx.y, radius, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.globalAlpha = 1;
+          if (age > 1000) effects.splice(i, 1);
+        });
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // PWA Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', async () => {
+        try {
+          const registration = await navigator.serviceWorker.register('/static/sw.js', {
+            scope: '/'
+          });
+          console.log('🚀 PWA: Service Worker registered successfully:', registration.scope);
+        } catch (error) {
+          console.error('❌ PWA: Service Worker registration failed:', error);
+        }
+      });
+    }
+
+    // SEO-friendly page tracking
+    if (typeof gtag !== 'undefined') {
+      gtag('config', 'GA_MEASUREMENT_ID', {
+        page_title: document.title,
+        page_location: window.location.href
+      });
+    }
+  </script>
+</body>
+
+</html>

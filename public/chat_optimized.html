@@ -1,0 +1,654 @@
+{% extends "base.html" %}
+
+{% block title %}Chat - CodeEx AI{% endblock %}
+
+{% block content %}
+<div class="h-screen flex overflow-hidden">
+    <!-- Mobile Sidebar Overlay -->
+    <div id="mobile-overlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="w-80 sidebar flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 fixed lg:relative h-full z-50">
+        <!-- Sidebar Header -->
+        <div class="p-6 border-b border-border-color">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg pulse-glow">
+                    <img src="{{ url_for('static', filename='images/codeex-logo.png') }}" alt="CodeEx AI Logo" class="w-12 h-12 rounded-2xl">
+                </div>
+                <div>
+                    <h1 class="font-bold text-white text-xl gradient-text">CODEEX AI</h1>
+                    <p class="text-sm text-muted">Next-Gen Assistant</p>
+                </div>
+            </div>
+
+            <button id="new-chat-btn" class="btn-primary w-full flex items-center justify-center gap-3 ripple btn-animated glow">
+                <svg class="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                <span class="font-semibold">New Conversation</span>
+            </button>
+        </div>
+
+        <!-- Sidebar Content -->
+        <div class="flex-1 overflow-y-auto scrollbar-thin">
+            <div class="p-4">
+                <h2 class="text-sm font-semibold text-secondary mb-3">Recent Conversations</h2>
+                <div id="chat-sessions" class="space-y-2">
+                    <!-- Sessions will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Footer -->
+        <div class="p-4 border-t border-border-color">
+            <div class="flex items-center justify-between mb-5">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-primary-500/30 to-accent-secondary/30 rounded-xl flex items-center justify-center shadow-lg">
+                        <span class="text-white font-semibold">{{ session.get('display_name', 'U')[0] if session.get('display_name') else 'U' }}</span>
+                    </div>
+                    <div>
+                        <span class="text-sm font-medium text-white">{{ session.get('display_name', 'User') }}</span>
+                        <div class="flex items-center gap-1 text-xs text-green-400">
+                            <div class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
+                            <span>Online</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="/logout" class="text-muted hover:text-white transition-colors p-2 rounded-lg hover:bg-dark-700">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="flex gap-3">
+                <a href="/settings" class="flex-1 glass-effect hover:bg-dark-700 text-white py-2.5 px-3 rounded-xl text-sm flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg ripple">
+                    <svg class="w-4 h-4 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    <span>Settings</span>
+                </a>
+                <a href="/storage" class="flex-1 glass-effect hover:bg-dark-700 text-white py-2.5 px-3 rounded-xl text-sm flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg ripple">
+                    <svg class="w-4 h-4 text-accent-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
+                    </svg>
+                    <span>Storage</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Chat Area -->
+    <div class="flex-1 flex flex-col">
+        <!-- Header -->
+        <header class="navbar sticky top-0 z-30 p-4 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <button id="mobile-menu-btn" class="lg:hidden text-secondary hover:text-white transition-colors p-2 rounded-lg hover:bg-dark-700" onclick="toggleSidebar()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-accent-secondary rounded-lg flex items-center justify-center shadow-lg pulse-glow">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                        </svg>
+                    </div>
+                    <h1 id="chat-title" class="text-lg font-bold gradient-text">Chat with CodeEx AI</h1>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button id="voice-input-btn" class="text-secondary hover:text-white transition-colors p-2 rounded-lg hover:bg-dark-700" title="Voice Input">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+                    </svg>
+                </button>
+                <button id="voice-output-btn" class="text-secondary hover:text-white transition-colors p-2 rounded-lg hover:bg-dark-700" title="Voice Output">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M6 10l6-6v4h8v4H12v4l-6-6z"></path>
+                    </svg>
+                </button>
+                <button id="clear-chat" class="text-secondary hover:text-white transition-colors p-2 rounded-lg hover:bg-dark-700" title="Clear Chat">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                </button>
+                <a href="/ai-brain-dashboard" class="text-secondary hover:text-white transition-colors p-2 rounded-lg hover:bg-dark-700" title="AI Dashboard">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                    </svg>
+                </a>
+            </div>
+        </header>
+
+        <!-- Chat Messages -->
+        <div id="messages-container" class="flex-1 overflow-y-auto p-6 space-y-6 scrollbar-thin">
+            <!-- Welcome message -->
+            <div id="welcome-message" class="flex justify-center mb-8">
+                <div class="glass-effect rounded-2xl p-6 max-w-2xl text-center shadow-xl">
+                    <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg pulse-glow">
+                        <img src="{{ url_for('static', filename='images/codeex-logo.png') }}" alt="CodeEx AI Logo" class="w-16 h-16 rounded-2xl">
+                    </div>
+                    <h2 class="text-2xl font-bold gradient-text mb-3">Welcome to CodeEx AI</h2>
+                    <p class="text-secondary mb-4">Your advanced AI assistant with self-learning capabilities. Ask me anything about programming, mathematics, or general knowledge!</p>
+                    <div class="grid grid-cols-2 gap-3 mt-6">
+                        <button class="suggestion-btn glass-effect hover:bg-dark-700 text-white py-2 px-3 rounded-xl text-sm transition-all duration-300 hover:shadow-lg ripple" data-suggestion="Explain neural networks">
+                            <span>Explain neural networks</span>
+                        </button>
+                        <button class="suggestion-btn glass-effect hover:bg-dark-700 text-white py-2 px-3 rounded-xl text-sm transition-all duration-300 hover:shadow-lg ripple" data-suggestion="Write a Python function">
+                            <span>Write a Python function</span>
+                        </button>
+                        <button class="suggestion-btn glass-effect hover:bg-dark-700 text-white py-2 px-3 rounded-xl text-sm transition-all duration-300 hover:shadow-lg ripple" data-suggestion="Solve a math problem">
+                            <span>Solve a math problem</span>
+                        </button>
+                        <button class="suggestion-btn glass-effect hover:bg-dark-700 text-white py-2 px-3 rounded-xl text-sm transition-all duration-300 hover:shadow-lg ripple" data-suggestion="Generate creative ideas">
+                            <span>Generate creative ideas</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Messages will be populated here -->
+        </div>
+
+        <!-- Input Area - Always Visible -->
+        <div id="input-area" class="border-t border-border-color p-4 sticky bottom-0 bg-dark-900/95 backdrop-blur-sm z-10">
+            <form id="chat-form" class="flex gap-3">
+                <div class="relative flex-1">
+                    <textarea id="message-input" class="input-field py-3 px-4 pr-24 resize-none" rows="1" placeholder="Type your message..." style="min-height: 50px; max-height: 200px;"></textarea>
+                    <div class="absolute right-3 top-2.5 flex items-center gap-2">
+                        <button type="button" id="upload-file" class="text-secondary hover:text-white p-1.5 rounded-lg hover:bg-dark-700 transition-colors" title="Upload file">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
+                            </svg>
+                        </button>
+                        <button type="button" id="voice-input" class="text-secondary hover:text-white p-1.5 rounded-lg hover:bg-dark-700 transition-colors" title="Voice input">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" id="send-btn" class="btn-primary rounded-xl p-3 ripple btn-animated glow" disabled>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </button>
+            </form>
+            <div class="flex justify-center mt-2">
+                <div class="text-xs text-muted flex items-center gap-1">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>CodeEx AI learns from your interactions to provide better responses</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.chat-session {
+    @apply p-3 rounded-lg cursor-pointer hover:bg-gray-700 border border-transparent transition-all duration-200;
+}
+.chat-session.active {
+    @apply border-blue-500 bg-blue-500/10;
+}
+.message-user {
+    @apply flex justify-end mb-4;
+}
+.message-assistant {
+    @apply flex justify-start mb-4;
+}
+.message-bubble-user {
+    @apply max-w-xs lg:max-w-md px-4 py-3 bg-blue-600 text-white rounded-2xl rounded-br-md;
+}
+.message-bubble-assistant {
+    @apply max-w-xs lg:max-w-md px-4 py-3 bg-gray-700 text-white rounded-2xl rounded-bl-md;
+}
+.typing-indicator {
+    @apply flex space-x-1;
+}
+.typing-dot {
+    @apply w-2 h-2 bg-gray-400 rounded-full animate-bounce;
+}
+.typing-dot:nth-child(2) {
+    animation-delay: 0.1s;
+}
+.typing-dot:nth-child(3) {
+    animation-delay: 0.2s;
+}
+</style>
+
+<script>
+let currentSessionId = null;
+let recognition = null;
+let isListening = false;
+let voiceOutputEnabled = true;
+let speechSynthesis = window.speechSynthesis;
+let messageQueue = [];
+let isProcessing = false;
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    loadChatSessions();
+    initializeVoiceFeatures();
+    setupEventListeners();
+});
+
+function setupEventListeners() {
+    // New chat button
+    document.getElementById('new-chat-btn').addEventListener('click', createNewChat);
+    
+    // Clear chat button
+    document.getElementById('clear-chat').addEventListener('click', function() {
+        if (confirm('Are you sure you want to clear this chat?')) {
+            const container = document.getElementById('messages-container');
+            container.innerHTML = '';
+            addWelcomeMessage();
+        }
+    });
+    
+    // Chat form submission
+    document.getElementById('chat-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        sendMessage();
+    });
+    
+    // Input handling
+    const messageInput = document.getElementById('message-input');
+    const sendBtn = document.getElementById('send-btn');
+    
+    messageInput.addEventListener('input', function() {
+        const value = this.value.trim();
+        sendBtn.disabled = !value;
+        
+        // Auto-resize textarea
+        this.style.height = 'auto';
+        this.style.height = Math.min(200, Math.max(50, this.scrollHeight)) + 'px';
+    });
+    
+    messageInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
+    
+    // Suggestion buttons
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.suggestion-btn')) {
+            const suggestion = e.target.closest('.suggestion-btn').dataset.suggestion;
+            messageInput.value = suggestion;
+            messageInput.dispatchEvent(new Event('input'));
+            messageInput.focus();
+            
+            // Hide welcome message and show input area
+            document.getElementById('welcome-message').style.display = 'none';
+            document.getElementById('input-area').classList.remove('hidden');
+        }
+    });
+}
+
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('mobile-overlay');
+    
+    sidebar.classList.toggle('-translate-x-full');
+    overlay.classList.toggle('hidden');
+}
+
+function initializeVoiceFeatures() {
+    // Voice recognition setup
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+        
+        recognition.onstart = function() {
+            isListening = true;
+            updateVoiceInputButton();
+        };
+        
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            const messageInput = document.getElementById('message-input');
+            messageInput.value = transcript;
+            messageInput.dispatchEvent(new Event('input'));
+        };
+        
+        recognition.onend = function() {
+            isListening = false;
+            updateVoiceInputButton();
+        };
+        
+        recognition.onerror = function(event) {
+            console.error('Speech recognition error:', event.error);
+            isListening = false;
+            updateVoiceInputButton();
+        };
+    }
+    
+    // Voice input button
+    document.getElementById('voice-input-btn').addEventListener('click', toggleVoiceInput);
+    
+    // Voice output button
+    document.getElementById('voice-output-btn').addEventListener('click', toggleVoiceOutput);
+    updateVoiceOutputButton();
+}
+
+function toggleVoiceInput() {
+    if (!recognition) return;
+    
+    if (isListening) {
+        recognition.stop();
+    } else {
+        recognition.start();
+    }
+}
+
+function updateVoiceInputButton() {
+    const btn = document.getElementById('voice-input-btn');
+    if (isListening) {
+        btn.classList.add('text-red-400');
+        btn.classList.remove('text-gray-400');
+    } else {
+        btn.classList.remove('text-red-400');
+        btn.classList.add('text-gray-400');
+    }
+}
+
+function toggleVoiceOutput() {
+    voiceOutputEnabled = !voiceOutputEnabled;
+    updateVoiceOutputButton();
+    
+    if (!voiceOutputEnabled && speechSynthesis.speaking) {
+        speechSynthesis.cancel();
+    }
+}
+
+function updateVoiceOutputButton() {
+    const btn = document.getElementById('voice-output-btn');
+    if (voiceOutputEnabled) {
+        btn.classList.remove('text-gray-400');
+        btn.classList.add('text-green-400');
+    } else {
+        btn.classList.remove('text-green-400');
+        btn.classList.add('text-gray-400');
+    }
+}
+
+function speakText(text) {
+    if (!voiceOutputEnabled || !speechSynthesis) return;
+    
+    speechSynthesis.cancel();
+    
+    const cleanText = text
+        .replace(/```[\s\S]*?```/g, ' code block ')
+        .replace(/`([^`]+)`/g, ' $1 ')
+        .replace(/\*\*(.*?)\*\*/g, '$1')
+        .replace(/<[^>]*>/g, '')
+        .replace(/\n/g, ' ')
+        .trim();
+    
+    if (cleanText.length === 0) return;
+    
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.rate = 0.9;
+    utterance.pitch = 1;
+    utterance.volume = 0.8;
+    
+    speechSynthesis.speak(utterance);
+}
+
+async function loadChatSessions() {
+    try {
+        const response = await fetch('/api/chat/sessions');
+        const sessions = await response.json();
+        
+        const container = document.getElementById('chat-sessions');
+        container.innerHTML = '';
+        
+        sessions.forEach(session => {
+            const sessionElement = document.createElement('div');
+            sessionElement.className = 'chat-session';
+            sessionElement.innerHTML = `
+                <div class="font-medium text-sm truncate text-white">${session.title}</div>
+                <div class="text-xs text-gray-400">${formatDate(session.created_at)}</div>
+            `;
+            sessionElement.addEventListener('click', () => selectSession(session.id, session.title));
+            container.appendChild(sessionElement);
+        });
+    } catch (error) {
+        console.error('Error loading chat sessions:', error);
+    }
+}
+
+async function createNewChat() {
+    try {
+        const response = await fetch('/api/chat/sessions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ title: 'New Chat' })
+        });
+        
+        const session = await response.json();
+        await loadChatSessions();
+        selectSession(session.session_id, session.title);
+    } catch (error) {
+        console.error('Error creating new chat:', error);
+    }
+}
+
+async function selectSession(sessionId, title) {
+    currentSessionId = sessionId;
+    document.getElementById('chat-title').textContent = title;
+    document.getElementById('welcome-message').style.display = 'none';
+    document.getElementById('input-area').classList.remove('hidden');
+    
+    // Highlight selected session
+    document.querySelectorAll('.chat-session').forEach(el => {
+        el.classList.remove('active');
+    });
+    
+    // Find and highlight the selected session
+    const sessions = document.querySelectorAll('.chat-session');
+    sessions.forEach(session => {
+        if (session.textContent.includes(title)) {
+            session.classList.add('active');
+        }
+    });
+    
+    await loadMessages(sessionId);
+}
+
+async function loadMessages(sessionId) {
+    try {
+        const response = await fetch(`/api/chat/${sessionId}/messages`);
+        const messages = await response.json();
+        
+        const container = document.getElementById('messages-container');
+        container.innerHTML = '';
+        
+        messages.forEach(message => {
+            addMessageToUI(message.role, message.content);
+        });
+        
+        scrollToBottom();
+    } catch (error) {
+        console.error('Error loading messages:', error);
+    }
+}
+
+async function sendMessage() {
+    const input = document.getElementById('message-input');
+    const message = input.value.trim();
+    
+    if (!message || !currentSessionId) return;
+    
+    // Add user message to UI
+    addMessageToUI('user', message);
+    input.value = '';
+    input.style.height = 'auto';
+    
+    // Disable send button and show typing indicator
+    const sendBtn = document.getElementById('send-btn');
+    sendBtn.disabled = true;
+    
+    const typingId = addTypingIndicator();
+    
+    try {
+        const response = await fetch(`/api/chat/${currentSessionId}/messages`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message })
+        });
+        
+        const result = await response.json();
+        
+        // Remove typing indicator
+        removeTypingIndicator(typingId);
+        
+        // Add AI response to UI
+        addMessageToUI('assistant', result.response);
+        
+        // Speak the AI response if voice output is enabled
+        speakText(result.response);
+        
+    } catch (error) {
+        console.error('Error sending message:', error);
+        removeTypingIndicator(typingId);
+        addMessageToUI('assistant', 'Sorry, I encountered an error. Please try again.');
+    } finally {
+        sendBtn.disabled = false;
+        scrollToBottom();
+    }
+}
+
+function addTypingIndicator() {
+    const container = document.getElementById('messages-container');
+    const typingDiv = document.createElement('div');
+    const typingId = 'typing-' + Date.now();
+    
+    typingDiv.id = typingId;
+    typingDiv.className = 'message-assistant';
+    typingDiv.innerHTML = `
+        <div class="message-bubble-assistant">
+            <div class="typing-indicator">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        </div>
+    `;
+    
+    container.appendChild(typingDiv);
+    scrollToBottom();
+    return typingId;
+}
+
+function removeTypingIndicator(typingId) {
+    const typingElement = document.getElementById(typingId);
+    if (typingElement) {
+        typingElement.remove();
+    }
+}
+
+function addWelcomeMessage() {
+    const container = document.getElementById('messages-container');
+    const welcomeEl = document.createElement('div');
+    welcomeEl.className = 'flex justify-center mb-8 animate-fade-in';
+    welcomeEl.innerHTML = `
+        <div class="glass-effect rounded-2xl p-6 max-w-2xl text-center shadow-xl">
+            <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg pulse-glow">
+                <img src="{{ url_for('static', filename='images/codeex-logo.png') }}" alt="CodeEx AI Logo" class="w-16 h-16 rounded-2xl">
+            </div>
+            <h2 class="text-2xl font-bold gradient-text mb-3">Welcome to CodeEx AI</h2>
+            <p class="text-secondary mb-4">Your advanced AI assistant with self-learning capabilities. Ask me anything about programming, mathematics, or general knowledge!</p>
+            <div class="grid grid-cols-2 gap-3 mt-6">
+                <button class="suggestion-btn glass-effect hover:bg-dark-700 text-white py-2 px-3 rounded-xl text-sm transition-all duration-300 hover:shadow-lg ripple" data-suggestion="Explain neural networks">
+                    <span>Explain neural networks</span>
+                </button>
+                <button class="suggestion-btn glass-effect hover:bg-dark-700 text-white py-2 px-3 rounded-xl text-sm transition-all duration-300 hover:shadow-lg ripple" data-suggestion="Write a Python function">
+                    <span>Write a Python function</span>
+                </button>
+                <button class="suggestion-btn glass-effect hover:bg-dark-700 text-white py-2 px-3 rounded-xl text-sm transition-all duration-300 hover:shadow-lg ripple" data-suggestion="Solve a math problem">
+                    <span>Solve a math problem</span>
+                </button>
+                <button class="suggestion-btn glass-effect hover:bg-dark-700 text-white py-2 px-3 rounded-xl text-sm transition-all duration-300 hover:shadow-lg ripple" data-suggestion="Generate creative ideas">
+                    <span>Generate creative ideas</span>
+                </button>
+            </div>
+        </div>
+    `;
+    container.appendChild(welcomeEl);
+}
+
+function addMessageToUI(role, content) {
+    const container = document.getElementById('messages-container');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'flex items-start gap-4 animate-fade-in';
+    
+    if (role === 'user') {
+        messageDiv.innerHTML = `
+            <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-secondary rounded-xl flex items-center justify-center shadow-lg">
+                <span class="text-white font-semibold">U</span>
+            </div>
+            <div class="message-bubble message-user">
+                <p>${escapeHtml(content)}</p>
+            </div>
+        `;
+    } else {
+        messageDiv.innerHTML = `
+            <div class="w-10 h-10 bg-gradient-to-br from-primary-500/30 to-accent-secondary/30 rounded-xl flex items-center justify-center shadow-lg">
+                <span class="text-white font-semibold">AI</span>
+            </div>
+            <div class="message-bubble message-assistant">
+                <p>${formatMessage(content)}</p>
+            </div>
+        `;
+    }
+    
+    container.appendChild(messageDiv);
+    scrollToBottom();
+}
+
+function formatMessage(content) {
+    // Handle code blocks
+    content = content.replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre class="bg-gray-800 p-3 rounded-lg mt-2 mb-2 overflow-x-auto"><code>$2</code></pre>');
+    
+    // Handle inline code
+    content = content.replace(/`([^`]+)`/g, '<code class="bg-gray-800 px-2 py-1 rounded text-sm">$1</code>');
+    
+    // Handle line breaks
+    content = content.replace(/\n/g, '<br>');
+    
+    // Handle bold text
+    content = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    
+    return content;
+}
+
+function scrollToBottom() {
+    const container = document.getElementById('messages-container');
+    container.scrollTop = container.scrollHeight;
+}
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+</script>
+{% endblock %}

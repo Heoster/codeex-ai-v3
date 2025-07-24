@@ -1,10 +1,10 @@
 {
-  "name": "codeex-ai-static-notice",
+  "name": "codeex-ai-flask-app",
   "version": "1.0.0",
-  "description": "Static notice page for CodeEx AI Flask app",
+  "description": "CodeEx AI Flask application for Vercel",
   "scripts": {
-    "build": "cp -r static/* public/ || xcopy static public\\ /E /I || echo 'Files copied'",
-    "dev": "echo 'Static files - no dev server needed'"
+    "build": "echo 'Public folder already exists with templates and static files'",
+    "dev": "python api/index.py"
   },
   "dependencies": {},
   "devDependencies": {}

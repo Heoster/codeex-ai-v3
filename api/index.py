@@ -24,8 +24,8 @@ project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Create Flask app with correct paths
 app = Flask(__name__, 
-           template_folder=os.path.join(project_root, 'static'),
-           static_folder=os.path.join(project_root, 'static'))
+           template_folder=os.path.join(project_root, 'public'),
+           static_folder=os.path.join(project_root, 'public'))
 
 # App configuration
 app.secret_key = os.getenv('SECRET_KEY', 'fallback-secret-key-for-vercel-2024')
